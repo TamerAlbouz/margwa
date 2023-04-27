@@ -6,7 +6,7 @@ async function fetchManga() {
     {
       method: "GET",
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Origin": " http://margwa.web.app",
         Accept: "application/json",
       },
       params: {
