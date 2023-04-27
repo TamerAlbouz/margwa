@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 
 async function fetchManga() {
   const result = await fetch(
-    "https://api.mangadex.org/manga?includes[]=cover_art",
+    "https://api.mangadex.org/manga?includes[]=cover_art&contentRating[]=safe",
     {
       method: "GET",
       headers: {
