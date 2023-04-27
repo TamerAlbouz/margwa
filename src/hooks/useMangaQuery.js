@@ -6,7 +6,7 @@ async function fetchManga() {
     {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        accept: "application/json",
       },
       params: {
         limit: 10,
