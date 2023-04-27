@@ -5,9 +5,6 @@ async function fetchManga() {
     "https://api.mangadex.org/manga?includes[]=cover_art&contentRating[]=safe",
     {
       method: "GET",
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-      },
       params: {
         limit: 10,
       },
