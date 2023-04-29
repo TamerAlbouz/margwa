@@ -6,7 +6,7 @@ import '../auth/firebase_auth/auth_util.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/users_record.dart';
-import 'schema/readmarkers_record.dart';
+import 'schema/chapters_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -15,7 +15,7 @@ export 'schema/index.dart';
 export 'schema/serializers.dart';
 
 export 'schema/users_record.dart';
-export 'schema/readmarkers_record.dart';
+export 'schema/chapters_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -69,52 +69,52 @@ Future<FFFirestorePage<UsersRecord>> queryUsersRecordPage({
       isStream: isStream,
     );
 
-/// Functions to query ReadmarkersRecords (as a Stream and as a Future).
-Future<int> queryReadmarkersRecordCount({
+/// Functions to query ChaptersRecords (as a Stream and as a Future).
+Future<int> queryChaptersRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      ReadmarkersRecord.collection,
+      ChaptersRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<ReadmarkersRecord>> queryReadmarkersRecord({
+Stream<List<ChaptersRecord>> queryChaptersRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      ReadmarkersRecord.collection,
-      ReadmarkersRecord.serializer,
+      ChaptersRecord.collection,
+      ChaptersRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<ReadmarkersRecord>> queryReadmarkersRecordOnce({
+Future<List<ChaptersRecord>> queryChaptersRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      ReadmarkersRecord.collection,
-      ReadmarkersRecord.serializer,
+      ChaptersRecord.collection,
+      ChaptersRecord.serializer,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<FFFirestorePage<ReadmarkersRecord>> queryReadmarkersRecordPage({
+Future<FFFirestorePage<ChaptersRecord>> queryChaptersRecordPage({
   Query Function(Query)? queryBuilder,
   DocumentSnapshot? nextPageMarker,
   required int pageSize,
   required bool isStream,
 }) =>
     queryCollectionPage(
-      ReadmarkersRecord.collection,
-      ReadmarkersRecord.serializer,
+      ChaptersRecord.collection,
+      ChaptersRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

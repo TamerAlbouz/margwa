@@ -7,14 +7,8 @@ part of 'serializers.dart';
 // **************************************************************************
 
 Serializers _$serializers = (new Serializers().toBuilder()
-      ..add(ReadmarkersRecord.serializer)
-      ..add(UsersRecord.serializer)
-      ..addBuilderFactory(
-          const FullType(BuiltList, const [
-            const FullType(
-                DocumentReference, const [const FullType.nullable(Object)])
-          ]),
-          () => new ListBuilder<DocumentReference<Object?>>()))
+      ..add(ChaptersRecord.serializer)
+      ..add(UsersRecord.serializer))
     .build();
 
 // ignore_for_file: deprecated_member_use_from_same_package,type=lint
