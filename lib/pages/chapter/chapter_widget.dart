@@ -135,6 +135,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 50.0),
                                 child: PageView.builder(
+                                  allowImplicitScrolling: true,
                                   controller: _model.pageViewController ??=
                                       PageController(
                                           initialPage:
