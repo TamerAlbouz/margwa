@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "842824867919",
+    "project_id": "margwa-manga",
+    "storage_bucket": "margwa-manga.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:842824867919:android:8405c30636471630d48a3a",
+        "android_client_info": {
+          "package_name": "com.mirror.margwa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "842824867919-jeb174dfp42umldjgnbn39c4dcr0abed.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirror.margwa",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "842824867919-3il996ema3a2fvepj49likkh13v0kfbd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCtfKE6vke0Rz3_GUeXl9bbU81rIbX-1kw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "842824867919-3il996ema3a2fvepj49likkh13v0kfbd.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "842824867919-nq4ed7g7cjad2m0j5tm8fceal8u93tgv.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mirror.margwa"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
