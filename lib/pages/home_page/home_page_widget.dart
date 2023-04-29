@@ -1,3 +1,4 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -5,6 +6,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:easy_debounce/easy_debounce.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -76,7 +78,22 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               'Margwa',
               style: FlutterFlowTheme.of(context).headlineMedium,
             ),
-            actions: [],
+            actions: [
+              FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30.0,
+                borderWidth: 1.0,
+                buttonSize: 60.0,
+                icon: Icon(
+                  Icons.menu_open_rounded,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  size: 30.0,
+                ),
+                onPressed: () async {
+                  context.pushNamed('Settings');
+                },
+              ),
+            ],
             centerTitle: true,
             elevation: 0.0,
           ),
@@ -86,6 +103,43 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                  child:
+                      // You will have to add an action on this rich text to go to your login page.
+                      Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 0.0),
+                    child: RichText(
+                      text: TextSpan(
+                        children: [
+                          TextSpan(
+                            text: 'Welcome, ',
+                            style: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 19.0,
+                                ),
+                          ),
+                          TextSpan(
+                            text: currentUserDisplayName,
+                            style: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  fontSize: 19.0,
+                                ),
+                          )
+                        ],
+                        style: FlutterFlowTheme.of(context).bodyMedium,
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
