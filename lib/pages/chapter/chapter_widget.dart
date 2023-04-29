@@ -97,10 +97,8 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             children: [
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
-                  future: FFAppState().appChapterQuery(
-                    requestFn: () => GetChapterPagesCall.call(
-                      chapterId: widget.chapterId,
-                    ),
+                  future: GetChapterPagesCall.call(
+                    chapterId: widget.chapterId,
                   ),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
