@@ -61,16 +61,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
         ..add(serializers.serialize(value,
             specifiedType: const FullType(String)));
     }
-    value = object.readMarkers;
-    if (value != null) {
-      result
-        ..add('read_markers')
-        ..add(serializers.serialize(value,
-            specifiedType: const FullType(BuiltList, const [
-              const FullType(
-                  DocumentReference, const [const FullType.nullable(Object)])
-            ])));
-    }
     value = object.ffRef;
     if (value != null) {
       result
@@ -117,13 +107,6 @@ class _$UsersRecordSerializer implements StructuredSerializer<UsersRecord> {
           result.phoneNumber = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String?;
           break;
-        case 'read_markers':
-          result.readMarkers.replace(serializers.deserialize(value,
-              specifiedType: const FullType(BuiltList, const [
-                const FullType(
-                    DocumentReference, const [const FullType.nullable(Object)])
-              ]))! as BuiltList<Object?>);
-          break;
         case 'Document__Reference__Field':
           result.ffRef = serializers.deserialize(value,
               specifiedType: const FullType(DocumentReference, const [
@@ -151,8 +134,6 @@ class _$UsersRecord extends UsersRecord {
   @override
   final String? phoneNumber;
   @override
-  final BuiltList<DocumentReference<Object?>>? readMarkers;
-  @override
   final DocumentReference<Object?>? ffRef;
 
   factory _$UsersRecord([void Function(UsersRecordBuilder)? updates]) =>
@@ -165,7 +146,6 @@ class _$UsersRecord extends UsersRecord {
       this.createdTime,
       this.photoUrl,
       this.phoneNumber,
-      this.readMarkers,
       this.ffRef})
       : super._();
 
@@ -186,7 +166,6 @@ class _$UsersRecord extends UsersRecord {
         createdTime == other.createdTime &&
         photoUrl == other.photoUrl &&
         phoneNumber == other.phoneNumber &&
-        readMarkers == other.readMarkers &&
         ffRef == other.ffRef;
   }
 
@@ -199,7 +178,6 @@ class _$UsersRecord extends UsersRecord {
     _$hash = $jc(_$hash, createdTime.hashCode);
     _$hash = $jc(_$hash, photoUrl.hashCode);
     _$hash = $jc(_$hash, phoneNumber.hashCode);
-    _$hash = $jc(_$hash, readMarkers.hashCode);
     _$hash = $jc(_$hash, ffRef.hashCode);
     _$hash = $jf(_$hash);
     return _$hash;
@@ -214,7 +192,6 @@ class _$UsersRecord extends UsersRecord {
           ..add('createdTime', createdTime)
           ..add('photoUrl', photoUrl)
           ..add('phoneNumber', phoneNumber)
-          ..add('readMarkers', readMarkers)
           ..add('ffRef', ffRef))
         .toString();
   }
@@ -247,12 +224,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   String? get phoneNumber => _$this._phoneNumber;
   set phoneNumber(String? phoneNumber) => _$this._phoneNumber = phoneNumber;
 
-  ListBuilder<DocumentReference<Object?>>? _readMarkers;
-  ListBuilder<DocumentReference<Object?>> get readMarkers =>
-      _$this._readMarkers ??= new ListBuilder<DocumentReference<Object?>>();
-  set readMarkers(ListBuilder<DocumentReference<Object?>>? readMarkers) =>
-      _$this._readMarkers = readMarkers;
-
   DocumentReference<Object?>? _ffRef;
   DocumentReference<Object?>? get ffRef => _$this._ffRef;
   set ffRef(DocumentReference<Object?>? ffRef) => _$this._ffRef = ffRef;
@@ -270,7 +241,6 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
       _createdTime = $v.createdTime;
       _photoUrl = $v.photoUrl;
       _phoneNumber = $v.phoneNumber;
-      _readMarkers = $v.readMarkers?.toBuilder();
       _ffRef = $v.ffRef;
       _$v = null;
     }
@@ -292,29 +262,15 @@ class UsersRecordBuilder implements Builder<UsersRecord, UsersRecordBuilder> {
   UsersRecord build() => _build();
 
   _$UsersRecord _build() {
-    _$UsersRecord _$result;
-    try {
-      _$result = _$v ??
-          new _$UsersRecord._(
-              email: email,
-              displayName: displayName,
-              uid: uid,
-              createdTime: createdTime,
-              photoUrl: photoUrl,
-              phoneNumber: phoneNumber,
-              readMarkers: _readMarkers?.build(),
-              ffRef: ffRef);
-    } catch (_) {
-      late String _$failedField;
-      try {
-        _$failedField = 'readMarkers';
-        _readMarkers?.build();
-      } catch (e) {
-        throw new BuiltValueNestedFieldError(
-            r'UsersRecord', _$failedField, e.toString());
-      }
-      rethrow;
-    }
+    final _$result = _$v ??
+        new _$UsersRecord._(
+            email: email,
+            displayName: displayName,
+            uid: uid,
+            createdTime: createdTime,
+            photoUrl: photoUrl,
+            phoneNumber: phoneNumber,
+            ffRef: ffRef);
     replace(_$result);
     return _$result;
   }

@@ -8,11 +8,11 @@ service cloud.firestore {
       allow delete: if false;
     }
 
-    match /readmarkers/{document} {
-      allow create: if true;
-      allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+    match /chapters/{document} {
+      allow create: if request.resource.data.user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow read: if resource.data.user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow write: if resource.data.user == /databases/$(database)/documents/users/$(request.auth.uid);
+      allow delete: if resource.data.user == /databases/$(database)/documents/users/$(request.auth.uid);
     }
   }
 }

@@ -271,221 +271,232 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   ),
                 ),
                 Expanded(
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 10.0),
-                    child: RefreshIndicator(
-                      onRefresh: () async {
-                        setState(() => _model.pagingController?.refresh());
-                        await _model.waitForOnePage();
-                      },
-                      child: PagedListView<ApiPagingParams, dynamic>(
-                        pagingController: () {
-                          if (_model.pagingController != null) {
-                            return _model.pagingController!;
-                          }
+                  child: Container(
+                    width: 100.0,
+                    height: 100.0,
+                    decoration: BoxDecoration(),
+                    child: Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 10.0),
+                      child: RefreshIndicator(
+                        onRefresh: () async {
+                          setState(() => _model.pagingController?.refresh());
+                          await _model.waitForOnePage();
+                        },
+                        child: PagedListView<ApiPagingParams, dynamic>(
+                          pagingController: () {
+                            if (_model.pagingController != null) {
+                              return _model.pagingController!;
+                            }
 
-                          _model.pagingController = PagingController(
-                            firstPageKey: ApiPagingParams(
-                              nextPageNumber: 0,
-                              numItems: 0,
-                              lastResponse: null,
-                            ),
-                          );
-                          _model.pagingController!
-                              .addPageRequestListener((nextPageMarker) {
-                            GetMangaCall.call(
-                              offset: valueOrDefault<int>(
-                                nextPageMarker.numItems,
-                                0,
+                            _model.pagingController = PagingController(
+                              firstPageKey: ApiPagingParams(
+                                nextPageNumber: 0,
+                                numItems: 0,
+                                lastResponse: null,
                               ),
-                              title: _model.textController.text,
-                              limit: 20,
-                            ).then((listViewGetMangaResponse) {
-                              final pageItems = (GetMangaCall.data(
-                                        listViewGetMangaResponse.jsonBody,
-                                      )!
-                                          .map((e) => e)
-                                          .toList() ??
-                                      [])
-                                  .toList() as List;
-                              final newNumItems =
-                                  nextPageMarker.numItems + pageItems.length;
-                              _model.pagingController!.appendPage(
-                                pageItems,
-                                (pageItems.length > 0)
-                                    ? ApiPagingParams(
-                                        nextPageNumber:
-                                            nextPageMarker.nextPageNumber + 1,
-                                        numItems: newNumItems,
-                                        lastResponse: listViewGetMangaResponse,
-                                      )
-                                    : null,
-                              );
+                            );
+                            _model.pagingController!
+                                .addPageRequestListener((nextPageMarker) {
+                              GetMangaCall.call(
+                                offset: valueOrDefault<int>(
+                                  nextPageMarker.numItems,
+                                  0,
+                                ),
+                                title: _model.textController.text,
+                                limit: 20,
+                              ).then((listViewGetMangaResponse) {
+                                final pageItems = (GetMangaCall.data(
+                                          listViewGetMangaResponse.jsonBody,
+                                        )!
+                                            .map((e) => e)
+                                            .toList() ??
+                                        [])
+                                    .toList() as List;
+                                final newNumItems =
+                                    nextPageMarker.numItems + pageItems.length;
+                                _model.pagingController!.appendPage(
+                                  pageItems,
+                                  (pageItems.length > 0)
+                                      ? ApiPagingParams(
+                                          nextPageNumber:
+                                              nextPageMarker.nextPageNumber + 1,
+                                          numItems: newNumItems,
+                                          lastResponse:
+                                              listViewGetMangaResponse,
+                                        )
+                                      : null,
+                                );
+                              });
                             });
-                          });
-                          return _model.pagingController!;
-                        }(),
-                        padding: EdgeInsets.zero,
-                        shrinkWrap: true,
-                        reverse: false,
-                        scrollDirection: Axis.vertical,
-                        builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                          // Customize what your widget looks like when it's loading the first page.
-                          firstPageProgressIndicatorBuilder: (_) => Center(
-                            child: SizedBox(
-                              width: 100.0,
-                              height: 100.0,
-                              child: SpinKitRipple(
-                                color: FlutterFlowTheme.of(context).primary,
-                                size: 100.0,
+                            return _model.pagingController!;
+                          }(),
+                          padding: EdgeInsets.zero,
+                          shrinkWrap: true,
+                          reverse: false,
+                          scrollDirection: Axis.vertical,
+                          builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                            // Customize what your widget looks like when it's loading the first page.
+                            firstPageProgressIndicatorBuilder: (_) => Center(
+                              child: SizedBox(
+                                width: 100.0,
+                                height: 100.0,
+                                child: SpinKitRipple(
+                                  color: FlutterFlowTheme.of(context).primary,
+                                  size: 100.0,
+                                ),
                               ),
                             ),
-                          ),
 
-                          itemBuilder: (context, _, mangaIndex) {
-                            final mangaItem =
-                                _model.pagingController!.itemList![mangaIndex];
-                            return Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 0.0, 0.0, 10.0),
-                              child: InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  context.pushNamed(
-                                    'Manga',
-                                    queryParams: {
-                                      'title': serializeParam(
-                                        getJsonField(
-                                          mangaItem,
-                                          r'''$.attributes.title.en''',
-                                        ).toString(),
-                                        ParamType.String,
-                                      ),
-                                      'desc': serializeParam(
-                                        getJsonField(
-                                          mangaItem,
-                                          r'''$.attributes.description.en''',
-                                        ).toString(),
-                                        ParamType.String,
-                                      ),
-                                      'src': serializeParam(
-                                        'https://uploads.mangadex.org/covers/${getJsonField(
-                                          mangaItem,
-                                          r'''$.id''',
-                                        ).toString()}/${getJsonField(
-                                          mangaItem,
-                                          r'''$.relationships[:].attributes.fileName''',
-                                        ).toString()}',
-                                        ParamType.String,
-                                      ),
-                                      'id': serializeParam(
-                                        getJsonField(
-                                          mangaItem,
-                                          r'''$.id''',
-                                        ).toString(),
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-                                },
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(10.0),
-                                        topRight: Radius.circular(0.0),
-                                      ),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            'https://uploads.mangadex.org/covers/${getJsonField(
-                                          mangaItem,
-                                          r'''$.id''',
-                                        ).toString()}/${getJsonField(
-                                          mangaItem,
-                                          r'''$.relationships[:].attributes.fileName''',
-                                        ).toString()}',
-                                        width: 100.0,
-                                        height: 150.0,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: ClipRRect(
-                                        child: Container(
+                            itemBuilder: (context, _, mangaIndex) {
+                              final mangaItem = _model
+                                  .pagingController!.itemList![mangaIndex];
+                              return Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 0.0, 10.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      'Manga',
+                                      queryParams: {
+                                        'title': serializeParam(
+                                          getJsonField(
+                                            mangaItem,
+                                            r'''$.attributes.title.en''',
+                                          ).toString(),
+                                          ParamType.String,
+                                        ),
+                                        'desc': serializeParam(
+                                          getJsonField(
+                                            mangaItem,
+                                            r'''$.attributes.description.en''',
+                                          ).toString(),
+                                          ParamType.String,
+                                        ),
+                                        'src': serializeParam(
+                                          'https://uploads.mangadex.org/covers/${getJsonField(
+                                            mangaItem,
+                                            r'''$.id''',
+                                          ).toString()}/${getJsonField(
+                                            mangaItem,
+                                            r'''$.relationships[:].attributes.fileName''',
+                                          ).toString()}',
+                                          ParamType.String,
+                                        ),
+                                        'id': serializeParam(
+                                          getJsonField(
+                                            mangaItem,
+                                            r'''$.id''',
+                                          ).toString(),
+                                          ParamType.String,
+                                        ),
+                                      }.withoutNulls,
+                                    );
+                                  },
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(10.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(10.0),
+                                          topRight: Radius.circular(0.0),
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              'https://uploads.mangadex.org/covers/${getJsonField(
+                                            mangaItem,
+                                            r'''$.id''',
+                                          ).toString()}/${getJsonField(
+                                            mangaItem,
+                                            r'''$.relationships[:].attributes.fileName''',
+                                          ).toString()}',
                                           width: 100.0,
                                           height: 150.0,
-                                          decoration: BoxDecoration(),
-                                          child: ListTile(
-                                            title: Text(
-                                              getJsonField(
-                                                mangaItem,
-                                                r'''$.attributes.title.en''',
-                                              ).toString().maybeHandleOverflow(
-                                                    maxChars: 25,
-                                                    replacement: '…',
-                                                  ),
-                                              textAlign: TextAlign.start,
-                                              style:
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      Expanded(
+                                        child: ClipRRect(
+                                          child: Container(
+                                            width: 100.0,
+                                            height: 150.0,
+                                            decoration: BoxDecoration(),
+                                            child: ListTile(
+                                              title: Text(
+                                                getJsonField(
+                                                  mangaItem,
+                                                  r'''$.attributes.title.en''',
+                                                )
+                                                    .toString()
+                                                    .maybeHandleOverflow(
+                                                      maxChars: 25,
+                                                      replacement: '…',
+                                                    ),
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          lineHeight: 2.0,
+                                                        ),
+                                              ),
+                                              subtitle: Text(
+                                                getJsonField(
+                                                  mangaItem,
+                                                  r'''$.attributes.description.en''',
+                                                )
+                                                    .toString()
+                                                    .maybeHandleOverflow(
+                                                      maxChars: 100,
+                                                      replacement: '…',
+                                                    ),
+                                                textAlign: TextAlign.start,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                        ),
+                                              ),
+                                              tileColor:
                                                   FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        lineHeight: 2.0,
-                                                      ),
-                                            ),
-                                            subtitle: Text(
-                                              getJsonField(
-                                                mangaItem,
-                                                r'''$.attributes.description.en''',
-                                              ).toString().maybeHandleOverflow(
-                                                    maxChars: 100,
-                                                    replacement: '…',
-                                                  ),
-                                              textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                      ),
-                                            ),
-                                            tileColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondary,
-                                            dense: true,
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 10.0, 20.0, 10.0),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(0.0),
-                                                bottomRight:
-                                                    Radius.circular(10.0),
-                                                topLeft: Radius.circular(0.0),
-                                                topRight: Radius.circular(10.0),
+                                                      .secondary,
+                                              dense: true,
+                                              contentPadding:
+                                                  EdgeInsetsDirectional
+                                                      .fromSTEB(20.0, 10.0,
+                                                          20.0, 10.0),
+                                              shape: RoundedRectangleBorder(
+                                                borderRadius: BorderRadius.only(
+                                                  bottomLeft:
+                                                      Radius.circular(0.0),
+                                                  bottomRight:
+                                                      Radius.circular(10.0),
+                                                  topLeft: Radius.circular(0.0),
+                                                  topRight:
+                                                      Radius.circular(10.0),
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ],
+                                    ],
+                                  ),
                                 ),
-                              ),
-                            );
-                          },
+                              );
+                            },
+                          ),
                         ),
                       ),
                     ),
