@@ -55,6 +55,8 @@ class _MangaWidgetState extends State<MangaWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: WillPopScope(
@@ -170,11 +172,11 @@ class _MangaWidgetState extends State<MangaWidget> {
                       if (!snapshot.hasData) {
                         return Center(
                           child: SizedBox(
-                            width: 100.0,
-                            height: 100.0,
+                            width: 75.0,
+                            height: 75.0,
                             child: SpinKitRipple(
                               color: FlutterFlowTheme.of(context).primary,
-                              size: 100.0,
+                              size: 75.0,
                             ),
                           ),
                         );
@@ -255,12 +257,12 @@ class _MangaWidgetState extends State<MangaWidget> {
                                 firstPageProgressIndicatorBuilder: (_) =>
                                     Center(
                                   child: SizedBox(
-                                    width: 100.0,
-                                    height: 100.0,
+                                    width: 75.0,
+                                    height: 75.0,
                                     child: SpinKitRipple(
                                       color:
                                           FlutterFlowTheme.of(context).primary,
-                                      size: 100.0,
+                                      size: 75.0,
                                     ),
                                   ),
                                 ),
