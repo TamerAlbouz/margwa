@@ -46,6 +46,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: WillPopScope(
@@ -85,7 +87,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 borderWidth: 1.0,
                 buttonSize: 60.0,
                 icon: Icon(
-                  Icons.menu_open_rounded,
+                  Icons.settings,
                   color: FlutterFlowTheme.of(context).primaryText,
                   size: 30.0,
                 ),
@@ -339,11 +341,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             // Customize what your widget looks like when it's loading the first page.
                             firstPageProgressIndicatorBuilder: (_) => Center(
                               child: SizedBox(
-                                width: 100.0,
-                                height: 100.0,
+                                width: 75.0,
+                                height: 75.0,
                                 child: SpinKitRipple(
                                   color: FlutterFlowTheme.of(context).primary,
-                                  size: 100.0,
+                                  size: 75.0,
                                 ),
                               ),
                             ),

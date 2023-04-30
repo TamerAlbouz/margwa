@@ -301,14 +301,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                    child: SpinKitRipple(
-                      color: FlutterFlowTheme.of(context).primary,
-                      size: 100.0,
-                    ),
+              ? Container(
+                  color: Colors.black,
+                  child: Image.asset(
+                    'assets/images/Margwa.png',
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;
