@@ -17,10 +17,10 @@ class FFAppState extends ChangeNotifier {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
-    _Orientation = prefs.getBool('ff_Orientation') ?? _Orientation;
     _PageNumber = prefs.getBool('ff_PageNumber') ?? _PageNumber;
     _PageTitle = prefs.getBool('ff_PageTitle') ?? _PageTitle;
     _Brightness = prefs.getDouble('ff_Brightness') ?? _Brightness;
+    _Orientation = prefs.getBool('ff_Orientation') ?? _Orientation;
   }
 
   void update(VoidCallback callback) {
@@ -29,13 +29,6 @@ class FFAppState extends ChangeNotifier {
   }
 
   late SharedPreferences prefs;
-
-  bool _Orientation = true;
-  bool get Orientation => _Orientation;
-  set Orientation(bool _value) {
-    _Orientation = _value;
-    prefs.setBool('ff_Orientation', _value);
-  }
 
   bool _PageNumber = true;
   bool get PageNumber => _PageNumber;
@@ -56,6 +49,13 @@ class FFAppState extends ChangeNotifier {
   set Brightness(double _value) {
     _Brightness = _value;
     prefs.setDouble('ff_Brightness', _value);
+  }
+
+  bool _Orientation = false;
+  bool get Orientation => _Orientation;
+  set Orientation(bool _value) {
+    _Orientation = _value;
+    prefs.setBool('ff_Orientation', _value);
   }
 }
 
