@@ -128,9 +128,13 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                           onChanged: (newValue) async {
                             setState(() => _model.switchValue = newValue!);
                             if (newValue!) {
-                              FFAppState().Orientation = true;
+                              setState(() {
+                                FFAppState().Orientation = true;
+                              });
                             } else {
-                              FFAppState().Orientation = false;
+                              setState(() {
+                                FFAppState().Orientation = false;
+                              });
                             }
                           },
                           activeColor: Color(0xFF1637E1),
@@ -271,14 +275,14 @@ class _ChapterWidgetState extends State<ChapterWidget> {
           elevation: 0.0,
         ),
         body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                if (FFAppState().Orientation)
-                  FutureBuilder<ApiCallResponse>(
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              if (FFAppState().Orientation)
+                Expanded(
+                  child: FutureBuilder<ApiCallResponse>(
                     future: GetChapterPagesCall.call(
                       chapterId: widget.chapterId,
                     ),
@@ -310,14 +314,13 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                               [];
                           return Container(
                             width: double.infinity,
-                            height: MediaQuery.of(context).size.height * 0.933,
+                            height: 500.0,
                             child: Stack(
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 50.0),
                                   child: PageView.builder(
-                                    allowImplicitScrolling: true,
                                     controller: _model.pageViewController ??=
                                         PageController(
                                             initialPage:
@@ -386,62 +389,8 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                       );
                     },
                   ),
-                if (FFAppState().Orientation == false)
-                  FutureBuilder<ApiCallResponse>(
-                    future: GetChapterPagesCall.call(
-                      chapterId: widget.chapterId,
-                    ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 75.0,
-                            height: 75.0,
-                            child: SpinKitRipple(
-                              color: FlutterFlowTheme.of(context).primary,
-                              size: 75.0,
-                            ),
-                          ),
-                        );
-                      }
-                      final listViewGetChapterPagesResponse = snapshot.data!;
-                      return Builder(
-                        builder: (context) {
-                          final pagesV = (GetChapterPagesCall.data(
-                                listViewGetChapterPagesResponse.jsonBody,
-                              ) as List)
-                                  .map<String>((s) => s.toString())
-                                  .toList()
-                                  ?.map((e) => e)
-                                  .toList()
-                                  ?.toList() ??
-                              [];
-                          return ListView.builder(
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            scrollDirection: Axis.vertical,
-                            itemCount: pagesV.length,
-                            itemBuilder: (context, pagesVIndex) {
-                              final pagesVItem = pagesV[pagesVIndex];
-                              return Image.network(
-                                '${GetChapterPagesCall.url(
-                                  listViewGetChapterPagesResponse.jsonBody,
-                                ).toString()}/data/${GetChapterPagesCall.hash(
-                                  listViewGetChapterPagesResponse.jsonBody,
-                                ).toString()}/${pagesVItem}',
-                                width: 100.0,
-                                height: 100.0,
-                                fit: BoxFit.fitWidth,
-                              );
-                            },
-                          );
-                        },
-                      );
-                    },
-                  ),
-              ],
-            ),
+                ),
+            ],
           ),
         ),
       ),
