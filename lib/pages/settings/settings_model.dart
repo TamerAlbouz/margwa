@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutterflow_colorpicker/flutterflow_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -15,8 +16,10 @@ class SettingsModel extends FlutterFlowModel {
   bool? switchListTileValue1;
   // State field(s) for SwitchListTile widget.
   bool? switchListTileValue2;
-  // State field(s) for SwitchListTile widget.
-  bool? switchListTileValue3;
+  Color? colorPicked1;
+  Color? colorPicked2;
+  Color? colorPicked3;
+  Color? colorPicked4;
 
   /// Initialization and disposal methods.
 

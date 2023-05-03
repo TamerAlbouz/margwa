@@ -95,7 +95,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Chapter',
-          path: '/chapter',
+          path: '/hchapter',
           builder: (context, params) => ChapterWidget(
             title: params.getParam('title', ParamType.String),
             chapterId: params.getParam('chapterId', ParamType.String),

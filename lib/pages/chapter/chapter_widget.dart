@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
@@ -112,42 +113,76 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                   ),
                   Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(40.0, 0.0, 40.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(40.0, 10.0, 40.0, 10.0),
                     child: Row(
                       mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Icon(
-                          Icons.swap_vert,
-                          color: FlutterFlowTheme.of(context).accent3,
-                          size: 40.0,
-                        ),
-                        Switch(
-                          value: _model.switchValue ??=
-                              FFAppState().Orientation,
-                          onChanged: (newValue) async {
-                            setState(() => _model.switchValue = newValue!);
-                            if (newValue!) {
-                              setState(() {
-                                FFAppState().Orientation = true;
-                              });
-                            } else {
-                              setState(() {
-                                FFAppState().Orientation = false;
-                              });
-                            }
+                        FFButtonWidget(
+                          onPressed: () async {
+                            setState(() {
+                              FFAppState().Orientation = true;
+                            });
                           },
-                          activeColor: Color(0xFF1637E1),
-                          activeTrackColor: Color(0xFF1637E1),
-                          inactiveTrackColor:
-                              FlutterFlowTheme.of(context).tertiary,
-                          inactiveThumbColor:
-                              FlutterFlowTheme.of(context).tertiary,
+                          text: 'H',
+                          icon: Icon(
+                            Icons.swap_horiz,
+                            size: 24.0,
+                          ),
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                10.0, 0.0, 15.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FFAppState().Orientation
+                                ? FlutterFlowTheme.of(context).success
+                                : FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
-                        Icon(
-                          Icons.swap_horiz,
-                          color: FlutterFlowTheme.of(context).accent3,
-                          size: 40.0,
+                        FFButtonWidget(
+                          onPressed: () async {
+                            setState(() {
+                              FFAppState().Orientation = false;
+                            });
+                          },
+                          text: 'V',
+                          icon: Icon(
+                            Icons.swap_vert,
+                            size: 24.0,
+                          ),
+                          options: FFButtonOptions(
+                            height: 40.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                10.0, 0.0, 15.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 0.0, 0.0, 0.0),
+                            color: FFAppState().Orientation == false
+                                ? FlutterFlowTheme.of(context).success
+                                : FlutterFlowTheme.of(context).primary,
+                            textStyle: FlutterFlowTheme.of(context)
+                                .titleMedium
+                                .override(
+                                  fontFamily: 'Nunito',
+                                  fontWeight: FontWeight.bold,
+                                ),
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
+                            ),
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
                         ),
                       ],
                     ),
@@ -232,7 +267,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
           ),
         ),
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FFAppState().BackgroundColor,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -241,7 +276,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: FFAppState().InteractablesColors,
               size: 30.0,
             ),
             onPressed: () async {
@@ -263,7 +298,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
               buttonSize: 60.0,
               icon: Icon(
                 Icons.menu_open,
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FFAppState().InteractablesColors,
                 size: 32.0,
               ),
               onPressed: () async {
@@ -275,46 +310,47 @@ class _ChapterWidgetState extends State<ChapterWidget> {
           elevation: 0.0,
         ),
         body: SafeArea(
-          child: Column(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              if (FFAppState().Orientation)
-                Expanded(
-                  child: FutureBuilder<ApiCallResponse>(
-                    future: GetChapterPagesCall.call(
-                      chapterId: widget.chapterId,
+          child: FutureBuilder<ApiCallResponse>(
+            future: GetChapterPagesCall.call(
+              chapterId: widget.chapterId,
+            ),
+            builder: (context, snapshot) {
+              // Customize what your widget looks like when it's loading.
+              if (!snapshot.hasData) {
+                return Center(
+                  child: SizedBox(
+                    width: 75.0,
+                    height: 75.0,
+                    child: SpinKitRipple(
+                      color: FlutterFlowTheme.of(context).primary,
+                      size: 75.0,
                     ),
-                    builder: (context, snapshot) {
-                      // Customize what your widget looks like when it's loading.
-                      if (!snapshot.hasData) {
-                        return Center(
-                          child: SizedBox(
-                            width: 75.0,
-                            height: 75.0,
-                            child: SpinKitRipple(
-                              color: FlutterFlowTheme.of(context).primary,
-                              size: 75.0,
-                            ),
-                          ),
-                        );
-                      }
-                      final pageViewGetChapterPagesResponse = snapshot.data!;
-                      return Builder(
+                  ),
+                );
+              }
+              final columnGetChapterPagesResponse = snapshot.data!;
+              return Column(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  if (FFAppState().Orientation)
+                    Expanded(
+                      child: Builder(
                         builder: (context) {
-                          final pagesH = (GetChapterPagesCall.data(
-                                pageViewGetChapterPagesResponse.jsonBody,
-                              ) as List)
-                                  .map<String>((s) => s.toString())
-                                  .toList()
-                                  ?.map((e) => e)
-                                  .toList()
-                                  ?.toList() ??
-                              [];
+                          final pagesH = ((GetChapterPagesCall.data(
+                                    columnGetChapterPagesResponse.jsonBody,
+                                  ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList()
+                                      ?.map((e) => e)
+                                      .toList()
+                                      ?.toList() ??
+                                  [])
+                              .take(10)
+                              .toList();
                           return Container(
                             width: double.infinity,
-                            height: 500.0,
                             child: Stack(
                               children: [
                                 Padding(
@@ -332,10 +368,10 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                       final pagesHItem = pagesH[pagesHIndex];
                                       return Image.network(
                                         '${GetChapterPagesCall.url(
-                                          pageViewGetChapterPagesResponse
+                                          columnGetChapterPagesResponse
                                               .jsonBody,
                                         ).toString()}/data/${GetChapterPagesCall.hash(
-                                          pageViewGetChapterPagesResponse
+                                          columnGetChapterPagesResponse
                                               .jsonBody,
                                         ).toString()}/${pagesHItem}',
                                         width: 100.0,
@@ -387,11 +423,53 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                             ),
                           );
                         },
-                      );
-                    },
-                  ),
-                ),
-            ],
+                      ),
+                    ),
+                  if (FFAppState().Orientation == false)
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Builder(
+                              builder: (context) {
+                                final pages = (GetChapterPagesCall.data(
+                                      columnGetChapterPagesResponse.jsonBody,
+                                    ) as List)
+                                        .map<String>((s) => s.toString())
+                                        .toList()
+                                        ?.map((e) => e)
+                                        .toList()
+                                        ?.toList() ??
+                                    [];
+                                return ListView.builder(
+                                  padding: EdgeInsets.zero,
+                                  primary: false,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: pages.length,
+                                  itemBuilder: (context, pagesIndex) {
+                                    final pagesItem = pages[pagesIndex];
+                                    return Image.network(
+                                      '${GetChapterPagesCall.url(
+                                        columnGetChapterPagesResponse.jsonBody,
+                                      ).toString()}/data/${GetChapterPagesCall.hash(
+                                        columnGetChapterPagesResponse.jsonBody,
+                                      ).toString()}/${pagesItem}',
+                                      width: double.infinity,
+                                      fit: BoxFit.fitWidth,
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
           ),
         ),
       ),

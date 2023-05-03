@@ -54,9 +54,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: valueOrDefault<Color>(
+            FFAppState().BackgroundColor,
+            FlutterFlowTheme.of(context).primaryBackground,
+          ),
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+            backgroundColor: FFAppState().BackgroundColor,
             automaticallyImplyLeading: false,
             leading: FlutterFlowIconButton(
               borderColor: Colors.transparent,
@@ -65,7 +68,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               buttonSize: 60.0,
               icon: Icon(
                 Icons.nightlight_round,
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FFAppState().InteractablesColors,
                 size: 30.0,
               ),
               onPressed: () async {
@@ -78,7 +81,10 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             ),
             title: Text(
               'Margwa',
-              style: FlutterFlowTheme.of(context).headlineMedium,
+              style: FlutterFlowTheme.of(context).headlineMedium.override(
+                    fontFamily: 'Nunito',
+                    color: FFAppState().TextColor,
+                  ),
             ),
             actions: [
               FlutterFlowIconButton(
@@ -88,7 +94,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 buttonSize: 60.0,
                 icon: Icon(
                   Icons.settings,
-                  color: FlutterFlowTheme.of(context).primaryText,
+                  color: FFAppState().InteractablesColors,
                   size: 30.0,
                 ),
                 onPressed: () async {
@@ -107,9 +113,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
               children: [
                 Container(
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
+                  decoration: BoxDecoration(),
                   child:
                       // You will have to add an action on this rich text to go to your login page.
                       Padding(
@@ -124,6 +128,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 .titleMedium
                                 .override(
                                   fontFamily: 'Nunito',
+                                  color: FFAppState().TextColor,
                                   fontSize: 19.0,
                                 ),
                           ),
@@ -137,16 +142,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 ),
                           )
                         ],
-                        style: FlutterFlowTheme.of(context).bodyMedium,
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              fontFamily: 'Nunito',
+                              color: FFAppState().TextColor,
+                            ),
                       ),
                     ),
                   ),
                 ),
                 Container(
                   width: double.infinity,
-                  decoration: BoxDecoration(
-                    color: FlutterFlowTheme.of(context).primaryBackground,
-                  ),
+                  decoration: BoxDecoration(),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
@@ -154,7 +160,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: double.infinity,
                       height: 60.0,
                       decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondary,
+                        color: FFAppState().CardColor,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -446,6 +452,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         .titleMedium
                                                         .override(
                                                           fontFamily: 'Nunito',
+                                                          color: FFAppState()
+                                                              .TextColor,
                                                           lineHeight: 2.0,
                                                         ),
                                               ),
@@ -470,9 +478,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               .secondaryText,
                                                         ),
                                               ),
-                                              tileColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
+                                              tileColor: FFAppState().CardColor,
                                               dense: true,
                                               contentPadding:
                                                   EdgeInsetsDirectional
