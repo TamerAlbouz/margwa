@@ -267,7 +267,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
           ),
         ),
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FFAppState().BackgroundColor,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -276,7 +276,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
+              color: FFAppState().InteractablesColors,
               size: 30.0,
             ),
             onPressed: () async {
@@ -298,7 +298,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
               buttonSize: 60.0,
               icon: Icon(
                 Icons.menu_open,
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FFAppState().InteractablesColors,
                 size: 32.0,
               ),
               onPressed: () async {
@@ -338,18 +338,19 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                     Expanded(
                       child: Builder(
                         builder: (context) {
-                          final pagesH = (GetChapterPagesCall.data(
-                                columnGetChapterPagesResponse.jsonBody,
-                              ) as List)
-                                  .map<String>((s) => s.toString())
-                                  .toList()
-                                  ?.map((e) => e)
-                                  .toList()
-                                  ?.toList() ??
-                              [];
+                          final pagesH = ((GetChapterPagesCall.data(
+                                    columnGetChapterPagesResponse.jsonBody,
+                                  ) as List)
+                                      .map<String>((s) => s.toString())
+                                      .toList()
+                                      ?.map((e) => e)
+                                      .toList()
+                                      ?.toList() ??
+                                  [])
+                              .take(10)
+                              .toList();
                           return Container(
                             width: double.infinity,
-                            height: 500.0,
                             child: Stack(
                               children: [
                                 Padding(
@@ -454,7 +455,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                       ).toString()}/data/${GetChapterPagesCall.hash(
                                         columnGetChapterPagesResponse.jsonBody,
                                       ).toString()}/${pagesItem}',
-                                      width: 100.0,
+                                      width: double.infinity,
                                       fit: BoxFit.fitWidth,
                                     );
                                   },

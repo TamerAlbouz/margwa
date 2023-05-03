@@ -21,6 +21,13 @@ class FFAppState extends ChangeNotifier {
     _PageTitle = prefs.getBool('ff_PageTitle') ?? _PageTitle;
     _Brightness = prefs.getDouble('ff_Brightness') ?? _Brightness;
     _Orientation = prefs.getBool('ff_Orientation') ?? _Orientation;
+    _BackgroundColor = _colorFromIntValue(prefs.getInt('ff_BackgroundColor')) ??
+        _BackgroundColor;
+    _InteractablesColors =
+        _colorFromIntValue(prefs.getInt('ff_InteractablesColors')) ??
+            _InteractablesColors;
+    _TextColor = _colorFromIntValue(prefs.getInt('ff_TextColor')) ?? _TextColor;
+    _CardColor = _colorFromIntValue(prefs.getInt('ff_CardColor')) ?? _CardColor;
   }
 
   void update(VoidCallback callback) {
@@ -57,6 +64,34 @@ class FFAppState extends ChangeNotifier {
     _Orientation = _value;
     prefs.setBool('ff_Orientation', _value);
   }
+
+  Color _BackgroundColor = Color(4279243283);
+  Color get BackgroundColor => _BackgroundColor;
+  set BackgroundColor(Color _value) {
+    _BackgroundColor = _value;
+    prefs.setString('ff_BackgroundColor', _value.value.toString());
+  }
+
+  Color _InteractablesColors = Color(4294967295);
+  Color get InteractablesColors => _InteractablesColors;
+  set InteractablesColors(Color _value) {
+    _InteractablesColors = _value;
+    prefs.setString('ff_InteractablesColors', _value.value.toString());
+  }
+
+  Color _TextColor = Color(4294967295);
+  Color get TextColor => _TextColor;
+  set TextColor(Color _value) {
+    _TextColor = _value;
+    prefs.setString('ff_TextColor', _value.value.toString());
+  }
+
+  Color _CardColor = Color(4280361249);
+  Color get CardColor => _CardColor;
+  set CardColor(Color _value) {
+    _CardColor = _value;
+    prefs.setString('ff_CardColor', _value.value.toString());
+  }
 }
 
 LatLng? _latLngFromString(String? val) {
@@ -67,4 +102,11 @@ LatLng? _latLngFromString(String? val) {
   final lat = double.parse(split.first);
   final lng = double.parse(split.last);
   return LatLng(lat, lng);
+}
+
+Color? _colorFromIntValue(int? val) {
+  if (val == null) {
+    return null;
+  }
+  return Color(val);
 }
