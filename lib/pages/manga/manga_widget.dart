@@ -99,7 +99,7 @@ class _MangaWidgetState extends State<MangaWidget> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  color: FFAppState().BackgroundColor,
                 ),
                 child: Padding(
                   padding:
@@ -288,6 +288,10 @@ class _MangaWidgetState extends State<MangaWidget> {
                                               chaptersItem,
                                               r'''$.id''',
                                             ).toString(),
+                                            ParamType.String,
+                                          ),
+                                          'mangaid': serializeParam(
+                                            widget.id,
                                             ParamType.String,
                                           ),
                                         }.withoutNulls,

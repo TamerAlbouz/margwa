@@ -17,10 +17,12 @@ class ChapterWidget extends StatefulWidget {
     Key? key,
     required this.title,
     required this.chapterId,
+    required this.mangaid,
   }) : super(key: key);
 
   final String? title;
   final String? chapterId;
+  final String? mangaid;
 
   @override
   _ChapterWidgetState createState() => _ChapterWidgetState();
@@ -68,7 +70,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             width: 100.0,
             height: 100.0,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondary,
+              color: FlutterFlowTheme.of(context).secondaryBackground,
             ),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20.0, 100.0, 20.0, 100.0),
@@ -452,6 +454,16 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                         .toList()
                                         ?.toList() ??
                                     [];
+                                if (pages.isEmpty) {
+                                  return Center(
+                                    child: Image.asset(
+                                      'assets/images/Margwa.png',
+                                      width: 500.0,
+                                      height: 500.0,
+                                      fit: BoxFit.fitWidth,
+                                    ),
+                                  );
+                                }
                                 return ListView.builder(
                                   padding: EdgeInsets.zero,
                                   primary: false,
