@@ -360,6 +360,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 50.0),
                                   child: PageView.builder(
+                                    allowImplicitScrolling: true,
                                     controller: _model.pageViewController ??=
                                         PageController(
                                             initialPage:
@@ -379,6 +380,47 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                         width: 100.0,
                                         height: 150.0,
                                         fit: BoxFit.fitWidth,
+                                        loadingBuilder: (BuildContext context,
+                                            Widget child,
+                                            ImageChunkEvent? loadingProgress) {
+                                          if (loadingProgress == null)
+                                            return child;
+                                          return Padding(
+                                            padding: EdgeInsets.fromLTRB(
+                                                0,
+                                                MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        2 -
+                                                    150.0,
+                                                0,
+                                                MediaQuery.of(context)
+                                                            .size
+                                                            .height /
+                                                        2 -
+                                                    150.0),
+                                            child: Center(
+                                              child: SizedBox(
+                                                width: 75,
+                                                height: 75,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primary,
+                                                  value: loadingProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? loadingProgress
+                                                              .cumulativeBytesLoaded /
+                                                          loadingProgress
+                                                              .expectedTotalBytes!
+                                                      : null,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        },
                                       );
                                     },
                                   ),
@@ -470,6 +512,46 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                       ).toString()}/${pagesItem}',
                                       width: double.infinity,
                                       fit: BoxFit.fitWidth,
+                                      loadingBuilder: (BuildContext context,
+                                          Widget child,
+                                          ImageChunkEvent? loadingProgress) {
+                                        if (loadingProgress == null)
+                                          return child;
+                                        return Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              0,
+                                              MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      2 -
+                                                  150.0,
+                                              0,
+                                              MediaQuery.of(context)
+                                                          .size
+                                                          .height /
+                                                      2 -
+                                                  150.0),
+                                          child: Center(
+                                            child: SizedBox(
+                                              width: 75,
+                                              height: 75,
+                                              child: CircularProgressIndicator(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                value: loadingProgress
+                                                            .expectedTotalBytes !=
+                                                        null
+                                                    ? loadingProgress
+                                                            .cumulativeBytesLoaded /
+                                                        loadingProgress
+                                                            .expectedTotalBytes!
+                                                    : null,
+                                              ),
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     );
                                   },
                                 );
