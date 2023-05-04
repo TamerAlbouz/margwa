@@ -79,9 +79,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               appStateNotifier.loggedIn ? HomePageWidget() : LogInWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => HomePageWidget(),
+          name: 'SearchPage',
+          path: '/searchPage',
+          builder: (context, params) => SearchPageWidget(),
         ),
         FFRoute(
           name: 'Manga',
@@ -99,6 +99,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => ChapterWidget(
             title: params.getParam('title', ParamType.String),
             chapterId: params.getParam('chapterId', ParamType.String),
+            mangaid: params.getParam('mangaid', ParamType.String),
           ),
         ),
         FFRoute(
@@ -120,6 +121,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ForgotPasswrod',
           path: '/forgotPasswrod',
           builder: (context, params) => ForgotPasswrodWidget(),
+        ),
+        FFRoute(
+          name: 'HomePage',
+          path: '/homePage',
+          builder: (context, params) => HomePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
