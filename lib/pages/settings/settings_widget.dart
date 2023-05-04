@@ -423,7 +423,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 ),
                 trailing: Icon(
                   Icons.color_lens,
-                  color: FFAppState().CardColor,
+                  color: FFAppState().TextColor,
                   size: 48.0,
                 ),
                 dense: false,
