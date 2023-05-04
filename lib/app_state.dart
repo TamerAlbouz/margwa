@@ -15,17 +15,14 @@ class FFAppState extends ChangeNotifier {
 
   Future initializePersistedState() async {
     prefs = await SharedPreferences.getInstance();
-    _PageNumber = prefs.getBool('ff_PageNumber') ?? _PageNumber;
-    _PageTitle = prefs.getBool('ff_PageTitle') ?? _PageTitle;
-    _Brightness = prefs.getDouble('ff_Brightness') ?? _Brightness;
     _Orientation = prefs.getBool('ff_Orientation') ?? _Orientation;
     _BackgroundColor = _colorFromIntValue(prefs.getInt('ff_BackgroundColor')) ??
         _BackgroundColor;
+    _TextColor = _colorFromIntValue(prefs.getInt('ff_TextColor')) ?? _TextColor;
+    _CardColor = _colorFromIntValue(prefs.getInt('ff_CardColor')) ?? _CardColor;
     _InteractablesColors =
         _colorFromIntValue(prefs.getInt('ff_InteractablesColors')) ??
             _InteractablesColors;
-    _TextColor = _colorFromIntValue(prefs.getInt('ff_TextColor')) ?? _TextColor;
-    _CardColor = _colorFromIntValue(prefs.getInt('ff_CardColor')) ?? _CardColor;
   }
 
   void update(VoidCallback callback) {
@@ -34,27 +31,6 @@ class FFAppState extends ChangeNotifier {
   }
 
   late SharedPreferences prefs;
-
-  bool _PageNumber = true;
-  bool get PageNumber => _PageNumber;
-  set PageNumber(bool _value) {
-    _PageNumber = _value;
-    prefs.setBool('ff_PageNumber', _value);
-  }
-
-  bool _PageTitle = true;
-  bool get PageTitle => _PageTitle;
-  set PageTitle(bool _value) {
-    _PageTitle = _value;
-    prefs.setBool('ff_PageTitle', _value);
-  }
-
-  double _Brightness = 10;
-  double get Brightness => _Brightness;
-  set Brightness(double _value) {
-    _Brightness = _value;
-    prefs.setDouble('ff_Brightness', _value);
-  }
 
   bool _Orientation = false;
   bool get Orientation => _Orientation;
@@ -70,13 +46,6 @@ class FFAppState extends ChangeNotifier {
     prefs.setString('ff_BackgroundColor', _value.value.toString());
   }
 
-  Color _InteractablesColors = Color(4294967295);
-  Color get InteractablesColors => _InteractablesColors;
-  set InteractablesColors(Color _value) {
-    _InteractablesColors = _value;
-    prefs.setString('ff_InteractablesColors', _value.value.toString());
-  }
-
   Color _TextColor = Color(4294967295);
   Color get TextColor => _TextColor;
   set TextColor(Color _value) {
@@ -89,6 +58,13 @@ class FFAppState extends ChangeNotifier {
   set CardColor(Color _value) {
     _CardColor = _value;
     prefs.setString('ff_CardColor', _value.value.toString());
+  }
+
+  Color _InteractablesColors = Color(4294967295);
+  Color get InteractablesColors => _InteractablesColors;
+  set InteractablesColors(Color _value) {
+    _InteractablesColors = _value;
+    prefs.setString('ff_InteractablesColors', _value.value.toString());
   }
 }
 
