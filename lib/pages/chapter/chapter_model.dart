@@ -3,8 +3,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import '/flutter_flow/request_manager.dart';
-
 import 'package:smooth_page_indicator/smooth_page_indicator.dart'
     as smooth_page_indicator;
 import 'package:flutter/material.dart';
@@ -24,32 +22,11 @@ class ChapterModel extends FlutterFlowModel {
   // State field(s) for Checkbox widget.
   bool? checkboxValue2;
 
-  /// Query cache managers for this widget.
-
-  final _chapterManager = FutureRequestManager<ApiCallResponse>();
-  Future<ApiCallResponse> chapter({
-    String? uniqueQueryKey,
-    bool? overrideCache,
-    required Future<ApiCallResponse> Function() requestFn,
-  }) =>
-      _chapterManager.performRequest(
-        uniqueQueryKey: uniqueQueryKey,
-        overrideCache: overrideCache,
-        requestFn: requestFn,
-      );
-  void clearChapterCache() => _chapterManager.clear();
-  void clearChapterCacheKey(String? uniqueKey) =>
-      _chapterManager.clearRequest(uniqueKey);
-
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}
 
-  void dispose() {
-    /// Dispose query cache managers for this widget.
-
-    clearChapterCache();
-  }
+  void dispose() {}
 
   /// Additional helper methods are added here.
 

@@ -313,11 +313,8 @@ class _ChapterWidgetState extends State<ChapterWidget> {
         ),
         body: SafeArea(
           child: FutureBuilder<ApiCallResponse>(
-            future: _model.chapter(
-              uniqueQueryKey: '${widget.mangaid}_${widget.chapterId}',
-              requestFn: () => GetChapterPagesCall.call(
-                chapterId: widget.chapterId,
-              ),
+            future: GetChapterPagesCall.call(
+              chapterId: widget.chapterId,
             ),
             builder: (context, snapshot) {
               // Customize what your widget looks like when it's loading.
