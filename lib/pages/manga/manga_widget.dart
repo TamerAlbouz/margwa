@@ -275,7 +275,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                                     onTap: () async {
                                       context.pushNamed(
                                         'Chapter',
-                                        queryParams: {
+                                        queryParameters: {
                                           'title': serializeParam(
                                             getJsonField(
                                               chaptersItem,

@@ -332,7 +332,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               onTap: () async {
                                 context.pushNamed(
                                   'Manga',
-                                  queryParams: {
+                                  queryParameters: {
                                     'title': serializeParam(
                                       getJsonField(
                                         mangaItem,

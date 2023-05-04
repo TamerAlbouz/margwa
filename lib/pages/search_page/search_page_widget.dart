@@ -330,7 +330,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   onTap: () async {
                                     context.pushNamed(
                                       'Manga',
-                                      queryParams: {
+                                      queryParameters: {
                                         'title': serializeParam(
                                           getJsonField(
                                             mangaItem,
