@@ -79,9 +79,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
               appStateNotifier.loggedIn ? HomePageWidget() : LogInWidget(),
         ),
         FFRoute(
-          name: 'HomePage',
-          path: '/homePage',
-          builder: (context, params) => HomePageWidget(),
+          name: 'SearchPage',
+          path: '/searchPage',
+          builder: (context, params) => SearchPageWidget(),
         ),
         FFRoute(
           name: 'Manga',
@@ -95,10 +95,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         ),
         FFRoute(
           name: 'Chapter',
-          path: '/chapter',
+          path: '/hchapter',
           builder: (context, params) => ChapterWidget(
             title: params.getParam('title', ParamType.String),
             chapterId: params.getParam('chapterId', ParamType.String),
+            mangaid: params.getParam('mangaid', ParamType.String),
           ),
         ),
         FFRoute(
@@ -120,6 +121,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'ForgotPasswrod',
           path: '/forgotPasswrod',
           builder: (context, params) => ForgotPasswrodWidget(),
+        ),
+        FFRoute(
+          name: 'HomePage',
+          path: '/homePage',
+          builder: (context, params) => HomePageWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
@@ -301,14 +307,11 @@ class FFRoute {
                 )
               : builder(context, ffParams);
           final child = appStateNotifier.loading
-              ? Center(
-                  child: SizedBox(
-                    width: 100.0,
-                    height: 100.0,
-                    child: SpinKitRipple(
-                      color: FlutterFlowTheme.of(context).primary,
-                      size: 100.0,
-                    ),
+              ? Container(
+                  color: Colors.black,
+                  child: Image.asset(
+                    'assets/images/Margwa.png',
+                    fit: BoxFit.contain,
                   ),
                 )
               : page;
