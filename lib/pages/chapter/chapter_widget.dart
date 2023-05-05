@@ -168,7 +168,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
           ),
         ),
         appBar: AppBar(
-          backgroundColor: FFAppState().BackgroundColor,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -177,7 +177,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: FFAppState().InteractablesColors,
+              color: FlutterFlowTheme.of(context).primaryText,
               size: 30.0,
             ),
             onPressed: () async {
@@ -199,7 +199,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
               buttonSize: 60.0,
               icon: Icon(
                 Icons.menu_open,
-                color: FFAppState().InteractablesColors,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 32.0,
               ),
               onPressed: () async {

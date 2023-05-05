@@ -60,9 +60,9 @@ class _MangaWidgetState extends State<MangaWidget> {
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: FFAppState().BackgroundColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FFAppState().BackgroundColor,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -71,7 +71,7 @@ class _MangaWidgetState extends State<MangaWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: FFAppState().InteractablesColors,
+              color: FlutterFlowTheme.of(context).primaryText,
               size: 30.0,
             ),
             onPressed: () async {
@@ -83,10 +83,7 @@ class _MangaWidgetState extends State<MangaWidget> {
               widget.title,
               'N/A',
             ),
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: 'Nunito',
-                  color: FFAppState().TextColor,
-                ),
+            style: FlutterFlowTheme.of(context).headlineMedium,
           ),
           actions: [],
           centerTitle: true,
@@ -101,7 +98,7 @@ class _MangaWidgetState extends State<MangaWidget> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: FFAppState().BackgroundColor,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                 ),
                 child: Padding(
                   padding:
@@ -127,7 +124,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                         child: Container(
                           height: 150.0,
                           decoration: BoxDecoration(
-                            color: FFAppState().CardColor,
+                            color: FlutterFlowTheme.of(context).secondary,
                             borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(0.0),
                               bottomRight: Radius.circular(10.0),
@@ -341,12 +338,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                                               }(),
                                               style:
                                                   FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color: FFAppState()
-                                                            .TextColor,
-                                                      ),
+                                                      .titleMedium,
                                             ),
                                             subtitle: Text(
                                               () {
@@ -435,7 +427,9 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                     ? FlutterFlowTheme.of(
                                                             context)
                                                         .success
-                                                    : FFAppState().CardColor,
+                                                    : FlutterFlowTheme.of(
+                                                            context)
+                                                        .secondary,
                                             dense: false,
                                             shape: RoundedRectangleBorder(
                                               borderRadius:

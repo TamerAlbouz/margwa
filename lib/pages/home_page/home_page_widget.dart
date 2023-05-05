@@ -45,34 +45,50 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
-        backgroundColor: valueOrDefault<Color>(
-          FFAppState().BackgroundColor,
-          FlutterFlowTheme.of(context).primaryBackground,
-        ),
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: valueOrDefault<Color>(
-            FFAppState().BackgroundColor,
-            FlutterFlowTheme.of(context).primaryBackground,
-          ),
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
           title: Text(
             'Hello',
             style: FlutterFlowTheme.of(context).headlineMedium,
           ),
           actions: [
-            FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
-              icon: Icon(
-                Icons.notifications_none,
-                color: Colors.white,
-                size: 30.0,
-              ),
-              onPressed: () {
-                print('IconButton pressed ...');
-              },
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                FlutterFlowIconButton(
+                  borderColor: Colors.transparent,
+                  borderRadius: 30.0,
+                  borderWidth: 1.0,
+                  buttonSize: 60.0,
+                  icon: Icon(
+                    Icons.notifications_none,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 30.0,
+                  ),
+                  onPressed: () {
+                    print('IconButton pressed ...');
+                  },
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
+                  child: InkWell(
+                    splashColor: Colors.transparent,
+                    focusColor: Colors.transparent,
+                    hoverColor: Colors.transparent,
+                    highlightColor: Colors.transparent,
+                    onTap: () async {
+                      context.pushNamed('Settings');
+                    },
+                    child: Icon(
+                      Icons.settings_outlined,
+                      color: FlutterFlowTheme.of(context).primaryText,
+                      size: 30.0,
+                    ),
+                  ),
+                ),
+              ],
             ),
           ],
           centerTitle: false,
@@ -99,10 +115,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                       width: double.infinity,
                       height: 50.0,
                       decoration: BoxDecoration(
-                        color: valueOrDefault<Color>(
-                          FFAppState().CardColor,
-                          FlutterFlowTheme.of(context).secondary,
-                        ),
+                        color: FlutterFlowTheme.of(context).secondary,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -140,192 +153,189 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                   width: double.infinity,
                   height: 110.0,
                   decoration: BoxDecoration(),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ListView(
-                        padding: EdgeInsets.zero,
-                        primary: false,
-                        shrinkWrap: true,
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                16.0, 8.0, 0.0, 8.0),
-                            child: Container(
-                              width: 120.0,
-                              height: 190.0,
-                              decoration: BoxDecoration(
-                                color: valueOrDefault<Color>(
-                                  FFAppState().CardColor,
-                                  FlutterFlowTheme.of(context).secondary,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4.0,
-                                    color: Color(0x230E151B),
-                                    offset: Offset(0.0, 2.0),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    4.0, 4.0, 4.0, 4.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 4.0),
-                                      child: FaIcon(
-                                        FontAwesomeIcons.redhat,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 44.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Action',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                      ),
-                                    ),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        ListView(
+                          padding: EdgeInsets.zero,
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.horizontal,
+                          children: [
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 8.0, 0.0, 8.0),
+                              child: Container(
+                                width: 120.0,
+                                height: 190.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4.0,
+                                      color: Color(0x230E151B),
+                                      offset: Offset(0.0, 2.0),
+                                    )
                                   ],
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      4.0, 4.0, 4.0, 4.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 4.0),
+                                        child: FaIcon(
+                                          FontAwesomeIcons.redhat,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 44.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 4.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Action',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 8.0, 0.0, 8.0),
-                            child: Container(
-                              width: 120.0,
-                              height: 190.0,
-                              decoration: BoxDecoration(
-                                color: valueOrDefault<Color>(
-                                  FFAppState().CardColor,
-                                  FlutterFlowTheme.of(context).secondary,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4.0,
-                                    color: Color(0x230E151B),
-                                    offset: Offset(0.0, 2.0),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    4.0, 4.0, 4.0, 4.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 4.0),
-                                      child: Icon(
-                                        Icons.wine_bar_outlined,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 44.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Romance',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                      ),
-                                    ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 8.0, 0.0, 8.0),
+                              child: Container(
+                                width: 120.0,
+                                height: 190.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4.0,
+                                      color: Color(0x230E151B),
+                                      offset: Offset(0.0, 2.0),
+                                    )
                                   ],
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      4.0, 4.0, 4.0, 4.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 4.0),
+                                        child: Icon(
+                                          Icons.wine_bar_outlined,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 44.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 4.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Romance',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                12.0, 8.0, 0.0, 8.0),
-                            child: Container(
-                              width: 120.0,
-                              height: 190.0,
-                              decoration: BoxDecoration(
-                                color: valueOrDefault<Color>(
-                                  FFAppState().CardColor,
-                                  FlutterFlowTheme.of(context).secondary,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 4.0,
-                                    color: Color(0x230E151B),
-                                    offset: Offset(0.0, 2.0),
-                                  )
-                                ],
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    4.0, 4.0, 4.0, 4.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 4.0),
-                                      child: Icon(
-                                        Icons.theater_comedy,
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        size: 44.0,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 4.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Comedy',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodySmall
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                      ),
-                                    ),
+                            Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  12.0, 8.0, 0.0, 8.0),
+                              child: Container(
+                                width: 120.0,
+                                height: 190.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  boxShadow: [
+                                    BoxShadow(
+                                      blurRadius: 4.0,
+                                      color: Color(0x230E151B),
+                                      offset: Offset(0.0, 2.0),
+                                    )
                                   ],
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      4.0, 4.0, 4.0, 4.0),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 4.0),
+                                        child: Icon(
+                                          Icons.theater_comedy,
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          size: 44.0,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 4.0, 0.0, 0.0),
+                                        child: Text(
+                                          'Comedy',
+                                          style: FlutterFlowTheme.of(context)
+                                              .bodySmall
+                                              .override(
+                                                fontFamily: 'Nunito',
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .secondaryText,
+                                              ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Padding(
@@ -442,7 +452,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       MediaQuery.of(context).size.width * 0.45,
                                   height: 190.0,
                                   decoration: BoxDecoration(
-                                    color: FFAppState().CardColor,
+                                    color:
+                                        FlutterFlowTheme.of(context).secondary,
                                     boxShadow: [
                                       BoxShadow(
                                         blurRadius: 4.0,

@@ -52,10 +52,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
         onWillPop: () async => false,
         child: Scaffold(
           key: scaffoldKey,
-          backgroundColor: valueOrDefault<Color>(
-            FFAppState().BackgroundColor,
-            FlutterFlowTheme.of(context).primaryBackground,
-          ),
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
@@ -66,7 +63,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
               buttonSize: 60.0,
               icon: Icon(
                 Icons.arrow_back_ios_rounded,
-                color: FFAppState().InteractablesColors,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 30.0,
               ),
               onPressed: () async {
@@ -75,27 +72,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
             ),
             title: Text(
               'Margwa',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Nunito',
-                    color: FFAppState().TextColor,
-                  ),
+              style: FlutterFlowTheme.of(context).headlineMedium,
             ),
-            actions: [
-              FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30.0,
-                borderWidth: 1.0,
-                buttonSize: 60.0,
-                icon: Icon(
-                  Icons.settings,
-                  color: FFAppState().InteractablesColors,
-                  size: 30.0,
-                ),
-                onPressed: () async {
-                  context.pushNamed('Settings');
-                },
-              ),
-            ],
+            actions: [],
             centerTitle: true,
             elevation: 0.0,
           ),
@@ -112,7 +91,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 Container(
                   width: double.infinity,
                   decoration: BoxDecoration(
-                    color: FFAppState().BackgroundColor,
+                    color: FlutterFlowTheme.of(context).primaryBackground,
                   ),
                   child: Padding(
                     padding:
@@ -121,7 +100,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                       width: double.infinity,
                       height: 60.0,
                       decoration: BoxDecoration(
-                        color: FFAppState().CardColor,
+                        color: FlutterFlowTheme.of(context).secondary,
                         borderRadius: BorderRadius.circular(12.0),
                       ),
                       child: Padding(
@@ -412,8 +391,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                         .titleMedium
                                                         .override(
                                                           fontFamily: 'Nunito',
-                                                          color: FFAppState()
-                                                              .TextColor,
                                                           lineHeight: 2.0,
                                                         ),
                                               ),
@@ -438,7 +415,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                               .secondaryText,
                                                         ),
                                               ),
-                                              tileColor: FFAppState().CardColor,
+                                              tileColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
                                               dense: true,
                                               contentPadding:
                                                   EdgeInsetsDirectional
