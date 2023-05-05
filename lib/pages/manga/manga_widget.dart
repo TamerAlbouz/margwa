@@ -1,10 +1,12 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/manga_summary_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -95,68 +97,98 @@ class _MangaWidgetState extends State<MangaWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBackground,
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(15.0, 10.0, 15.0, 10.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10.0),
-                          bottomRight: Radius.circular(0.0),
-                          topLeft: Radius.circular(10.0),
-                          topRight: Radius.circular(0.0),
-                        ),
-                        child: Image.network(
-                          widget.src!,
-                          width: 100.0,
-                          height: 150.0,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          height: 150.0,
-                          decoration: BoxDecoration(
-                            color: FlutterFlowTheme.of(context).secondary,
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(0.0),
-                              bottomRight: Radius.circular(10.0),
-                              topLeft: Radius.circular(0.0),
-                              topRight: Radius.circular(10.0),
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  await showDialog(
+                    barrierColor: Color(0xCC101213),
+                    context: context,
+                    builder: (dialogContext) {
+                      return GestureDetector(
+                        onTap: () =>
+                            FocusScope.of(context).requestFocus(_unfocusNode),
+                        child: Dialog(
+                          insetPadding: MediaQuery.of(dialogContext).viewInsets,
+                          backgroundColor:
+                              FlutterFlowTheme.of(context).primaryBackground,
+                          child: Container(
+                            width: MediaQuery.of(context).size.width * 0.8,
+                            child: MangaSummaryWidget(
+                              title: widget.title,
+                              desc: widget.desc!,
                             ),
                           ),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                15.0, 15.0, 15.0, 15.0),
-                            child: Container(
-                              width: 100.0,
-                              height: 100.0,
-                              decoration: BoxDecoration(),
-                              child: Text(
-                                valueOrDefault<String>(
-                                  widget.desc,
-                                  'N/A',
+                        ),
+                      );
+                    },
+                  ).then((value) => setState(() {}));
+                },
+                child: Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).primaryBackground,
+                  ),
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(15.0, 10.0, 15.0, 10.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10.0),
+                            bottomRight: Radius.circular(0.0),
+                            topLeft: Radius.circular(10.0),
+                            topRight: Radius.circular(0.0),
+                          ),
+                          child: CachedNetworkImage(
+                            imageUrl: widget.src!,
+                            width: 100.0,
+                            height: 150.0,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            height: 150.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).secondary,
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(0.0),
+                                bottomRight: Radius.circular(10.0),
+                                topLeft: Radius.circular(0.0),
+                                topRight: Radius.circular(10.0),
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  15.0, 15.0, 15.0, 15.0),
+                              child: Container(
+                                width: 100.0,
+                                height: 100.0,
+                                decoration: BoxDecoration(),
+                                child: Text(
+                                  valueOrDefault<String>(
+                                    widget.desc,
+                                    'N/A',
+                                  ),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryText,
+                                      ),
                                 ),
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily: 'Nunito',
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                    ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),

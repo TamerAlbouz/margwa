@@ -167,65 +167,61 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             ),
           ),
         ),
-        appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-          automaticallyImplyLeading: false,
-          leading: FlutterFlowIconButton(
-            borderColor: Colors.transparent,
-            borderRadius: 30.0,
-            borderWidth: 1.0,
-            buttonSize: 60.0,
-            icon: Icon(
-              Icons.arrow_back_ios_rounded,
-              color: FlutterFlowTheme.of(context).primaryText,
-              size: 30.0,
-            ),
-            onPressed: () async {
-              context.pop();
-            },
-          ),
-          title: Text(
-            valueOrDefault<String>(
-              widget.title,
-              'Title',
-            ),
-            style: FlutterFlowTheme.of(context).titleMedium,
-          ),
-          actions: [
-            FlutterFlowIconButton(
-              borderColor: Colors.transparent,
-              borderRadius: 30.0,
-              borderWidth: 1.0,
-              buttonSize: 60.0,
-              icon: Icon(
-                Icons.menu_open,
-                color: FlutterFlowTheme.of(context).primaryText,
-                size: 32.0,
+        body: NestedScrollView(
+          headerSliverBuilder: (context, _) => [
+            SliverAppBar(
+              pinned: false,
+              floating: true,
+              snap: false,
+              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+              automaticallyImplyLeading: false,
+              leading: FlutterFlowIconButton(
+                borderColor: Colors.transparent,
+                borderRadius: 30.0,
+                borderWidth: 1.0,
+                buttonSize: 60.0,
+                icon: Icon(
+                  Icons.arrow_back_ios_rounded,
+                  color: FlutterFlowTheme.of(context).primaryText,
+                  size: 30.0,
+                ),
+                onPressed: () async {
+                  context.pop();
+                },
               ),
-              onPressed: () async {
-                scaffoldKey.currentState!.openEndDrawer();
-              },
-            ),
+              title: Text(
+                valueOrDefault<String>(
+                  widget.title,
+                  'Title',
+                ),
+                style: FlutterFlowTheme.of(context).titleMedium,
+              ),
+              actions: [
+                FlutterFlowIconButton(
+                  borderColor: Colors.transparent,
+                  borderRadius: 30.0,
+                  borderWidth: 1.0,
+                  buttonSize: 60.0,
+                  icon: Icon(
+                    Icons.menu_open,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 32.0,
+                  ),
+                  onPressed: () async {
+                    scaffoldKey.currentState!.openEndDrawer();
+                  },
+                ),
+              ],
+              centerTitle: true,
+              elevation: 0.0,
+            )
           ],
-          centerTitle: true,
-          elevation: 0.0,
-        ),
-        body: SafeArea(
-          child: FutureBuilder<ApiCallResponse>(
-            future: GetChapterPagesCall.call(
-              chapterId: widget.chapterId,
-            ),
-            builder: (context, snapshot) {
-              // Customize what your widget looks like when it's loading.
-              if (!snapshot.hasData) {
-                return Center(
-                  child: SizedBox(
-                    width: 75.0,
-                    height: 75.0,
-                    child: SpinKitRipple(
-                      color: FlutterFlowTheme.of(context).primary,
-                      size: 75.0,
-                    ),
+          body: Builder(
+            builder: (context) {
+              return SafeArea(
+                child: FutureBuilder<ApiCallResponse>(
+                  future: GetChapterPagesCall.call(
+                    chapterId: widget.chapterId,
                   ),
                 );
               }
@@ -350,7 +346,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                                 .primary,
                                         paintStyle: PaintingStyle.fill,
                                       ),
-                                    ),
+                                    ],
                                   ),
                                 ),
                               ],
@@ -436,11 +432,67 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                 );
                               },
                             ),
-                          ],
-                        ),
-                      ),
-                    ),
-                ],
+                          ),
+                        if (FFAppState().Orientation == false)
+                          Expanded(
+                            child: SingleChildScrollView(
+                              child: Column(
+                                mainAxisSize: MainAxisSize.max,
+                                children: [
+                                  Builder(
+                                    builder: (context) {
+                                      final pages = (GetChapterPagesCall.data(
+                                            columnGetChapterPagesResponse
+                                                .jsonBody,
+                                          ) as List)
+                                              .map<String>((s) => s.toString())
+                                              .toList()
+                                              ?.map((e) => e)
+                                              .toList()
+                                              ?.toList() ??
+                                          [];
+                                      if (pages.isEmpty) {
+                                        return Center(
+                                          child: Image.asset(
+                                            'assets/images/Margwa.png',
+                                            width: 500.0,
+                                            height: 500.0,
+                                            fit: BoxFit.fitWidth,
+                                          ),
+                                        );
+                                      }
+                                      return ListView.builder(
+                                        padding: EdgeInsets.zero,
+                                        primary: false,
+                                        shrinkWrap: true,
+                                        scrollDirection: Axis.vertical,
+                                        itemCount: pages.length,
+                                        itemBuilder: (context, pagesIndex) {
+                                          final pagesItem = pages[pagesIndex];
+                                          return CachedNetworkImage(
+                                            imageUrl:
+                                                '${GetChapterPagesCall.url(
+                                              columnGetChapterPagesResponse
+                                                  .jsonBody,
+                                            ).toString()}/data/${GetChapterPagesCall.hash(
+                                              columnGetChapterPagesResponse
+                                                  .jsonBody,
+                                            ).toString()}/${pagesItem}',
+                                            width: double.infinity,
+                                            fit: BoxFit.fitWidth,
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
+                  },
+                ),
               );
             },
           ),

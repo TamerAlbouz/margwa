@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -278,7 +279,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  12.0, 8.0, 0.0, 8.0),
+                                  12.0, 8.0, 16.0, 8.0),
                               child: Container(
                                 width: 120.0,
                                 height: 190.0,
@@ -476,8 +477,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(10.0),
-                                          child: Image.network(
-                                            'https://uploads.mangadex.org/covers/${getJsonField(
+                                          child: CachedNetworkImage(
+                                            imageUrl:
+                                                'https://uploads.mangadex.org/covers/${getJsonField(
                                               mangaItem,
                                               r'''$.id''',
                                             ).toString()}/${getJsonField(
