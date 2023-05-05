@@ -16,12 +16,6 @@ class ChapterModel extends FlutterFlowModel {
 
   // State field(s) for PageView widget.
   PageController? pageViewController;
-  // State field(s) for Slider widget.
-  double? sliderValue;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue1;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue2;
 
   /// Initialization and disposal methods.
 

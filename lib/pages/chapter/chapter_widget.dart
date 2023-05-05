@@ -44,8 +44,6 @@ class _ChapterWidgetState extends State<ChapterWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => ChapterModel());
-
-    WidgetsBinding.instance.addPostFrameCallback((_) => setState(() {}));
   }
 
   @override
@@ -80,32 +78,6 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                    child: Text(
-                      'Brightness',
-                      style: FlutterFlowTheme.of(context).headlineSmall,
-                    ),
-                  ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-                    child: Slider(
-                      activeColor: FlutterFlowTheme.of(context).primary,
-                      inactiveColor: FlutterFlowTheme.of(context).accent3,
-                      min: 0.0,
-                      max: 10.0,
-                      value: _model.sliderValue ??= FFAppState().Brightness,
-                      label: _model.sliderValue.toString(),
-                      divisions: 10,
-                      onChanged: (newValue) async {
-                        newValue = double.parse(newValue.toStringAsFixed(0));
-                        setState(() => _model.sliderValue = newValue);
-                        FFAppState().Brightness = _model.sliderValue!;
-                      },
-                    ),
-                  ),
                   Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
@@ -190,87 +162,13 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
-                    child: Text(
-                      'Page',
-                      style: FlutterFlowTheme.of(context).headlineSmall,
-                    ),
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Theme(
-                        data: ThemeData(
-                          checkboxTheme: CheckboxThemeData(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0.0),
-                            ),
-                          ),
-                          unselectedWidgetColor:
-                              FlutterFlowTheme.of(context).accent2,
-                        ),
-                        child: Checkbox(
-                          value: _model.checkboxValue1 ??= true,
-                          onChanged: (newValue) async {
-                            setState(() => _model.checkboxValue1 = newValue!);
-                            if (newValue!) {
-                              FFAppState().PageNumber = true;
-                            } else {
-                              FFAppState().PageNumber = false;
-                            }
-                          },
-                          activeColor: FlutterFlowTheme.of(context).primary,
-                        ),
-                      ),
-                      Text(
-                        'Number',
-                        style: FlutterFlowTheme.of(context).titleMedium,
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Theme(
-                        data: ThemeData(
-                          checkboxTheme: CheckboxThemeData(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(0.0),
-                            ),
-                          ),
-                          unselectedWidgetColor:
-                              FlutterFlowTheme.of(context).accent2,
-                        ),
-                        child: Checkbox(
-                          value: _model.checkboxValue2 ??= true,
-                          onChanged: (newValue) async {
-                            setState(() => _model.checkboxValue2 = newValue!);
-                            if (newValue!) {
-                              FFAppState().PageTitle = true;
-                            } else {
-                              FFAppState().PageTitle = false;
-                            }
-                          },
-                          activeColor: FlutterFlowTheme.of(context).primary,
-                        ),
-                      ),
-                      Text(
-                        'Title',
-                        style: FlutterFlowTheme.of(context).titleMedium,
-                      ),
-                    ],
-                  ),
                 ],
               ),
             ),
           ),
         ),
         appBar: AppBar(
-          backgroundColor: FFAppState().BackgroundColor,
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -279,19 +177,19 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             buttonSize: 60.0,
             icon: Icon(
               Icons.arrow_back_ios_rounded,
-              color: FFAppState().InteractablesColors,
+              color: FlutterFlowTheme.of(context).primaryText,
               size: 30.0,
             ),
             onPressed: () async {
               context.pop();
             },
           ),
-          title: Visibility(
-            visible: FFAppState().PageTitle,
-            child: Text(
-              widget.title!,
-              style: FlutterFlowTheme.of(context).titleMedium,
+          title: Text(
+            valueOrDefault<String>(
+              widget.title,
+              'Title',
             ),
+            style: FlutterFlowTheme.of(context).titleMedium,
           ),
           actions: [
             FlutterFlowIconButton(
@@ -301,7 +199,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
               buttonSize: 60.0,
               icon: Icon(
                 Icons.menu_open,
-                color: FFAppState().InteractablesColors,
+                color: FlutterFlowTheme.of(context).primaryText,
                 size: 32.0,
               ),
               onPressed: () async {
@@ -360,7 +258,6 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 50.0),
                                   child: PageView.builder(
-                                    allowImplicitScrolling: true,
                                     controller: _model.pageViewController ??=
                                         PageController(
                                             initialPage:
