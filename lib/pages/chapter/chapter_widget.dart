@@ -298,17 +298,16 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                             child: SizedBox(
                                               width: 75,
                                               height: 75,
-                                              child: downloadProgress
-                                                          .progress !=
-                                                      null
-                                                  ? CircularProgressIndicator(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                      value: downloadProgress
-                                                          .progress)
-                                                  : null,
+                                              child: CircularProgressIndicator(
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                value: downloadProgress
+                                                            .progress !=
+                                                        null
+                                                    ? downloadProgress.progress
+                                                    : 0,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -419,15 +418,16 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                           child: SizedBox(
                                             width: 75,
                                             height: 75,
-                                            child: downloadProgress.progress !=
-                                                    null
-                                                ? CircularProgressIndicator(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    value: downloadProgress
-                                                        .progress)
-                                                : null,
+                                            child: CircularProgressIndicator(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              value: downloadProgress
+                                                          .progress !=
+                                                      null
+                                                  ? downloadProgress.progress
+                                                  : 0,
+                                            ),
                                           ),
                                         ),
                                       ),
