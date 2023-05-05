@@ -258,6 +258,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 50.0),
                                   child: PageView.builder(
+                                    allowImplicitScrolling: true,
                                     controller: _model.pageViewController ??=
                                         PageController(
                                             initialPage:
@@ -297,12 +298,17 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                             child: SizedBox(
                                               width: 75,
                                               height: 75,
-                                              child: CircularProgressIndicator(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primary,
-                                                  value: downloadProgress
-                                                      .progress),
+                                              child: downloadProgress
+                                                          .progress !=
+                                                      null
+                                                  ? CircularProgressIndicator(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      value: downloadProgress
+                                                          .progress)
+                                                  : null,
                                             ),
                                           ),
                                         ),
@@ -413,12 +419,15 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                           child: SizedBox(
                                             width: 75,
                                             height: 75,
-                                            child: CircularProgressIndicator(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
+                                            child: downloadProgress.progress !=
+                                                    null
+                                                ? CircularProgressIndicator(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
                                                         .primary,
-                                                value:
-                                                    downloadProgress.progress),
+                                                    value: downloadProgress
+                                                        .progress)
+                                                : null,
                                           ),
                                         ),
                                       ),
