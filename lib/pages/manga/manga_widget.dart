@@ -114,7 +114,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                         child: Dialog(
                           insetPadding: MediaQuery.of(dialogContext).viewInsets,
                           backgroundColor:
-                              FlutterFlowTheme.of(context).primaryBackground,
+                              FlutterFlowTheme.of(context).secondaryBackground,
                           child: Container(
                             width: MediaQuery.of(context).size.width * 0.8,
                             child: MangaSummaryWidget(
