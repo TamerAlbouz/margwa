@@ -11,12 +11,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 
 class MangaModel extends FlutterFlowModel {
   ///  State fields for stateful widgets in this page.
 
-  Completer<ApiCallResponse>? apiRequestCompleter;
+  // State field(s) for ListView widget.
+  PagingController<ApiPagingParams, dynamic>? pagingController;
 
   /// Initialization and disposal methods.
 
@@ -26,7 +28,7 @@ class MangaModel extends FlutterFlowModel {
 
   /// Additional helper methods are added here.
 
-  Future waitForApiRequestCompleted({
+  Future waitForOnePage({
     double minWait = 0,
     double maxWait = double.infinity,
   }) async {
@@ -34,7 +36,8 @@ class MangaModel extends FlutterFlowModel {
     while (true) {
       await Future.delayed(Duration(milliseconds: 50));
       final timeElapsed = stopwatch.elapsedMilliseconds;
-      final requestComplete = apiRequestCompleter?.isCompleted ?? false;
+      final requestComplete =
+          (pagingController?.nextPageKey?.nextPageNumber ?? 0) > 0;
       if (timeElapsed > maxWait || (requestComplete && timeElapsed > minWait)) {
         break;
       }
