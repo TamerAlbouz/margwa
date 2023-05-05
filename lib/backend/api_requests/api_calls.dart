@@ -43,14 +43,18 @@ class GetMangaCall {
 class GetChaptersCall {
   static Future<ApiCallResponse> call({
     String? id = 'a72123a4-25e4-4b18-82ab-a4d520aa2417',
+    int? offset = 20,
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getChapters',
       apiUrl:
-          'https://api.mangadex.org/manga/${id}/feed?translatedLanguage%5B%5D=en&contentRating%5B%5D=safe&includeFutureUpdates=1&order%5Bvolume%5D=desc&order%5Bchapter%5D=desc&includeEmptyPages=0',
+          'https://api.mangadex.org/manga/${id}/feed?translatedLanguage%5B%5D=en&contentRating%5B%5D=safe&includeFutureUpdates=1&order%5Bvolume%5D=desc&order%5Bchapter%5D=desc&includeEmptyPages=0&',
       callType: ApiCallType.GET,
       headers: {},
-      params: {},
+      params: {
+        'limit': 20,
+        'offset': offset,
+      },
       returnBody: true,
       encodeBodyUtf8: false,
       decodeUtf8: false,
