@@ -498,7 +498,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                                             BorderRadius.circular(8.0),
                                       ),
                                       child: Column(
-                                        mainAxisSize: MainAxisSize.min,
+                                        mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.center,
                                         crossAxisAlignment:
@@ -620,15 +620,11 @@ class _MangaWidgetState extends State<MangaWidget> {
                                               size: 20.0,
                                             ),
                                             dense: false,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                            ),
                                           ),
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 0.0, 15.0),
+                                                    15.0, 0.0, 0.0, 10.0),
                                             child: Text(
                                               getJsonField(
                                                 chaptersItem,
