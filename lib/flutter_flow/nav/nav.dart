@@ -100,6 +100,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             title: params.getParam('title', ParamType.String),
             chapterId: params.getParam('chapterId', ParamType.String),
             mangaid: params.getParam('mangaid', ParamType.String),
+            pages: params.getParam('pages', ParamType.int),
           ),
         ),
         FFRoute(
@@ -126,6 +127,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'HomePage',
           path: '/homePage',
           builder: (context, params) => HomePageWidget(),
+        ),
+        FFRoute(
+          name: 'Library',
+          path: '/library',
+          builder: (context, params) => LibraryWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,

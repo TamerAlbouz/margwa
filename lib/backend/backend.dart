@@ -7,6 +7,7 @@ import '../flutter_flow/flutter_flow_util.dart';
 
 import 'schema/users_record.dart';
 import 'schema/chapters_record.dart';
+import 'schema/favorites_record.dart';
 import 'schema/serializers.dart';
 
 export 'dart:async' show StreamSubscription;
@@ -16,6 +17,7 @@ export 'schema/serializers.dart';
 
 export 'schema/users_record.dart';
 export 'schema/chapters_record.dart';
+export 'schema/favorites_record.dart';
 
 /// Functions to query UsersRecords (as a Stream and as a Future).
 Future<int> queryUsersRecordCount({
@@ -115,6 +117,58 @@ Future<FFFirestorePage<ChaptersRecord>> queryChaptersRecordPage({
     queryCollectionPage(
       ChaptersRecord.collection,
       ChaptersRecord.serializer,
+      queryBuilder: queryBuilder,
+      nextPageMarker: nextPageMarker,
+      pageSize: pageSize,
+      isStream: isStream,
+    );
+
+/// Functions to query FavoritesRecords (as a Stream and as a Future).
+Future<int> queryFavoritesRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      FavoritesRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<FavoritesRecord>> queryFavoritesRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      FavoritesRecord.collection,
+      FavoritesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<FavoritesRecord>> queryFavoritesRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      FavoritesRecord.collection,
+      FavoritesRecord.serializer,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<FFFirestorePage<FavoritesRecord>> queryFavoritesRecordPage({
+  Query Function(Query)? queryBuilder,
+  DocumentSnapshot? nextPageMarker,
+  required int pageSize,
+  required bool isStream,
+}) =>
+    queryCollectionPage(
+      FavoritesRecord.collection,
+      FavoritesRecord.serializer,
       queryBuilder: queryBuilder,
       nextPageMarker: nextPageMarker,
       pageSize: pageSize,

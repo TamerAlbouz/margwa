@@ -82,7 +82,12 @@ class _LogInWidgetState extends State<LogInWidget> {
                                 32.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Margwa',
-                              style: FlutterFlowTheme.of(context).displaySmall,
+                              style: FlutterFlowTheme.of(context)
+                                  .displaySmall
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w800,
+                                  ),
                             ),
                           ),
                         ),
@@ -95,18 +100,13 @@ class _LogInWidgetState extends State<LogInWidget> {
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(
-                                  'Welcome Back',
-                                  style:
-                                      FlutterFlowTheme.of(context).displaySmall,
-                                ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 12.0, 0.0, 24.0),
+                                      0.0, 30.0, 0.0, 30.0),
                                   child: Text(
-                                    'Let\'s get started by filling out the form below.',
+                                    'Log In',
                                     style: FlutterFlowTheme.of(context)
-                                        .labelMedium,
+                                        .displaySmall,
                                   ),
                                 ),
                                 Padding(

@@ -84,7 +84,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 32.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Margwa',
-                              style: FlutterFlowTheme.of(context).displaySmall,
+                              style: FlutterFlowTheme.of(context)
+                                  .displaySmall
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w800,
+                                  ),
                             ),
                           ),
                         ),

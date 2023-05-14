@@ -3,8 +3,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart'
-    as smooth_page_indicator;
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -19,11 +17,13 @@ class ChapterWidget extends StatefulWidget {
     required this.title,
     required this.chapterId,
     required this.mangaid,
+    required this.pages,
   }) : super(key: key);
 
   final String? title;
   final String? chapterId;
   final String? mangaid;
+  final int? pages;
 
   @override
   _ChapterWidgetState createState() => _ChapterWidgetState();
@@ -34,10 +34,15 @@ class _ChapterWidgetState extends State<ChapterWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
-  int get pageViewCurrentIndex => _model.pageViewController != null &&
-          _model.pageViewController!.hasClients &&
-          _model.pageViewController!.page != null
-      ? _model.pageViewController!.page!.round()
+  int get pageViewCurrentIndex1 => _model.pageViewController1 != null &&
+          _model.pageViewController1!.hasClients &&
+          _model.pageViewController1!.page != null
+      ? _model.pageViewController1!.page!.round()
+      : 0;
+  int get pageViewCurrentIndex2 => _model.pageViewController2 != null &&
+          _model.pageViewController2!.hasClients &&
+          _model.pageViewController2!.page != null
+      ? _model.pageViewController2!.page!.round()
       : 0;
 
   @override
@@ -185,10 +190,10 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             },
           ),
           title: Text(
-            valueOrDefault<String>(
-              widget.title,
-              'Title',
-            ),
+            '${valueOrDefault<String>(
+              (pageViewCurrentIndex2 + 1).toString(),
+              '0',
+            )}/${widget.pages?.toString()}',
             style: FlutterFlowTheme.of(context).titleMedium,
           ),
           actions: [
@@ -254,13 +259,14 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                               children: [
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 0.0, 0.0, 50.0),
+                                      0.0, 0.0, 0.0, 0.0),
                                   child: PageView.builder(
                                     allowImplicitScrolling: true,
-                                    controller: _model.pageViewController ??=
+                                    controller: _model.pageViewController1 ??=
                                         PageController(
                                             initialPage:
                                                 min(0, pagesH.length - 1)),
+                                    onPageChanged: (_) => setState(() {}),
                                     scrollDirection: Axis.horizontal,
                                     itemCount: pagesH.length,
                                     itemBuilder: (context, pagesHIndex) {
@@ -313,44 +319,6 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                     },
                                   ),
                                 ),
-                                Align(
-                                  alignment: AlignmentDirectional(0.0, 0.97),
-                                  child: Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        10.0, 10.0, 10.0, 10.0),
-                                    child: smooth_page_indicator
-                                        .SmoothPageIndicator(
-                                      controller: _model.pageViewController ??=
-                                          PageController(
-                                              initialPage:
-                                                  min(0, pagesH.length - 1)),
-                                      count: pagesH.length,
-                                      axisDirection: Axis.horizontal,
-                                      onDotClicked: (i) async {
-                                        await _model.pageViewController!
-                                            .animateToPage(
-                                          i,
-                                          duration: Duration(milliseconds: 500),
-                                          curve: Curves.ease,
-                                        );
-                                      },
-                                      effect: smooth_page_indicator
-                                          .ExpandingDotsEffect(
-                                        expansionFactor: 2.0,
-                                        spacing: 4.0,
-                                        radius: 8.0,
-                                        dotWidth: 8.0,
-                                        dotHeight: 8.0,
-                                        dotColor: FlutterFlowTheme.of(context)
-                                            .accent2,
-                                        activeDotColor:
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                        paintStyle: PaintingStyle.fill,
-                                      ),
-                                    ),
-                                  ),
-                                ),
                               ],
                             ),
                           );
@@ -359,83 +327,74 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                     ),
                   if (FFAppState().Orientation == false)
                     Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Builder(
-                              builder: (context) {
-                                final pages = (GetChapterPagesCall.data(
+                      child: Builder(
+                        builder: (context) {
+                          final pagesH = (GetChapterPagesCall.data(
+                                columnGetChapterPagesResponse.jsonBody,
+                              ) as List)
+                                  .map<String>((s) => s.toString())
+                                  .toList()
+                                  ?.map((e) => e)
+                                  .toList()
+                                  ?.toList() ??
+                              [];
+                          return Container(
+                            width: double.infinity,
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  0.0, 0.0, 0.0, 0.0),
+                              child: PageView.builder(
+                                pageSnapping: false,
+                                allowImplicitScrolling: true,
+                                controller: _model.pageViewController2 ??=
+                                    PageController(
+                                        initialPage: min(0, pagesH.length - 1)),
+                                onPageChanged: (_) => setState(() {}),
+                                scrollDirection: Axis.vertical,
+                                itemCount: pagesH.length,
+                                itemBuilder: (context, pagesHIndex) {
+                                  final pagesHItem = pagesH[pagesHIndex];
+                                  return CachedNetworkImage(
+                                    imageUrl: '${GetChapterPagesCall.url(
                                       columnGetChapterPagesResponse.jsonBody,
-                                    ) as List)
-                                        .map<String>((s) => s.toString())
-                                        .toList()
-                                        ?.map((e) => e)
-                                        .toList()
-                                        ?.toList() ??
-                                    [];
-                                if (pages.isEmpty) {
-                                  return Center(
-                                    child: Image.asset(
-                                      'assets/images/Margwa.png',
-                                      width: 500.0,
-                                      height: 500.0,
-                                      fit: BoxFit.fitWidth,
-                                    ),
-                                  );
-                                }
-                                return ListView.builder(
-                                  padding: EdgeInsets.zero,
-                                  primary: false,
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.vertical,
-                                  itemCount: pages.length,
-                                  itemBuilder: (context, pagesIndex) {
-                                    final pagesItem = pages[pagesIndex];
-                                    return CachedNetworkImage(
-                                      imageUrl: '${GetChapterPagesCall.url(
-                                        columnGetChapterPagesResponse.jsonBody,
-                                      ).toString()}/data/${GetChapterPagesCall.hash(
-                                        columnGetChapterPagesResponse.jsonBody,
-                                      ).toString()}/${pagesItem}',
-                                      width: double.infinity,
-                                      fit: BoxFit.fitWidth,
-                                      progressIndicatorBuilder:
-                                          (context, url, downloadProgress) =>
-                                              Padding(
-                                        padding: EdgeInsets.fromLTRB(
-                                            0,
-                                            MediaQuery.of(context).size.height /
-                                                    2 -
-                                                150.0,
-                                            0,
-                                            MediaQuery.of(context).size.height /
-                                                    2 -
-                                                150.0),
-                                        child: Center(
-                                          child: SizedBox(
-                                            width: 75,
-                                            height: 75,
-                                            child: CircularProgressIndicator(
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              value: downloadProgress
-                                                          .progress !=
-                                                      null
-                                                  ? downloadProgress.progress
-                                                  : 0,
-                                            ),
+                                    ).toString()}/data/${GetChapterPagesCall.hash(
+                                      columnGetChapterPagesResponse.jsonBody,
+                                    ).toString()}/${pagesHItem}',
+                                    width: double.infinity,
+                                    fit: BoxFit.fitWidth,
+                                    progressIndicatorBuilder:
+                                        (context, url, downloadProgress) =>
+                                            Padding(
+                                      padding: EdgeInsets.fromLTRB(
+                                          0,
+                                          MediaQuery.of(context).size.height /
+                                                  2 -
+                                              150.0,
+                                          0,
+                                          MediaQuery.of(context).size.height /
+                                                  2 -
+                                              150.0),
+                                      child: Center(
+                                        child: SizedBox(
+                                          width: 75,
+                                          height: 75,
+                                          child: CircularProgressIndicator(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                            value: downloadProgress.progress !=
+                                                    null
+                                                ? downloadProgress.progress
+                                                : 0,
                                           ),
                                         ),
                                       ),
-                                    );
-                                  },
-                                );
-                              },
+                                    ),
+                                  );
+                                },
+                              ),
                             ),
-                          ],
-                        ),
+                          );
+                        },
                       ),
                     ),
                 ],

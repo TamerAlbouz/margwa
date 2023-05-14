@@ -49,12 +49,16 @@ class _MangaSummaryWidgetState extends State<MangaSummaryWidget> {
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
 
-    return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
-      child: SingleChildScrollView(
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
         child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
@@ -81,14 +85,25 @@ class _MangaSummaryWidgetState extends State<MangaSummaryWidget> {
                 style: FlutterFlowTheme.of(context).headlineLarge,
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
-              child: Text(
-                widget.desc,
-                style: FlutterFlowTheme.of(context).bodyLarge.override(
-                      fontFamily: 'Nunito',
-                      color: FlutterFlowTheme.of(context).secondaryText,
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                      child: Text(
+                        widget.desc,
+                        style: FlutterFlowTheme.of(context).bodyLarge.override(
+                              fontFamily: 'Nunito',
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                            ),
+                      ),
                     ),
+                  ],
+                ),
               ),
             ),
           ],
