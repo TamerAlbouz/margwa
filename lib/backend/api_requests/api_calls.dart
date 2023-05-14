@@ -44,15 +44,16 @@ class GetChaptersCall {
   static Future<ApiCallResponse> call({
     String? id = 'a72123a4-25e4-4b18-82ab-a4d520aa2417',
     int? offset = 20,
+    int? limit = 40,
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getChapters',
       apiUrl:
-          'https://api.mangadex.org/manga/${id}/feed?translatedLanguage%5B%5D=en&contentRating%5B%5D=safe&includeFutureUpdates=1&order%5Bvolume%5D=desc&order%5Bchapter%5D=desc&includeEmptyPages=0&',
+          'https://api.mangadex.org/manga/${id}/feed?translatedLanguage%5B%5D=en&contentRating%5B%5D=safe&includeFutureUpdates=0&order%5Bvolume%5D=desc&order%5Bchapter%5D=desc&includeEmptyPages=0&includes%5B%5D=scanlation_group&',
       callType: ApiCallType.GET,
       headers: {},
       params: {
-        'limit': 20,
+        'limit': limit,
         'offset': offset,
       },
       returnBody: true,
@@ -98,6 +99,37 @@ class GetChapterPagesCall {
   static dynamic hash(dynamic response) => getJsonField(
         response,
         r'''$.chapter.hash''',
+      );
+}
+
+class GetSpecificMangaCall {
+  static Future<ApiCallResponse> call({
+    int? limit = 10,
+    List<String>? idsList,
+  }) {
+    final ids = _serializeList(idsList);
+
+    return ApiManager.instance.makeApiCall(
+      callName: 'getSpecificManga',
+      apiUrl:
+          'https://api.mangadex.org/manga?includedTagsMode=AND&excludedTagsMode=OR&contentRating%5B%5D=safe&order%5BlatestUploadedChapter%5D=desc&includes%5B%5D=cover_art&',
+      callType: ApiCallType.GET,
+      headers: {},
+      params: {
+        'limit': limit,
+        'ids[]': ids,
+      },
+      returnBody: true,
+      encodeBodyUtf8: false,
+      decodeUtf8: false,
+      cache: false,
+    );
+  }
+
+  static dynamic data(dynamic response) => getJsonField(
+        response,
+        r'''$.data''',
+        true,
       );
 }
 
