@@ -247,7 +247,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     children: [
                                       Icon(
                                         Icons.wine_bar_outlined,
-                                        color: Color(0xFFFF2D3D),
+                                        color: Color(0xFFD94352),
                                         size: 44.0,
                                       ),
                                       Padding(
@@ -259,7 +259,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               .bodySmall
                                               .override(
                                                 fontFamily: 'Nunito',
-                                                color: Color(0xFFFF2D3D),
+                                                color: Color(0xFFD94352),
                                                 fontWeight: FontWeight.w600,
                                               ),
                                         ),
@@ -480,157 +480,151 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     4.0, 0.0, 4.0, 12.0),
-                                            child:
-                                                FutureBuilder<ApiCallResponse>(
-                                              future: GetChaptersCall.call(
-                                                id: listViewFavoritesRecord.id,
-                                              ),
-                                              builder: (context, snapshot) {
-                                                // Customize what your widget looks like when it's loading.
-                                                if (!snapshot.hasData) {
-                                                  return Center(
-                                                    child: SizedBox(
-                                                      width: 75.0,
-                                                      height: 75.0,
-                                                      child: SpinKitRipple(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        size: 75.0,
-                                                      ),
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                  'Manga',
+                                                  queryParams: {
+                                                    'title': serializeParam(
+                                                      listViewFavoritesRecord
+                                                          .title,
+                                                      ParamType.String,
                                                     ),
-                                                  );
-                                                }
-                                                final containerGetChaptersResponse =
-                                                    snapshot.data!;
-                                                return InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    context.pushNamed(
-                                                      'Manga',
-                                                      queryParams: {
-                                                        'title': serializeParam(
-                                                          listViewFavoritesRecord
-                                                              .title,
-                                                          ParamType.String,
-                                                        ),
-                                                        'desc': serializeParam(
-                                                          listViewFavoritesRecord
-                                                              .desc,
-                                                          ParamType.String,
-                                                        ),
-                                                        'src': serializeParam(
-                                                          listViewFavoritesRecord
-                                                              .src,
-                                                          ParamType.String,
-                                                        ),
-                                                        'id': serializeParam(
-                                                          listViewFavoritesRecord
-                                                              .id,
-                                                          ParamType.String,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  },
-                                                  child: Container(
-                                                    width:
-                                                        MediaQuery.of(context)
-                                                                .size
-                                                                .width *
-                                                            0.45,
-                                                    height: 190.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .secondary,
-                                                      boxShadow: [
-                                                        BoxShadow(
-                                                          blurRadius: 4.0,
-                                                          color:
-                                                              Color(0x230E151B),
-                                                          offset:
-                                                              Offset(0.0, 2.0),
-                                                        )
-                                                      ],
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12.0),
+                                                    'desc': serializeParam(
+                                                      listViewFavoritesRecord
+                                                          .desc,
+                                                      ParamType.String,
                                                     ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  4.0,
-                                                                  4.0,
-                                                                  4.0,
-                                                                  4.0),
-                                                      child: Column(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        10.0),
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              imageUrl:
-                                                                  listViewFavoritesRecord
-                                                                      .src!,
-                                                              width: double
-                                                                  .infinity,
-                                                              height: 115.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        8.0,
-                                                                        12.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(
+                                                    'src': serializeParam(
+                                                      listViewFavoritesRecord
+                                                          .src,
+                                                      ParamType.String,
+                                                    ),
+                                                    'id': serializeParam(
+                                                      listViewFavoritesRecord
+                                                          .id,
+                                                      ParamType.String,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.45,
+                                                height: 190.0,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondary,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 4.0,
+                                                      color: Color(0x230E151B),
+                                                      offset: Offset(0.0, 2.0),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          4.0, 4.0, 4.0, 4.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl:
                                                               listViewFavoritesRecord
-                                                                  .title!
-                                                                  .maybeHandleOverflow(
-                                                                maxChars: 15,
-                                                                replacement:
-                                                                    '…',
-                                                              ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .titleMedium,
-                                                            ),
+                                                                  .src!,
+                                                          width:
+                                                              double.infinity,
+                                                          height: 115.0,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    8.0,
+                                                                    12.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          listViewFavoritesRecord
+                                                              .title!
+                                                              .maybeHandleOverflow(
+                                                            maxChars: 15,
+                                                            replacement: '…',
                                                           ),
-                                                          Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        8.0,
-                                                                        4.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child: Text(
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleMedium,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    8.0,
+                                                                    4.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: FutureBuilder<
+                                                            ApiCallResponse>(
+                                                          future:
+                                                              GetChaptersCall
+                                                                  .call(
+                                                            id: listViewFavoritesRecord
+                                                                .id,
+                                                          ),
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            // Customize what your widget looks like when it's loading.
+                                                            if (!snapshot
+                                                                .hasData) {
+                                                              return Center(
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          7.5,
+                                                                          10.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      LinearProgressIndicator(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .tertiary,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                            final textGetChaptersResponse =
+                                                                snapshot.data!;
+                                                            return Text(
                                                               getJsonField(
-                                                                        containerGetChaptersResponse
+                                                                        textGetChaptersResponse
                                                                             .jsonBody,
                                                                         r'''$.total''',
                                                                       ) ==
@@ -645,21 +639,21 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     fontFamily:
                                                                         'Nunito',
                                                                     color: getJsonField(
-                                                                              containerGetChaptersResponse.jsonBody,
+                                                                              textGetChaptersResponse.jsonBody,
                                                                               r'''$.total''',
                                                                             ) ==
                                                                             listViewFavoritesRecord.numChapters
                                                                         ? FlutterFlowTheme.of(context).secondaryText
-                                                                        : FlutterFlowTheme.of(context).success,
+                                                                        : FlutterFlowTheme.of(context).tertiary,
                                                                   ),
-                                                            ),
-                                                          ),
-                                                        ],
+                                                            );
+                                                          },
+                                                        ),
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                );
-                                              },
+                                                ),
+                                              ),
                                             ),
                                           );
                                         },
