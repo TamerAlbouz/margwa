@@ -624,33 +624,73 @@ class _MangaWidgetState extends State<MangaWidget> {
                                           Padding(
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 0.0, 10.0),
-                                            child: Text(
-                                              getJsonField(
-                                                chaptersItem,
-                                                r'''$.relationships[:].attributes.name''',
-                                              ).toString(),
-                                              textAlign: TextAlign.center,
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    color: (containerChaptersRecord !=
-                                                                null) &&
-                                                            (containerChaptersRecord!
-                                                                    .chapterId ==
-                                                                getJsonField(
-                                                                  chaptersItem,
-                                                                  r'''$.id''',
-                                                                ))
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText
-                                                        : FlutterFlowTheme.of(
-                                                                context)
-                                                            .tertiary,
-                                                  ),
+                                                    15.0, 0.0, 15.0, 10.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  getJsonField(
+                                                    chaptersItem,
+                                                    r'''$.relationships[:].attributes.name''',
+                                                  ).toString(),
+                                                  textAlign: TextAlign.center,
+                                                  style:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .labelMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            color: (containerChaptersRecord !=
+                                                                        null) &&
+                                                                    (containerChaptersRecord!
+                                                                            .chapterId ==
+                                                                        getJsonField(
+                                                                          chaptersItem,
+                                                                          r'''$.id''',
+                                                                        ))
+                                                                ? FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText
+                                                                : FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiary,
+                                                          ),
+                                                ),
+                                                Text(
+                                                  (String date) {
+                                                    return date.split("T")[0];
+                                                  }(getJsonField(
+                                                    chaptersItem,
+                                                    r'''$.attributes.updatedAt''',
+                                                  ).toString()),
+                                                  style:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            color: (containerChaptersRecord !=
+                                                                        null) &&
+                                                                    (containerChaptersRecord!
+                                                                            .chapterId ==
+                                                                        getJsonField(
+                                                                          chaptersItem,
+                                                                          r'''$.id''',
+                                                                        ))
+                                                                ? FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText
+                                                                : FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                          ),
+                                                ),
+                                              ],
                                             ),
                                           ),
                                         ],

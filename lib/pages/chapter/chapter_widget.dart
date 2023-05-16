@@ -70,7 +70,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
             width: 100.0,
             height: 100.0,
             decoration: BoxDecoration(
-              color: FlutterFlowTheme.of(context).secondaryBackground,
+              color: FlutterFlowTheme.of(context).primaryBackground,
             ),
             child: Padding(
               padding: EdgeInsetsDirectional.fromSTEB(20.0, 100.0, 20.0, 100.0),
@@ -84,7 +84,11 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                         EdgeInsetsDirectional.fromSTEB(0.0, 10.0, 0.0, 10.0),
                     child: Text(
                       'Image Orientation',
-                      style: FlutterFlowTheme.of(context).headlineSmall,
+                      style:
+                          FlutterFlowTheme.of(context).headlineSmall.override(
+                                fontFamily: 'Nunito',
+                                fontWeight: FontWeight.w500,
+                              ),
                     ),
                   ),
                   Padding(
@@ -297,7 +301,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                                 badges.BadgePosition.topEnd(),
                                             animationType:
                                                 badges.BadgeAnimationType.scale,
-                                            toAnimate: true,
+                                            toAnimate: false,
                                           ),
                                         ),
                                       ),
@@ -364,7 +368,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                               badges.BadgePosition.topEnd(),
                                           animationType:
                                               badges.BadgeAnimationType.scale,
-                                          toAnimate: true,
+                                          toAnimate: false,
                                         ),
                                       ),
                                     ),
