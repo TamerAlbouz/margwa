@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/components/empty_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
@@ -656,34 +657,77 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                             }
                                                             final textGetChaptersResponse =
                                                                 snapshot.data!;
-                                                            return Text(
-                                                              valueOrDefault<
-                                                                  String>(
-                                                                getJsonField(
-                                                                          textGetChaptersResponse
-                                                                              .jsonBody,
-                                                                          r'''$.total''',
-                                                                        ) ==
+                                                            return InkWell(
+                                                              splashColor: Colors
+                                                                  .transparent,
+                                                              focusColor: Colors
+                                                                  .transparent,
+                                                              hoverColor: Colors
+                                                                  .transparent,
+                                                              highlightColor:
+                                                                  Colors
+                                                                      .transparent,
+                                                              onTap: () async {
+                                                                triggerPushNotification(
+                                                                  notificationTitle:
+                                                                      listViewFavoritesRecord
+                                                                          .title!,
+                                                                  notificationText:
+                                                                      'Updated with ${(getJsonField(
+                                                                            textGetChaptersResponse.jsonBody,
+                                                                            r'''$.total''',
+                                                                          ) - listViewFavoritesRecord.numChapters!).toString()} new chapters!',
+                                                                  notificationSound:
+                                                                      'default',
+                                                                  userRefs: [
+                                                                    currentUserReference!
+                                                                  ],
+                                                                  initialPageName:
+                                                                      'Manga',
+                                                                  parameterData: {
+                                                                    'title':
                                                                         listViewFavoritesRecord
-                                                                            .numChapters
-                                                                    ? 'No Update'
-                                                                    : 'New Update',
-                                                                'No Update',
+                                                                            .title,
+                                                                    'desc':
+                                                                        listViewFavoritesRecord
+                                                                            .desc,
+                                                                    'src':
+                                                                        listViewFavoritesRecord
+                                                                            .src,
+                                                                    'id':
+                                                                        listViewFavoritesRecord
+                                                                            .id,
+                                                                  },
+                                                                );
+                                                              },
+                                                              child: Text(
+                                                                valueOrDefault<
+                                                                    String>(
+                                                                  getJsonField(
+                                                                            textGetChaptersResponse.jsonBody,
+                                                                            r'''$.total''',
+                                                                          ) ==
+                                                                          listViewFavoritesRecord
+                                                                              .numChapters
+                                                                      ? 'No Update'
+                                                                      : 'New Update',
+                                                                  'No Update',
+                                                                ),
+                                                                style: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodySmall
+                                                                    .override(
+                                                                      fontFamily:
+                                                                          'Nunito',
+                                                                      color: getJsonField(
+                                                                                textGetChaptersResponse.jsonBody,
+                                                                                r'''$.total''',
+                                                                              ) ==
+                                                                              listViewFavoritesRecord.numChapters
+                                                                          ? FlutterFlowTheme.of(context).secondaryText
+                                                                          : FlutterFlowTheme.of(context).tertiary,
+                                                                    ),
                                                               ),
-                                                              style: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodySmall
-                                                                  .override(
-                                                                    fontFamily:
-                                                                        'Nunito',
-                                                                    color: getJsonField(
-                                                                              textGetChaptersResponse.jsonBody,
-                                                                              r'''$.total''',
-                                                                            ) ==
-                                                                            listViewFavoritesRecord.numChapters
-                                                                        ? FlutterFlowTheme.of(context).secondaryText
-                                                                        : FlutterFlowTheme.of(context).tertiary,
-                                                                  ),
                                                             );
                                                           },
                                                         ),
