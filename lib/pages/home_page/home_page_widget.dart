@@ -6,6 +6,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -487,6 +488,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               highlightColor:
                                                   Colors.transparent,
                                               onTap: () async {
+                                                var _shouldSetState = false;
+
                                                 context.pushNamed(
                                                   'Manga',
                                                   queryParams: {
@@ -512,6 +515,37 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     ),
                                                   }.withoutNulls,
                                                 );
+
+                                                _model.apiResultk0t =
+                                                    await GetChaptersCall.call(
+                                                  id: listViewFavoritesRecord
+                                                      .id,
+                                                );
+                                                _shouldSetState = true;
+                                                if ((_model.apiResultk0t
+                                                        ?.succeeded ??
+                                                    true)) {
+                                                  final favoritesUpdateData =
+                                                      createFavoritesRecordData(
+                                                    numChapters: getJsonField(
+                                                      (_model.apiResultk0t
+                                                              ?.jsonBody ??
+                                                          ''),
+                                                      r'''$.total''',
+                                                    ),
+                                                  );
+                                                  await listViewFavoritesRecord
+                                                      .reference
+                                                      .update(
+                                                          favoritesUpdateData);
+                                                } else {
+                                                  if (_shouldSetState)
+                                                    setState(() {});
+                                                  return;
+                                                }
+
+                                                if (_shouldSetState)
+                                                  setState(() {});
                                               },
                                               child: Container(
                                                 width: MediaQuery.of(context)
@@ -623,15 +657,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                             final textGetChaptersResponse =
                                                                 snapshot.data!;
                                                             return Text(
-                                                              getJsonField(
-                                                                        textGetChaptersResponse
-                                                                            .jsonBody,
-                                                                        r'''$.total''',
-                                                                      ) ==
-                                                                      listViewFavoritesRecord
-                                                                          .numChapters
-                                                                  ? 'No Update'
-                                                                  : 'New Update',
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                getJsonField(
+                                                                          textGetChaptersResponse
+                                                                              .jsonBody,
+                                                                          r'''$.total''',
+                                                                        ) ==
+                                                                        listViewFavoritesRecord
+                                                                            .numChapters
+                                                                    ? 'No Update'
+                                                                    : 'New Update',
+                                                                'No Update',
+                                                              ),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
                                                                   .bodySmall
