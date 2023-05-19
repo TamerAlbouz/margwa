@@ -83,6 +83,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
           elevation: 0.0,
         ),
         body: SafeArea(
+          top: true,
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.max,
@@ -184,7 +185,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                           borderRadius:
                                               BorderRadius.circular(6.0),
                                           child: Image.network(
-                                            listViewFavoritesRecord.src!,
+                                            listViewFavoritesRecord.src,
                                             width: 80.0,
                                             height: 80.0,
                                             fit: BoxFit.cover,
@@ -204,7 +205,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                listViewFavoritesRecord.title!
+                                                listViewFavoritesRecord.title
                                                     .maybeHandleOverflow(
                                                   maxChars: 12,
                                                   replacement: '…',
@@ -218,7 +219,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                                     .fromSTEB(
                                                         0.0, 4.0, 8.0, 0.0),
                                                 child: AutoSizeText(
-                                                  listViewFavoritesRecord.desc!
+                                                  listViewFavoritesRecord.desc
                                                       .maybeHandleOverflow(
                                                     maxChars: 30,
                                                     replacement: '…',

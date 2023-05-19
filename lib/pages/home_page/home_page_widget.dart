@@ -10,6 +10,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -103,6 +104,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             elevation: 0.0,
           ),
           body: SafeArea(
+            top: true,
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -590,7 +592,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                             CachedNetworkImage(
                                                           imageUrl:
                                                               listViewFavoritesRecord
-                                                                  .src!,
+                                                                  .src,
                                                           width:
                                                               double.infinity,
                                                           height: 115.0,
@@ -607,7 +609,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     0.0),
                                                         child: Text(
                                                           listViewFavoritesRecord
-                                                              .title!
+                                                              .title
                                                               .maybeHandleOverflow(
                                                             maxChars: 15,
                                                             replacement: '…',
@@ -671,12 +673,12 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                 triggerPushNotification(
                                                                   notificationTitle:
                                                                       listViewFavoritesRecord
-                                                                          .title!,
+                                                                          .title,
                                                                   notificationText:
                                                                       'Updated with ${(getJsonField(
                                                                             textGetChaptersResponse.jsonBody,
                                                                             r'''$.total''',
-                                                                          ) - listViewFavoritesRecord.numChapters!).toString()} new chapters!',
+                                                                          ) - listViewFavoritesRecord.numChapters).toString()} new chapters!',
                                                                   notificationSound:
                                                                       'default',
                                                                   userRefs: [
@@ -962,6 +964,39 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 },
                               );
                             },
+                          ),
+                        ),
+                        Container(
+                          width: double.infinity,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF181818),
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    16.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  'API (Manga & Chapters): MangaDex\nScanlation Group: credited/chapter',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: 'Nunito',
+                                        color: FlutterFlowTheme.of(context)
+                                            .accent3,
+                                      ),
+                                ),
+                              ),
+                              SvgPicture.network(
+                                'https://mangadex.org/img/brand/mangadex-logo.svg',
+                                width: 100.0,
+                                height: 100.0,
+                                fit: BoxFit.cover,
+                              ),
+                            ],
                           ),
                         ),
                       ],
