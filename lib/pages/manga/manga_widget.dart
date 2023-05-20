@@ -487,7 +487,6 @@ class _MangaWidgetState extends State<MangaWidget> {
                                       duration: Duration(milliseconds: 100),
                                       curve: Curves.easeInOut,
                                       width: double.infinity,
-                                      height: 95.0,
                                       decoration: BoxDecoration(
                                         color:
                                             (containerChaptersRecord != null) &&
