@@ -1,4 +1,5 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -95,6 +96,16 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 value: _model.switchListTileValue1 ??= true,
                 onChanged: (newValue) async {
                   setState(() => _model.switchListTileValue1 = newValue!);
+                  if (newValue!) {
+                    triggerPushNotification(
+                      notificationTitle: 'Notifications',
+                      notificationText: 'Enabled',
+                      notificationSound: 'default',
+                      userRefs: [currentUserReference!],
+                      initialPageName: 'Settings',
+                      parameterData: {},
+                    );
+                  }
                 },
                 title: Text(
                   'Push Notifications',
