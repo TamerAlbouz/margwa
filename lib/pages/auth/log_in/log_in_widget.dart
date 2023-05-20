@@ -50,6 +50,7 @@ class _LogInWidgetState extends State<LogInWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
+          top: true,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -307,7 +308,8 @@ class _LogInWidgetState extends State<LogInWidget> {
                                         return;
                                       }
 
-                                      context.goNamedAuth('HomePage', mounted);
+                                      context.goNamedAuth(
+                                          'HomePage', context.mounted);
                                     },
                                     text: 'Sign In',
                                     options: FFButtonOptions(
@@ -372,6 +374,84 @@ class _LogInWidgetState extends State<LogInWidget> {
                                   ),
                                 ),
                               ],
+                            ),
+                          ),
+                        ),
+                        Align(
+                          alignment: AlignmentDirectional(0.0, 0.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              GoRouter.of(context).prepareAuthEvent();
+                              final user =
+                                  await authManager.signInWithGoogle(context);
+                              if (user == null) {
+                                return;
+                              }
+
+                              context.goNamedAuth('HomePage', context.mounted);
+                            },
+                            child: Container(
+                              width: 230.0,
+                              height: 44.0,
+                              child: Stack(
+                                children: [
+                                  Align(
+                                    alignment: AlignmentDirectional(0.0, 0.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () {
+                                        print('Button pressed ...');
+                                      },
+                                      text: 'Sign in with Google',
+                                      icon: Icon(
+                                        Icons.add,
+                                        color: Colors.transparent,
+                                        size: 20.0,
+                                      ),
+                                      options: FFButtonOptions(
+                                        width: 230.0,
+                                        height: 44.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 8.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        textStyle: GoogleFonts.getFont(
+                                          'Roboto',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                          fontSize: 17.0,
+                                        ),
+                                        elevation: 4.0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 0.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: AlignmentDirectional(-0.83, 0.0),
+                                    child: Container(
+                                      width: 28.0,
+                                      height: 28.0,
+                                      clipBehavior: Clip.antiAlias,
+                                      decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                      ),
+                                      child: Image.network(
+                                        'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
+                                        fit: BoxFit.contain,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

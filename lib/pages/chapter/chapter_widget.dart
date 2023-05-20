@@ -209,6 +209,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
           elevation: 0.0,
         ),
         body: SafeArea(
+          top: true,
           child: FutureBuilder<ApiCallResponse>(
             future: GetChapterPagesCall.call(
               chapterId: widget.chapterId,

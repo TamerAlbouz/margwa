@@ -52,6 +52,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
+          top: true,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -370,7 +371,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                         return;
                                       }
 
-                                      context.goNamedAuth('HomePage', mounted);
+                                      context.goNamedAuth(
+                                          'HomePage', context.mounted);
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
