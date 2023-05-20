@@ -1,11 +1,14 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/empty_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/flutter_flow/instant_timer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -36,6 +39,28 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => HomePageModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      _model.instantTimer = InstantTimer.periodic(
+        duration: Duration(milliseconds: 5000),
+        callback: (timer) async {
+          if (pageViewCurrentIndex < 10) {
+            await _model.pageViewController?.nextPage(
+              duration: Duration(milliseconds: 300),
+              curve: Curves.ease,
+            );
+          } else {
+            await _model.pageViewController?.animateToPage(
+              0,
+              duration: Duration(milliseconds: 500),
+              curve: Curves.ease,
+            );
+          }
+        },
+        startImmediately: true,
+      );
+    });
   }
 
   @override
@@ -439,6 +464,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 queryBuilder: (favoritesRecord) =>
                                     favoritesRecord.where('user',
                                         isEqualTo: currentUserReference),
+                                limit: 10,
                               ),
                               builder: (context, snapshot) {
                                 // Customize what your widget looks like when it's loading.
@@ -458,6 +484,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 List<FavoritesRecord>
                                     pageViewFavoritesRecordList =
                                     snapshot.data!;
+                                if (pageViewFavoritesRecordList.isEmpty) {
+                                  return EmptyWidget();
+                                }
                                 return Container(
                                   width: double.infinity,
                                   height: 500.0,
@@ -492,6 +521,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                             alignment:
                                                 AlignmentDirectional(-0.9, 0.9),
                                             child: Container(
+                                              width: 170.0,
+                                              height: 60.0,
                                               decoration: BoxDecoration(
                                                 color:
                                                     FlutterFlowTheme.of(context)
@@ -507,13 +538,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   mainAxisSize:
                                                       MainAxisSize.min,
                                                   mainAxisAlignment:
-                                                      MainAxisAlignment.end,
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
                                                   crossAxisAlignment:
                                                       CrossAxisAlignment.start,
                                                   children: [
                                                     Text(
                                                       pageViewFavoritesRecord
-                                                          .title,
+                                                          .title
+                                                          .maybeHandleOverflow(
+                                                        maxChars: 20,
+                                                        replacement: '…',
+                                                      ),
+                                                      maxLines: 1,
                                                       style:
                                                           FlutterFlowTheme.of(
                                                                   context)
@@ -531,16 +568,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         // Customize what your widget looks like when it's loading.
                                                         if (!snapshot.hasData) {
                                                           return Center(
-                                                            child: SizedBox(
-                                                              width: 75.0,
-                                                              height: 75.0,
-                                                              child:
-                                                                  SpinKitRipple(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                size: 75.0,
-                                                              ),
+                                                            child:
+                                                                LinearProgressIndicator(
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .tertiary,
                                                             ),
                                                           );
                                                         }
@@ -846,11 +878,15 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ),
                                 ),
                               ),
-                              SvgPicture.network(
-                                'https://mangadex.org/img/brand/mangadex-logo.svg',
-                                width: 100.0,
-                                height: 100.0,
-                                fit: BoxFit.cover,
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 0.0, 50.0, 0.0),
+                                child: SvgPicture.network(
+                                  'https://mangadex.org/img/brand/mangadex-logo.svg',
+                                  width: 50.0,
+                                  height: 50.0,
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ],
                           ),
