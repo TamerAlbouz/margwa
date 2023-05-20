@@ -43,9 +43,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.instantTimer = InstantTimer.periodic(
-        duration: Duration(milliseconds: 5000),
+        duration: Duration(milliseconds: 10000),
         callback: (timer) async {
-          if (pageViewCurrentIndex < 10) {
+          if (pageViewCurrentIndex < 9) {
             await _model.pageViewController?.nextPage(
               duration: Duration(milliseconds: 300),
               curve: Curves.ease,
@@ -505,117 +505,149 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       final pageViewFavoritesRecord =
                                           pageViewFavoritesRecordList[
                                               pageViewIndex];
-                                      return Stack(
-                                        children: [
-                                          ClipRRect(
-                                            borderRadius:
-                                                BorderRadius.circular(8.0),
-                                            child: Image.network(
-                                              pageViewFavoritesRecord.src,
-                                              width: double.infinity,
-                                              height: 200.0,
-                                              fit: BoxFit.cover,
-                                            ),
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(-0.9, 0.9),
-                                            child: Container(
-                                              width: 170.0,
-                                              height: 60.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                borderRadius:
-                                                    BorderRadius.circular(5.0),
+                                      return InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'Manga',
+                                            queryParams: {
+                                              'title': serializeParam(
+                                                pageViewFavoritesRecord.title,
+                                                ParamType.String,
                                               ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        10.0, 10.0, 10.0, 10.0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Text(
-                                                      pageViewFavoritesRecord
-                                                          .title
-                                                          .maybeHandleOverflow(
-                                                        maxChars: 20,
-                                                        replacement: '…',
+                                              'desc': serializeParam(
+                                                pageViewFavoritesRecord.desc,
+                                                ParamType.String,
+                                              ),
+                                              'src': serializeParam(
+                                                pageViewFavoritesRecord.src,
+                                                ParamType.String,
+                                              ),
+                                              'id': serializeParam(
+                                                pageViewFavoritesRecord.id,
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+                                        },
+                                        child: Stack(
+                                          children: [
+                                            ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                              child: CachedNetworkImage(
+                                                imageUrl:
+                                                    pageViewFavoritesRecord.src,
+                                                width: double.infinity,
+                                                height: 200.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                            ),
+                                            Align(
+                                              alignment: AlignmentDirectional(
+                                                  -0.9, 0.9),
+                                              child: Container(
+                                                width: 160.0,
+                                                height: 60.0,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondary,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(10.0, 10.0,
+                                                          10.0, 10.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceBetween,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(
+                                                        pageViewFavoritesRecord
+                                                            .title
+                                                            .maybeHandleOverflow(
+                                                          maxChars: 15,
+                                                          replacement: '…',
+                                                        ),
+                                                        maxLines: 1,
+                                                        style:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .titleMedium,
                                                       ),
-                                                      maxLines: 1,
-                                                      style:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .titleMedium,
-                                                    ),
-                                                    FutureBuilder<
-                                                        ApiCallResponse>(
-                                                      future:
-                                                          GetChaptersCall.call(
-                                                        id: pageViewFavoritesRecord
-                                                            .id,
-                                                      ),
-                                                      builder:
-                                                          (context, snapshot) {
-                                                        // Customize what your widget looks like when it's loading.
-                                                        if (!snapshot.hasData) {
-                                                          return Center(
-                                                            child:
-                                                                LinearProgressIndicator(
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .tertiary,
-                                                            ),
-                                                          );
-                                                        }
-                                                        final textGetChaptersResponse =
-                                                            snapshot.data!;
-                                                        return Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            getJsonField(
-                                                                      textGetChaptersResponse
-                                                                          .jsonBody,
-                                                                      r'''$.total''',
-                                                                    ) ==
-                                                                    pageViewFavoritesRecord
-                                                                        .numChapters
-                                                                ? 'No Update'
-                                                                : 'New Update',
-                                                            'No Update',
-                                                          ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                color: getJsonField(
-                                                                          textGetChaptersResponse
-                                                                              .jsonBody,
-                                                                          r'''$.total''',
-                                                                        ) ==
-                                                                        pageViewFavoritesRecord.numChapters
-                                                                    ? FlutterFlowTheme.of(context).secondaryText
-                                                                    : FlutterFlowTheme.of(context).tertiary,
+                                                      FutureBuilder<
+                                                          ApiCallResponse>(
+                                                        future: GetChaptersCall
+                                                            .call(
+                                                          id: pageViewFavoritesRecord
+                                                              .id,
+                                                        ),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child:
+                                                                  LinearProgressIndicator(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiary,
                                                               ),
-                                                        );
-                                                      },
-                                                    ),
-                                                  ],
+                                                            );
+                                                          }
+                                                          final textGetChaptersResponse =
+                                                              snapshot.data!;
+                                                          return Text(
+                                                            valueOrDefault<
+                                                                String>(
+                                                              getJsonField(
+                                                                        textGetChaptersResponse
+                                                                            .jsonBody,
+                                                                        r'''$.total''',
+                                                                      ) ==
+                                                                      pageViewFavoritesRecord
+                                                                          .numChapters
+                                                                  ? 'No Update'
+                                                                  : 'New Update',
+                                                              'No Update',
+                                                            ),
+                                                            style: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .bodySmall
+                                                                .override(
+                                                                  fontFamily:
+                                                                      'Nunito',
+                                                                  color: getJsonField(
+                                                                            textGetChaptersResponse.jsonBody,
+                                                                            r'''$.total''',
+                                                                          ) ==
+                                                                          pageViewFavoritesRecord.numChapters
+                                                                      ? FlutterFlowTheme.of(context).secondaryText
+                                                                      : FlutterFlowTheme.of(context).tertiary,
+                                                                ),
+                                                          );
+                                                        },
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                        ],
+                                          ],
+                                        ),
                                       );
                                     },
                                   ),
@@ -862,7 +894,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                           ),
                           child: Row(
                             mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
@@ -878,15 +910,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ),
                                 ),
                               ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 50.0, 0.0),
-                                child: SvgPicture.network(
-                                  'https://mangadex.org/img/brand/mangadex-logo.svg',
-                                  width: 50.0,
-                                  height: 50.0,
-                                  fit: BoxFit.cover,
-                                ),
+                              SvgPicture.network(
+                                'https://mangadex.org/img/brand/mangadex-logo.svg',
+                                width: 50.0,
+                                height: 50.0,
+                                fit: BoxFit.cover,
                               ),
                             ],
                           ),
