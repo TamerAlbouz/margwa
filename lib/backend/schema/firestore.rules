@@ -21,5 +21,10 @@ service cloud.firestore {
       allow write: if resource.data.user == /databases/$(database)/documents/users/$(request.auth.uid);
       allow delete: if resource.data.user == /databases/$(database)/documents/users/$(request.auth.uid);
     }
+
+    match /ff_user_push_notifications/{id} {
+      allow read, update, delete: if false;
+      allow create: if /databases/$(database)/documents/users/$(request.auth.uid) == request.resource.data.sender;
+    }
   }
 }
