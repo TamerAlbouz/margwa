@@ -57,24 +57,37 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
             ) !=
             favoritesRecord.numChapters) {
           // If they don't match, send notification
-          triggerPushNotification(
-            notificationTitle: favoritesRecord.title!,
-            notificationText: 'Updated with ${(getJsonField(
-                  (apiResult?.jsonBody ?? ''),
-                  r'''$.total''',
-                ) - favoritesRecord.numChapters!).toString()} new chapters!',
-            notificationSound: 'default',
-            userRefs: [currentUserReference!],
-            initialPageName: 'Manga',
-            parameterData: {
-              'title': favoritesRecord.title,
-              'desc': favoritesRecord.desc,
-              'src': favoritesRecord.src,
-              'id': favoritesRecord.id,
-            },
-          );
+          // triggerPushNotification(
+          //   notificationTitle: "Test From headless",
+          //   notificationText: 'Updated with ${(getJsonField(
+          //         (apiResult?.jsonBody ?? ''),
+          //         r'''$.total''',
+          //       ) - favoritesRecord.numChapters!).toString()} new chapters!',
+          //   notificationSound: 'default',
+          //   userRefs: [currentUserReference!],
+          //   initialPageName: 'Manga',
+          //   parameterData: {
+          //     'title': favoritesRecord.title,
+          //     'desc': favoritesRecord.desc,
+          //     'src': favoritesRecord.src,
+          //     'id': favoritesRecord.id,
+          //   },
+          // );
         }
       }
+    },
+  );
+  triggerPushNotification(
+    notificationTitle: "Test From headless",
+    notificationText: 'new chapters!',
+    notificationSound: 'default',
+    userRefs: [currentUserReference!],
+    initialPageName: 'Manga',
+    parameterData: {
+      'title': "",
+      'desc': "",
+      'src': "",
+      'id': "",
     },
   );
   BackgroundFetch.finish(taskId);
@@ -174,7 +187,7 @@ class _MyAppState extends State<MyApp> {
                 favoritesRecord.numChapters) {
               // If they don't match, send notification
               triggerPushNotification(
-                notificationTitle: favoritesRecord.title!,
+                notificationTitle: "Test from frontless",
                 notificationText: 'Updated with ${(getJsonField(
                       (apiResult?.jsonBody ?? ''),
                       r'''$.total''',
@@ -191,6 +204,19 @@ class _MyAppState extends State<MyApp> {
               );
             }
           }
+        },
+      );
+      triggerPushNotification(
+        notificationTitle: "Test From frontless",
+        notificationText: 'new chapters!',
+        notificationSound: 'default',
+        userRefs: [currentUserReference!],
+        initialPageName: 'Manga',
+        parameterData: {
+          'title': "",
+          'desc': "",
+          'src': "",
+          'id': "",
         },
       );
 
