@@ -57,22 +57,22 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
             ) !=
             favoritesRecord.numChapters) {
           // If they don't match, send notification
-          // triggerPushNotification(
-          //   notificationTitle: "Test From headless",
-          //   notificationText: 'Updated with ${(getJsonField(
-          //         (apiResult?.jsonBody ?? ''),
-          //         r'''$.total''',
-          //       ) - favoritesRecord.numChapters!).toString()} new chapters!',
-          //   notificationSound: 'default',
-          //   userRefs: [currentUserReference!],
-          //   initialPageName: 'Manga',
-          //   parameterData: {
-          //     'title': favoritesRecord.title,
-          //     'desc': favoritesRecord.desc,
-          //     'src': favoritesRecord.src,
-          //     'id': favoritesRecord.id,
-          //   },
-          // );
+          triggerPushNotification(
+            notificationTitle: "Test From headless",
+            notificationText: 'Updated with ${(getJsonField(
+                  (apiResult?.jsonBody ?? ''),
+                  r'''$.total''',
+                ) - favoritesRecord.numChapters!).toString()} new chapters!',
+            notificationSound: 'default',
+            userRefs: [currentUserReference!],
+            initialPageName: 'Manga',
+            parameterData: {
+              'title': favoritesRecord.title,
+              'desc': favoritesRecord.desc,
+              'src': favoritesRecord.src,
+              'id': favoritesRecord.id,
+            },
+          );
         }
       }
     },
@@ -187,7 +187,7 @@ class _MyAppState extends State<MyApp> {
                 favoritesRecord.numChapters) {
               // If they don't match, send notification
               triggerPushNotification(
-                notificationTitle: "Test from frontless",
+                notificationTitle: favoritesRecord.title,
                 notificationText: 'Updated with ${(getJsonField(
                       (apiResult?.jsonBody ?? ''),
                       r'''$.total''',
@@ -206,20 +206,6 @@ class _MyAppState extends State<MyApp> {
           }
         },
       );
-      triggerPushNotification(
-        notificationTitle: "Test From frontless",
-        notificationText: 'new chapters!',
-        notificationSound: 'default',
-        userRefs: [currentUserReference!],
-        initialPageName: 'Manga',
-        parameterData: {
-          'title': "",
-          'desc': "",
-          'src': "",
-          'id': "",
-        },
-      );
-
       // IMPORTANT:  You must signal completion of your task or the OS can punish your app
       // for taking too long in the background.
       BackgroundFetch.finish(taskId);

@@ -491,6 +491,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                   width: double.infinity,
                                   height: 500.0,
                                   child: PageView.builder(
+                                    allowImplicitScrolling: true,
                                     controller: _model.pageViewController ??=
                                         PageController(
                                             initialPage: min(
@@ -544,6 +545,29 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                 width: double.infinity,
                                                 height: 200.0,
                                                 fit: BoxFit.cover,
+                                                progressIndicatorBuilder:
+                                                    (context, url,
+                                                            downloadProgress) =>
+                                                        Center(
+                                                  child: SizedBox(
+                                                    width: 25,
+                                                    height: 25,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      strokeWidth: 1,
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      value: downloadProgress
+                                                                  .progress !=
+                                                              null
+                                                          ? downloadProgress
+                                                              .progress
+                                                          : 0,
+                                                    ),
+                                                  ),
+                                                ),
                                               ),
                                             ),
                                             Align(
@@ -816,6 +840,28 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     width: double.infinity,
                                                     height: 150.0,
                                                     fit: BoxFit.cover,
+                                                    progressIndicatorBuilder:
+                                                        (context, url,
+                                                                downloadProgress) =>
+                                                            Center(
+                                                      child: SizedBox(
+                                                        width: 25,
+                                                        height: 25,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          strokeWidth: 1,
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          value: downloadProgress
+                                                                      .progress !=
+                                                                  null
+                                                              ? downloadProgress
+                                                                  .progress
+                                                              : 0,
+                                                        ),
+                                                      ),
+                                                    ),
                                                   ),
                                                 ),
                                                 Padding(
