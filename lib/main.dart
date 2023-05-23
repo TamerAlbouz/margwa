@@ -109,14 +109,6 @@ void main() async {
 
   // Register to receive BackgroundFetch events after app is terminated.
   // Requires {stopOnTerminate: false, enableHeadless: true}
-
-  BackgroundFetch.configure(
-    minimumFetchInterval: 15,
-    stopOnTerminate: false,
-    enableHeadless: true,
-    startOnBoot: true,
-  );
-  
  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
