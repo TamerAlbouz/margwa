@@ -114,7 +114,7 @@ void main() async {
       minimumFetchInterval: 15,
       stopOnTerminate: false,
       enableHeadless: true,
-    ),
+    );
   
  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
