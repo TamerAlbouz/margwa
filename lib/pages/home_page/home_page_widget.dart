@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/instant_timer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -425,7 +426,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 0.0, 4.0),
                                 child: Text(
-                                  'Library',
+                                  'Categories',
                                   style: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -675,7 +676,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 4.0, 0.0, 4.0),
                                 child: Text(
-                                  'Categories',
+                                  'Library',
                                   style: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(
@@ -759,11 +760,17 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           ),
                                         }.withoutNulls,
                                       );
+
+                                      final favoritesUpdateData = {
+                                        'num_chapters': FieldValue.increment(1),
+                                      };
+                                      await wrapFavoritesRecord.reference
+                                          .update(favoritesUpdateData);
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
                                           0.45,
-                                      height: 250.0,
+                                      height: 255.0,
                                       decoration: BoxDecoration(
                                         color: FlutterFlowTheme.of(context)
                                             .secondary,
@@ -826,14 +833,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   // Customize what your widget looks like when it's loading.
                                                   if (!snapshot.hasData) {
                                                     return Center(
-                                                      child: SizedBox(
-                                                        width: 75.0,
-                                                        height: 75.0,
-                                                        child: SpinKitRipple(
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    0.0,
+                                                                    8.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child:
+                                                            LinearProgressIndicator(
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .primary,
-                                                          size: 75.0,
+                                                              .tertiary,
                                                         ),
                                                       ),
                                                     );
