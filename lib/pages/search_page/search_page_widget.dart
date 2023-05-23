@@ -370,7 +370,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             width: 25,
                                             height: 25,
                                             child: CircularProgressIndicator(
-                                              strokeWidth: 1,
+                                              strokeWidth: 3,
                                               color:
                                                   FlutterFlowTheme.of(context)
                                                       .primary,

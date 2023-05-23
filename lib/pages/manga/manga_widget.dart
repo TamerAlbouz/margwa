@@ -271,7 +271,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                                   width: 25,
                                   height: 25,
                                   child: CircularProgressIndicator(
-                                    strokeWidth: 1,
+                                    strokeWidth: 3,
                                     color: FlutterFlowTheme.of(context).primary,
                                     value: downloadProgress.progress != null
                                         ? downloadProgress.progress

@@ -90,39 +90,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-              child: SwitchListTile.adaptive(
-                value: _model.switchListTileValue1 ??= true,
-                onChanged: (newValue) async {
-                  setState(() => _model.switchListTileValue1 = newValue!);
-                  if (newValue!) {
-                    triggerPushNotification(
-                      notificationTitle: 'Notifications',
-                      notificationText: 'Enabled',
-                      notificationSound: 'default',
-                      userRefs: [currentUserReference!],
-                      initialPageName: 'Settings',
-                      parameterData: {},
-                    );
-                  }
-                },
-                title: Text(
-                  'Push Notifications',
-                  style: FlutterFlowTheme.of(context).headlineSmall,
-                ),
-                subtitle: Text(
-                  'Receive Push notifications from our application on a semi regular basis.',
-                  style: FlutterFlowTheme.of(context).bodySmall,
-                ),
-                activeColor: Colors.white,
-                activeTrackColor: FlutterFlowTheme.of(context).primary,
-                dense: false,
-                controlAffinity: ListTileControlAffinity.trailing,
-                contentPadding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
-              ),
-            ),
             SwitchListTile.adaptive(
               value: _model.switchListTileValue2 ??= true,
               onChanged: (newValue) async {
