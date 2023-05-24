@@ -115,10 +115,6 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  background_fetch:
-    stopOnTerminate: false
-    enableHeadless: true
-
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/fonts/

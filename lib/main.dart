@@ -32,20 +32,6 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
   if (isTimeout) {
     // This task has exceeded its allowed running-time.
     // You must stop what you're doing and immediately .finish(taskId)
-    triggerPushNotification(
-      notificationTitle: "Test From headless",
-      notificationText: 'new chapters!',
-      notificationSound: 'default',
-      userRefs: [currentUserReference!],
-      initialPageName: 'Manga',
-      parameterData: {
-        'title': "",
-        'desc': "",
-        'src': "",
-        'id': "",
-      },
-    );
-
     print("[BackgroundFetch] Headless task timed-out: $taskId");
     BackgroundFetch.finish(taskId);
     return;
