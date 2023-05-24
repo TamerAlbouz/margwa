@@ -742,6 +742,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                               }
                               List<FavoritesRecord> wrapFavoritesRecordList =
                                   snapshot.data!;
+                              if (wrapFavoritesRecordList.isEmpty) {
+                                return EmptyWidget();
+                              }
                               return Wrap(
                                 spacing: 8.0,
                                 runSpacing: 8.0,
