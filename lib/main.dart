@@ -32,6 +32,20 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
   if (isTimeout) {
     // This task has exceeded its allowed running-time.
     // You must stop what you're doing and immediately .finish(taskId)
+    triggerPushNotification(
+      notificationTitle: "Test From headless",
+      notificationText: 'new chapters!',
+      notificationSound: 'default',
+      userRefs: [currentUserReference!],
+      initialPageName: 'Manga',
+      parameterData: {
+        'title': "",
+        'desc': "",
+        'src': "",
+        'id': "",
+      },
+    );
+
     print("[BackgroundFetch] Headless task timed-out: $taskId");
     BackgroundFetch.finish(taskId);
     return;
@@ -102,14 +116,14 @@ void main() async {
   final appState = FFAppState(); // Initialize FFAppState
   await appState.initializePersistedState();
 
+  // Register to receive BackgroundFetch events after app is terminated.
+  // Requires {stopOnTerminate: false, enableHeadless: true}
+  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+
   runApp(ChangeNotifierProvider(
     create: (context) => appState,
     child: MyApp(),
   ));
-
-  // Register to receive BackgroundFetch events after app is terminated.
-  // Requires {stopOnTerminate: false, enableHeadless: true}
-  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class MyApp extends StatefulWidget {
@@ -157,6 +171,7 @@ class _MyAppState extends State<MyApp> {
             minimumFetchInterval: 15,
             stopOnTerminate: false,
             enableHeadless: true,
+            startOnBoot: true,
             requiresBatteryNotLow: false,
             requiresCharging: false,
             requiresStorageNotLow: false,
