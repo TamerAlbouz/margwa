@@ -7,7 +7,6 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/instant_timer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -44,7 +43,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.instantTimer = InstantTimer.periodic(
-        duration: Duration(milliseconds: 10000),
+        duration: Duration(milliseconds: 5000),
         callback: (timer) async {
           if (pageViewCurrentIndex < 9) {
             await _model.pageViewController?.nextPage(
@@ -436,19 +435,9 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ),
                                 ),
                               ),
-                              InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  context.pushNamed('Library');
-                                },
-                                child: Text(
-                                  'See All',
-                                  style:
-                                      FlutterFlowTheme.of(context).bodyMedium,
-                                ),
+                              Text(
+                                'See All',
+                                style: FlutterFlowTheme.of(context).bodyMedium,
                               ),
                             ],
                           ),
@@ -709,9 +698,19 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       ),
                                 ),
                               ),
-                              Text(
-                                'See All',
-                                style: FlutterFlowTheme.of(context).bodyMedium,
+                              InkWell(
+                                splashColor: Colors.transparent,
+                                focusColor: Colors.transparent,
+                                hoverColor: Colors.transparent,
+                                highlightColor: Colors.transparent,
+                                onTap: () async {
+                                  context.pushNamed('Library');
+                                },
+                                child: Text(
+                                  'See All',
+                                  style:
+                                      FlutterFlowTheme.of(context).bodyMedium,
+                                ),
                               ),
                             ],
                           ),
@@ -783,12 +782,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           ),
                                         }.withoutNulls,
                                       );
-
-                                      final favoritesUpdateData = {
-                                        'num_chapters': FieldValue.increment(1),
-                                      };
-                                      await wrapFavoritesRecord.reference
-                                          .update(favoritesUpdateData);
                                     },
                                     child: Container(
                                       width: MediaQuery.of(context).size.width *
