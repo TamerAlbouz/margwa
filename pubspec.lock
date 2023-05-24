@@ -249,6 +249,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.1.4"
+  firebase_analytics:
+    dependency: "direct main"
+    description:
+      name: firebase_analytics
+      sha256: "8e83227fc21defec65f298e266d5d68cc0102e0e9ae69f2954d37cf204adf89e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "10.0.7"
+  firebase_analytics_platform_interface:
+    dependency: transitive
+    description:
+      name: firebase_analytics_platform_interface
+      sha256: "95009d4bdbccd827565f741b657270fa5e7f848fd542d015732a81cd75062108"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.3.15"
+  firebase_analytics_web:
+    dependency: transitive
+    description:
+      name: firebase_analytics_web
+      sha256: "676eea01b5e4a3067106096423f6776f0b4bef1246b5390ec96ee2a57774e91b"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1+6"
   firebase_auth:
     dependency: "direct main"
     description:
@@ -334,38 +358,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.1.1+1"
-  flutter_background_service:
-    dependency: "direct main"
-    description:
-      name: flutter_background_service
-      sha256: "7b9f15ab7d1a5784850ecfde722be4ace4dbcf1072a1fe33b7f9cbe871241e53"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.6"
-  flutter_background_service_android:
-    dependency: transitive
-    description:
-      name: flutter_background_service_android
-      sha256: "57fd631d800f7e56ca5bfadcfc00c8903eb721b23506b1a387342039521883ec"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.3"
-  flutter_background_service_ios:
-    dependency: transitive
-    description:
-      name: flutter_background_service_ios
-      sha256: d3f1dc009137c1ac19f5e3d88668836f088a7e078396733547339765d46ff12f
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.4.0"
-  flutter_background_service_platform_interface:
-    dependency: transitive
-    description:
-      name: flutter_background_service_platform_interface
-      sha256: "5f0480ee8378984f718d640abbe09b4d6d024d58a72b2d8b86bdedb3cf095ff8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.2.0"
   flutter_blurhash:
     dependency: transitive
     description:
