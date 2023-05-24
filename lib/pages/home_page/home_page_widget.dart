@@ -7,6 +7,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/instant_timer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -732,125 +733,135 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                     (wrapIndex) {
                                   final wrapFavoritesRecord =
                                       wrapFavoritesRecordList[wrapIndex];
-                                  return InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context.pushNamed(
-                                        'Manga',
-                                        queryParams: {
-                                          'title': serializeParam(
-                                            wrapFavoritesRecord.title,
-                                            ParamType.String,
-                                          ),
-                                          'desc': serializeParam(
-                                            wrapFavoritesRecord.desc,
-                                            ParamType.String,
-                                          ),
-                                          'src': serializeParam(
-                                            wrapFavoritesRecord.src,
-                                            ParamType.String,
-                                          ),
-                                          'id': serializeParam(
-                                            wrapFavoritesRecord.id,
-                                            ParamType.String,
-                                          ),
-                                        }.withoutNulls,
-                                      );
-                                    },
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width *
-                                          0.45,
-                                      height: 255.0,
-                                      decoration: BoxDecoration(
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondary,
-                                        boxShadow: [
-                                          BoxShadow(
-                                            blurRadius: 4.0,
-                                            color: Color(0x230E151B),
-                                            offset: Offset(0.0, 2.0),
-                                          )
-                                        ],
-                                        borderRadius:
-                                            BorderRadius.circular(12.0),
-                                      ),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            4.0, 4.0, 4.0, 4.0),
-                                        child: Column(
-                                          mainAxisSize: MainAxisSize.max,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0),
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    wrapFavoritesRecord.src,
-                                                width: double.infinity,
-                                                height: 180.0,
-                                                fit: BoxFit.cover,
-                                              ),
+                                  return FutureBuilder<ApiCallResponse>(
+                                    future: GetChaptersCall.call(
+                                      id: wrapFavoritesRecord.id,
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 75.0,
+                                            height: 75.0,
+                                            child: SpinKitRipple(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                              size: 75.0,
                                             ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      8.0, 12.0, 0.0, 0.0),
-                                              child: Text(
-                                                wrapFavoritesRecord.title
-                                                    .maybeHandleOverflow(
-                                                  maxChars: 12,
-                                                  replacement: '…',
+                                          ),
+                                        );
+                                      }
+                                      final containerGetChaptersResponse =
+                                          snapshot.data!;
+                                      return InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            'Manga',
+                                            queryParams: {
+                                              'title': serializeParam(
+                                                wrapFavoritesRecord.title,
+                                                ParamType.String,
+                                              ),
+                                              'desc': serializeParam(
+                                                wrapFavoritesRecord.desc,
+                                                ParamType.String,
+                                              ),
+                                              'src': serializeParam(
+                                                wrapFavoritesRecord.src,
+                                                ParamType.String,
+                                              ),
+                                              'id': serializeParam(
+                                                wrapFavoritesRecord.id,
+                                                ParamType.String,
+                                              ),
+                                            }.withoutNulls,
+                                          );
+
+                                          final favoritesUpdateData =
+                                              createFavoritesRecordData(
+                                            numChapters: getJsonField(
+                                              containerGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.total''',
+                                            ),
+                                          );
+                                          await wrapFavoritesRecord.reference
+                                              .update(favoritesUpdateData);
+                                        },
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.45,
+                                          height: 255.0,
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondary,
+                                            boxShadow: [
+                                              BoxShadow(
+                                                blurRadius: 4.0,
+                                                color: Color(0x230E151B),
+                                                offset: Offset(0.0, 2.0),
+                                              )
+                                            ],
+                                            borderRadius:
+                                                BorderRadius.circular(12.0),
+                                          ),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    4.0, 4.0, 4.0, 4.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          10.0),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl:
+                                                        wrapFavoritesRecord.src,
+                                                    width: double.infinity,
+                                                    height: 180.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
-                                                maxLines: 1,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 12.0, 0.0, 0.0),
+                                                  child: Text(
+                                                    wrapFavoritesRecord.title
+                                                        .maybeHandleOverflow(
+                                                      maxChars: 12,
+                                                      replacement: '…',
+                                                    ),
+                                                    maxLines: 1,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
                                                         .titleMedium,
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(8.0, 4.0, 0.0, 0.0),
-                                              child: FutureBuilder<
-                                                  ApiCallResponse>(
-                                                future: GetChaptersCall.call(
-                                                  id: wrapFavoritesRecord.id,
+                                                  ),
                                                 ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    8.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        child:
-                                                            LinearProgressIndicator(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .tertiary,
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  final textGetChaptersResponse =
-                                                      snapshot.data!;
-                                                  return Text(
+                                                Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          8.0, 4.0, 0.0, 0.0),
+                                                  child: Text(
                                                     valueOrDefault<String>(
                                                       wrapFavoritesRecord
                                                                   .numChapters ==
                                                               getJsonField(
-                                                                textGetChaptersResponse
+                                                                containerGetChaptersResponse
                                                                     .jsonBody,
                                                                 r'''$.total''',
                                                               )
@@ -867,7 +878,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                   'Nunito',
                                                               color:
                                                                   getJsonField(
-                                                                            textGetChaptersResponse.jsonBody,
+                                                                            containerGetChaptersResponse.jsonBody,
                                                                             r'''$.total''',
                                                                           ) ==
                                                                           wrapFavoritesRecord
@@ -879,14 +890,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                               context)
                                                                           .tertiary,
                                                             ),
-                                                  );
-                                                },
-                                              ),
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ],
+                                          ),
                                         ),
-                                      ),
-                                    ),
+                                      );
+                                    },
                                   );
                                 }),
                               );
