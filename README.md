@@ -1,20 +1,7 @@
 # Margwa
 
-A new Flutter project.
+Margwa is the ultimate app for manga lovers! Whether you are a casual reader or a hardcore fan, you will find something to enjoy in our huge collection of manga titles from various genres and demographics. You can browse, search, bookmark, download, and read manga online or offline, all without annoying ads or pop-ups!
 
-## Getting Started
+Margwa uses the MangaDex API and Scanlation Groups to provide you with the best quality and latest releases of manga. You can access thousands of manga chapters from hundreds of scanlation groups, all in one place. You can also support the original creators and translators by following their links and donating to them.
 
-FlutterFlow projects are built to run on the Flutter _stable_ release.
-
-### Getting started continued:
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Margwa respects the hard work and dedication of the MangaDex and Scanlation Groups, and credits them for every manga chapter. You can also join the Margwa community and interact with other manga fans, share your opinions, recommendations, and feedback.
