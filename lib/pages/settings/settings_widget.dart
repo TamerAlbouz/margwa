@@ -1,11 +1,11 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/push_notifications/push_notifications_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutterflow_colorpicker/flutterflow_colorpicker.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'settings_model.dart';
@@ -42,12 +42,9 @@ class _SettingsWidgetState extends State<SettingsWidget> {
 
     return Scaffold(
       key: scaffoldKey,
-      backgroundColor: valueOrDefault<Color>(
-        FFAppState().BackgroundColor,
-        FlutterFlowTheme.of(context).primaryBackground,
-      ),
+      backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
       appBar: AppBar(
-        backgroundColor: FFAppState().BackgroundColor,
+        backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         automaticallyImplyLeading: false,
         leading: FlutterFlowIconButton(
           borderColor: Colors.transparent,
@@ -56,7 +53,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           buttonSize: 60.0,
           icon: Icon(
             Icons.arrow_back_ios_rounded,
-            color: FFAppState().InteractablesColors,
+            color: FlutterFlowTheme.of(context).primaryText,
             size: 30.0,
           ),
           onPressed: () async {
@@ -67,7 +64,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           'Settings',
           style: FlutterFlowTheme.of(context).headlineMedium.override(
                 fontFamily: 'Nunito',
-                color: FFAppState().TextColor,
+                color: FlutterFlowTheme.of(context).primaryText,
                 fontSize: 22.0,
               ),
         ),
@@ -87,42 +84,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   Expanded(
                     child: Text(
                       'Choose what notifcations you want to recieve below and we will update the settings.',
-                      style: FlutterFlowTheme.of(context).bodySmall.override(
-                            fontFamily: 'Nunito',
-                            color: FFAppState().TextColor,
-                          ),
+                      style: FlutterFlowTheme.of(context).bodySmall,
                     ),
                   ),
                 ],
-              ),
-            ),
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
-              child: SwitchListTile.adaptive(
-                value: _model.switchListTileValue1 ??= true,
-                onChanged: (newValue) async {
-                  setState(() => _model.switchListTileValue1 = newValue!);
-                },
-                title: Text(
-                  'Push Notifications',
-                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                subtitle: Text(
-                  'Receive Push notifications from our application on a semi regular basis.',
-                  style: FlutterFlowTheme.of(context).bodySmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                activeColor: FlutterFlowTheme.of(context).primaryText,
-                activeTrackColor: FlutterFlowTheme.of(context).primary,
-                dense: false,
-                controlAffinity: ListTileControlAffinity.trailing,
-                contentPadding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
               ),
             ),
             SwitchListTile.adaptive(
@@ -132,17 +97,37 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               },
               title: Text(
                 'Email Notifications',
-                style: FlutterFlowTheme.of(context).headlineSmall.override(
-                      fontFamily: 'Nunito',
-                      color: FFAppState().TextColor,
-                    ),
+                style: FlutterFlowTheme.of(context).headlineSmall,
               ),
               subtitle: Text(
                 'Receive email notifications from our marketing team about new features.',
-                style: FlutterFlowTheme.of(context).bodySmall.override(
-                      fontFamily: 'Nunito',
-                      color: FFAppState().TextColor,
-                    ),
+                style: FlutterFlowTheme.of(context).bodySmall,
+              ),
+              activeColor: Colors.white,
+              activeTrackColor: FlutterFlowTheme.of(context).primary,
+              dense: false,
+              controlAffinity: ListTileControlAffinity.trailing,
+              contentPadding:
+                  EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
+            ),
+            SwitchListTile.adaptive(
+              value: _model.switchListTileValue3 ??=
+                  Theme.of(context).brightness == Brightness.dark,
+              onChanged: (newValue) async {
+                setState(() => _model.switchListTileValue3 = newValue!);
+                if (newValue!) {
+                  setDarkModeSetting(context, ThemeMode.dark);
+                } else {
+                  setDarkModeSetting(context, ThemeMode.light);
+                }
+              },
+              title: Text(
+                'Dark Mode',
+                style: FlutterFlowTheme.of(context).headlineSmall,
+              ),
+              subtitle: Text(
+                'Switch on Dark mode',
+                style: FlutterFlowTheme.of(context).bodySmall,
               ),
               activeColor: FlutterFlowTheme.of(context).primaryText,
               activeTrackColor: FlutterFlowTheme.of(context).primary,
@@ -152,286 +137,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
             ),
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20.0, 10.0, 20.0, 0.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    'Colours & Themes',
-                    style: FlutterFlowTheme.of(context).headlineSmall.override(
-                          fontFamily: 'Nunito',
-                          color: FFAppState().TextColor,
-                          fontWeight: FontWeight.w600,
-                        ),
-                  ),
-                  FFButtonWidget(
-                    onPressed: () async {
-                      FFAppState().update(() {
-                        FFAppState().BackgroundColor =
-                            FlutterFlowTheme.of(context).primaryBackground;
-                        FFAppState().InteractablesColors =
-                            FlutterFlowTheme.of(context).primaryText;
-                        FFAppState().TextColor =
-                            FlutterFlowTheme.of(context).primaryText;
-                        FFAppState().CardColor =
-                            FlutterFlowTheme.of(context).secondary;
-                      });
-                    },
-                    text: 'Reset',
-                    options: FFButtonOptions(
-                      height: 35.0,
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(10.0, 0.0, 10.0, 0.0),
-                      iconPadding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                      color: FlutterFlowTheme.of(context).primary,
-                      textStyle:
-                          FlutterFlowTheme.of(context).titleSmall.override(
-                                fontFamily: 'Lexend Deca',
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w500,
-                              ),
-                      elevation: 3.0,
-                      borderSide: BorderSide(
-                        color: Colors.transparent,
-                        width: 1.0,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                final _colorPicked1Color = await showFFColorPicker(
-                  context,
-                  currentColor: _model.colorPicked1 ??=
-                      FlutterFlowTheme.of(context).primaryBackground,
-                  showRecentColors: true,
-                  allowOpacity: true,
-                  textColor: FlutterFlowTheme.of(context).primaryText,
-                  secondaryTextColor:
-                      FlutterFlowTheme.of(context).secondaryText,
-                  backgroundColor:
-                      FlutterFlowTheme.of(context).primaryBackground,
-                  primaryButtonBackgroundColor:
-                      FlutterFlowTheme.of(context).primary,
-                  primaryButtonTextColor: Colors.white,
-                  primaryButtonBorderColor: Colors.transparent,
-                  displayAsBottomSheet: isMobileWidth(context),
-                );
-
-                if (_colorPicked1Color != null) {
-                  setState(() => _model.colorPicked1 = _colorPicked1Color);
-                }
-
-                setState(() {
-                  FFAppState().BackgroundColor = _model.colorPicked1!;
-                });
-              },
-              child: ListTile(
-                title: Text(
-                  'Background',
-                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                subtitle: Text(
-                  'Choose a background color',
-                  style: FlutterFlowTheme.of(context).bodySmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                trailing: Icon(
-                  Icons.color_lens,
-                  color: FFAppState().BackgroundColor,
-                  size: 48.0,
-                ),
-                dense: false,
-                contentPadding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
-              ),
-            ),
-            InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                final _colorPicked2Color = await showFFColorPicker(
-                  context,
-                  currentColor: _model.colorPicked2 ??=
-                      FlutterFlowTheme.of(context).primaryText,
-                  showRecentColors: true,
-                  allowOpacity: true,
-                  textColor: FlutterFlowTheme.of(context).primaryText,
-                  secondaryTextColor:
-                      FlutterFlowTheme.of(context).secondaryText,
-                  backgroundColor:
-                      FlutterFlowTheme.of(context).primaryBackground,
-                  primaryButtonBackgroundColor:
-                      FlutterFlowTheme.of(context).primary,
-                  primaryButtonTextColor: Colors.white,
-                  primaryButtonBorderColor: Colors.transparent,
-                  displayAsBottomSheet: isMobileWidth(context),
-                );
-
-                if (_colorPicked2Color != null) {
-                  setState(() => _model.colorPicked2 = _colorPicked2Color);
-                }
-
-                FFAppState().update(() {
-                  FFAppState().TextColor = _model.colorPicked2!;
-                });
-              },
-              child: ListTile(
-                title: Text(
-                  'Text',
-                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                subtitle: Text(
-                  'Choose a text color',
-                  style: FlutterFlowTheme.of(context).bodySmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                trailing: Icon(
-                  Icons.color_lens,
-                  color: FFAppState().TextColor,
-                  size: 48.0,
-                ),
-                dense: false,
-                contentPadding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
-              ),
-            ),
-            InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                final _colorPicked3Color = await showFFColorPicker(
-                  context,
-                  currentColor: _model.colorPicked3 ??=
-                      FlutterFlowTheme.of(context).primaryText,
-                  showRecentColors: true,
-                  allowOpacity: true,
-                  textColor: FlutterFlowTheme.of(context).primaryText,
-                  secondaryTextColor:
-                      FlutterFlowTheme.of(context).secondaryText,
-                  backgroundColor:
-                      FlutterFlowTheme.of(context).primaryBackground,
-                  primaryButtonBackgroundColor:
-                      FlutterFlowTheme.of(context).primary,
-                  primaryButtonTextColor: Colors.white,
-                  primaryButtonBorderColor: Colors.transparent,
-                  displayAsBottomSheet: isMobileWidth(context),
-                );
-
-                if (_colorPicked3Color != null) {
-                  setState(() => _model.colorPicked3 = _colorPicked3Color);
-                }
-
-                FFAppState().update(() {
-                  FFAppState().InteractablesColors = _model.colorPicked3!;
-                });
-              },
-              child: ListTile(
-                title: Text(
-                  'Interactables',
-                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                subtitle: Text(
-                  'Choose an Icon, Button, and navigation color',
-                  style: FlutterFlowTheme.of(context).bodySmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                trailing: Icon(
-                  Icons.color_lens,
-                  color: FFAppState().InteractablesColors,
-                  size: 48.0,
-                ),
-                dense: false,
-                contentPadding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
-              ),
-            ),
-            InkWell(
-              splashColor: Colors.transparent,
-              focusColor: Colors.transparent,
-              hoverColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-              onTap: () async {
-                final _colorPicked4Color = await showFFColorPicker(
-                  context,
-                  currentColor: _model.colorPicked4 ??=
-                      FlutterFlowTheme.of(context).secondary,
-                  showRecentColors: true,
-                  allowOpacity: true,
-                  textColor: FlutterFlowTheme.of(context).primaryText,
-                  secondaryTextColor:
-                      FlutterFlowTheme.of(context).secondaryText,
-                  backgroundColor:
-                      FlutterFlowTheme.of(context).primaryBackground,
-                  primaryButtonBackgroundColor:
-                      FlutterFlowTheme.of(context).primary,
-                  primaryButtonTextColor: Colors.white,
-                  primaryButtonBorderColor: Colors.transparent,
-                  displayAsBottomSheet: isMobileWidth(context),
-                );
-
-                if (_colorPicked4Color != null) {
-                  setState(() => _model.colorPicked4 = _colorPicked4Color);
-                }
-
-                FFAppState().update(() {
-                  FFAppState().CardColor = _model.colorPicked4!;
-                });
-              },
-              child: ListTile(
-                title: Text(
-                  'Cards',
-                  style: FlutterFlowTheme.of(context).headlineSmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                subtitle: Text(
-                  'Choose an Icon, Button, and navigation color',
-                  style: FlutterFlowTheme.of(context).bodySmall.override(
-                        fontFamily: 'Nunito',
-                        color: FFAppState().TextColor,
-                      ),
-                ),
-                trailing: Icon(
-                  Icons.color_lens,
-                  color: FFAppState().TextColor,
-                  size: 48.0,
-                ),
-                dense: false,
-                contentPadding:
-                    EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
-              ),
-            ),
-            Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 24.0, 0.0, 0.0),
               child: FFButtonWidget(
                 onPressed: () async {
@@ -439,7 +144,7 @@ class _SettingsWidgetState extends State<SettingsWidget> {
                   await authManager.signOut();
                   GoRouter.of(context).clearRedirectLocation();
 
-                  context.goNamedAuth('LogIn', mounted);
+                  context.goNamedAuth('LogIn', context.mounted);
                 },
                 text: 'Log Out',
                 options: FFButtonOptions(

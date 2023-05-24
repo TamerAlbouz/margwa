@@ -5,9 +5,11 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:go_router/go_router.dart';
 import 'package:page_transition/page_transition.dart';
 import '../flutter_flow_theme.dart';
-import '../../backend/backend.dart';
+import '/backend/backend.dart';
 
 import '../../auth/base_auth_user_provider.dart';
+import '../../backend/push_notifications/push_notifications_handler.dart'
+    show PushNotificationsHandler;
 
 import '../../index.dart';
 import '../../main.dart';
@@ -100,6 +102,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             title: params.getParam('title', ParamType.String),
             chapterId: params.getParam('chapterId', ParamType.String),
             mangaid: params.getParam('mangaid', ParamType.String),
+            pages: params.getParam('pages', ParamType.int),
           ),
         ),
         FFRoute(
@@ -126,6 +129,11 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'HomePage',
           path: '/homePage',
           builder: (context, params) => HomePageWidget(),
+        ),
+        FFRoute(
+          name: 'Library',
+          path: '/library',
+          builder: (context, params) => LibraryWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
@@ -261,7 +269,8 @@ class FFParameters {
       return param;
     }
     // Return serialized value.
-    return deserializeParam<T>(param, type, isList, collectionNamePath);
+    return deserializeParam<T>(param, type, isList,
+        collectionNamePath: collectionNamePath);
   }
 }
 
@@ -314,7 +323,7 @@ class FFRoute {
                     fit: BoxFit.contain,
                   ),
                 )
-              : page;
+              : PushNotificationsHandler(child: page);
 
           final transitionInfo = state.transitionInfo;
           return transitionInfo.hasTransition

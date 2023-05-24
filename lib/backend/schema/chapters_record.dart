@@ -1,51 +1,64 @@
 import 'dart:async';
 
+import '/backend/schema/util/firestore_util.dart';
+import '/backend/schema/util/schema_util.dart';
+
 import 'index.dart';
-import 'serializers.dart';
-import 'package:built_value/built_value.dart';
+import '/flutter_flow/flutter_flow_util.dart';
 
-part 'chapters_record.g.dart';
+class ChaptersRecord extends FirestoreRecord {
+  ChaptersRecord._(
+    DocumentReference reference,
+    Map<String, dynamic> data,
+  ) : super(reference, data) {
+    _initializeFields();
+  }
 
-abstract class ChaptersRecord
-    implements Built<ChaptersRecord, ChaptersRecordBuilder> {
-  static Serializer<ChaptersRecord> get serializer =>
-      _$chaptersRecordSerializer;
+  // "chapter_id" field.
+  String? _chapterId;
+  String get chapterId => _chapterId ?? '';
+  bool hasChapterId() => _chapterId != null;
 
-  @BuiltValueField(wireName: 'chapter_id')
-  String? get chapterId;
+  // "user" field.
+  DocumentReference? _user;
+  DocumentReference? get user => _user;
+  bool hasUser() => _user != null;
 
-  DocumentReference? get user;
+  // "manga_id" field.
+  String? _mangaId;
+  String get mangaId => _mangaId ?? '';
+  bool hasMangaId() => _mangaId != null;
 
-  @BuiltValueField(wireName: 'manga_id')
-  String? get mangaId;
-
-  @BuiltValueField(wireName: kDocumentReferenceField)
-  DocumentReference? get ffRef;
-  DocumentReference get reference => ffRef!;
-
-  static void _initializeBuilder(ChaptersRecordBuilder builder) => builder
-    ..chapterId = ''
-    ..mangaId = '';
+  void _initializeFields() {
+    _chapterId = snapshotData['chapter_id'] as String?;
+    _user = snapshotData['user'] as DocumentReference?;
+    _mangaId = snapshotData['manga_id'] as String?;
+  }
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('chapters');
 
-  static Stream<ChaptersRecord> getDocument(DocumentReference ref) => ref
-      .snapshots()
-      .map((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Stream<ChaptersRecord> getDocument(DocumentReference ref) =>
+      ref.snapshots().map((s) => ChaptersRecord.fromSnapshot(s));
 
-  static Future<ChaptersRecord> getDocumentOnce(DocumentReference ref) => ref
-      .get()
-      .then((s) => serializers.deserializeWith(serializer, serializedData(s))!);
+  static Future<ChaptersRecord> getDocumentOnce(DocumentReference ref) =>
+      ref.get().then((s) => ChaptersRecord.fromSnapshot(s));
 
-  ChaptersRecord._();
-  factory ChaptersRecord([void Function(ChaptersRecordBuilder) updates]) =
-      _$ChaptersRecord;
+  static ChaptersRecord fromSnapshot(DocumentSnapshot snapshot) =>
+      ChaptersRecord._(
+        snapshot.reference,
+        mapFromFirestore(snapshot.data() as Map<String, dynamic>),
+      );
 
   static ChaptersRecord getDocumentFromData(
-          Map<String, dynamic> data, DocumentReference reference) =>
-      serializers.deserializeWith(serializer,
-          {...mapFromFirestore(data), kDocumentReferenceField: reference})!;
+    Map<String, dynamic> data,
+    DocumentReference reference,
+  ) =>
+      ChaptersRecord._(reference, mapFromFirestore(data));
+
+  @override
+  String toString() =>
+      'ChaptersRecord(reference: ${reference.path}, data: $snapshotData)';
 }
 
 Map<String, dynamic> createChaptersRecordData({
@@ -53,14 +66,12 @@ Map<String, dynamic> createChaptersRecordData({
   DocumentReference? user,
   String? mangaId,
 }) {
-  final firestoreData = serializers.toFirestore(
-    ChaptersRecord.serializer,
-    ChaptersRecord(
-      (c) => c
-        ..chapterId = chapterId
-        ..user = user
-        ..mangaId = mangaId,
-    ),
+  final firestoreData = mapToFirestore(
+    <String, dynamic>{
+      'chapter_id': chapterId,
+      'user': user,
+      'manga_id': mangaId,
+    }.withoutNulls,
   );
 
   return firestoreData;

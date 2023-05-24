@@ -52,6 +52,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         body: SafeArea(
+          top: true,
           child: Row(
             mainAxisSize: MainAxisSize.max,
             children: [
@@ -84,7 +85,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                 32.0, 0.0, 0.0, 0.0),
                             child: Text(
                               'Margwa',
-                              style: FlutterFlowTheme.of(context).displaySmall,
+                              style: FlutterFlowTheme.of(context)
+                                  .displaySmall
+                                  .override(
+                                    fontFamily: 'Nunito',
+                                    fontWeight: FontWeight.w800,
+                                  ),
                             ),
                           ),
                         ),
@@ -365,7 +371,8 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                         return;
                                       }
 
-                                      context.goNamedAuth('HomePage', mounted);
+                                      context.goNamedAuth(
+                                          'HomePage', context.mounted);
                                     },
                                     text: 'Create Account',
                                     options: FFButtonOptions(
