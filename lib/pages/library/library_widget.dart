@@ -73,7 +73,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
               child: Icon(
-                Icons.favorite_border,
+                Icons.favorite,
                 color: FlutterFlowTheme.of(context).primaryText,
                 size: 32.0,
               ),
@@ -174,7 +174,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                 ),
                                 child: Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
-                                      8.0, 8.0, 8.0, 8.0),
+                                      0.0, 0.0, 8.0, 0.0),
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
@@ -182,8 +182,12 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 1.0, 1.0, 1.0),
                                         child: ClipRRect(
-                                          borderRadius:
-                                              BorderRadius.circular(6.0),
+                                          borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(8.0),
+                                            bottomRight: Radius.circular(0.0),
+                                            topLeft: Radius.circular(8.0),
+                                            topRight: Radius.circular(0.0),
+                                          ),
                                           child: Image.network(
                                             listViewFavoritesRecord.src,
                                             width: 80.0,
@@ -196,7 +200,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
-                                                  8.0, 8.0, 4.0, 0.0),
+                                                  8.0, 0.0, 4.0, 0.0),
                                           child: Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
@@ -207,7 +211,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                               Text(
                                                 listViewFavoritesRecord.title
                                                     .maybeHandleOverflow(
-                                                  maxChars: 12,
+                                                  maxChars: 16,
                                                   replacement: '…',
                                                 ),
                                                 style:
