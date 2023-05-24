@@ -64,6 +64,9 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
             ) !=
             favoritesRecord.numChapters) {
           // If they don't match, send notification
+          createFavoritesRecordData(
+            notificationSent: true,
+          );
           triggerPushNotification(
             notificationTitle: "Test From headless",
             notificationText: 'Updated with ${(getJsonField(
@@ -181,6 +184,9 @@ class _MyAppState extends State<MyApp> {
                 ) !=
                 favoritesRecord.numChapters) {
               // If they don't match, send notification
+              createFavoritesRecordData(
+                notificationSent: true,
+              );
               triggerPushNotification(
                 notificationTitle: favoritesRecord.title,
                 notificationText: 'Updated with ${(getJsonField(

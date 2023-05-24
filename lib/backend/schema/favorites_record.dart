@@ -44,6 +44,11 @@ class FavoritesRecord extends FirestoreRecord {
   int get numChapters => _numChapters ?? 0;
   bool hasNumChapters() => _numChapters != null;
 
+  // "notification_sent" field.
+  bool? _notificationSent;
+  bool get notificationSent => _notificationSent ?? false;
+  bool hasNotificationSent() => _notificationSent != null;
+
   void _initializeFields() {
     _user = snapshotData['user'] as DocumentReference?;
     _id = snapshotData['id'] as String?;
@@ -51,6 +56,7 @@ class FavoritesRecord extends FirestoreRecord {
     _title = snapshotData['title'] as String?;
     _desc = snapshotData['desc'] as String?;
     _numChapters = snapshotData['num_chapters'] as int?;
+    _notificationSent = snapshotData['notification_sent'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -86,6 +92,7 @@ Map<String, dynamic> createFavoritesRecordData({
   String? title,
   String? desc,
   int? numChapters,
+  bool? notificationSent,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -95,6 +102,7 @@ Map<String, dynamic> createFavoritesRecordData({
       'title': title,
       'desc': desc,
       'num_chapters': numChapters,
+      'notification_sent': notificationSent,
     }.withoutNulls,
   );
 
