@@ -64,11 +64,13 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
             ) !=
             favoritesRecord.numChapters) {
           // If they don't match, send notification
-          createFavoritesRecordData(
-            notificationSent: true,
-          );
+          favoritesRecord.reference.update(createFavoritesRecordData(
+              numChapters: getJsonField(
+            (apiResult?.jsonBody ?? ''),
+            r'''$.total''',
+          )));
           triggerPushNotification(
-            notificationTitle: "Test From headless",
+            notificationTitle: favoritesRecord.title,
             notificationText: 'Updated with ${(getJsonField(
                   (apiResult?.jsonBody ?? ''),
                   r'''$.total''',
@@ -184,9 +186,11 @@ class _MyAppState extends State<MyApp> {
                 ) !=
                 favoritesRecord.numChapters) {
               // If they don't match, send notification
-              createFavoritesRecordData(
-                notificationSent: true,
-              );
+              favoritesRecord.reference.update(createFavoritesRecordData(
+                  numChapters: getJsonField(
+                (apiResult?.jsonBody ?? ''),
+                r'''$.total''',
+              )));
               triggerPushNotification(
                 notificationTitle: favoritesRecord.title,
                 notificationText: 'Updated with ${(getJsonField(
