@@ -904,7 +904,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   child: Text(
                                                     valueOrDefault<String>(
                                                       wrapFavoritesRecord
-                                                                  .numChapters ==
+                                                                  .openedChapters ==
                                                               getJsonField(
                                                                 containerGetChaptersResponse
                                                                     .jsonBody,
@@ -927,7 +927,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                             r'''$.total''',
                                                                           ) ==
                                                                           wrapFavoritesRecord
-                                                                              .numChapters
+                                                                              .openedChapters
                                                                       ? FlutterFlowTheme.of(
                                                                               context)
                                                                           .secondaryText
