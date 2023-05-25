@@ -272,12 +272,11 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                               .jsonBody,
                                         ).toString()}/${pagesHItem}',
                                         width: double.infinity,
-                                        height: double.infinity,
                                         fit: BoxFit.fitWidth,
                                       ),
                                       Align(
                                         alignment:
-                                            AlignmentDirectional(1.0, -0.75),
+                                            AlignmentDirectional(1.0, -1.0),
                                         child: Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(

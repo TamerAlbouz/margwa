@@ -399,13 +399,24 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           ),
                                           child: ListTile(
                                             title: Text(
-                                              getJsonField(
-                                                mangaItem,
-                                                r'''$.attributes.title.en''',
-                                              ).toString().maybeHandleOverflow(
-                                                    maxChars: 20,
-                                                    replacement: '…',
-                                                  ),
+                                              (getJsonField(
+                                                            mangaItem,
+                                                            r'''$.attributes.title.en''',
+                                                          ) !=
+                                                          'null') ||
+                                                      (getJsonField(
+                                                            mangaItem,
+                                                            r'''$.attributes.title.en''',
+                                                          ) !=
+                                                          null)
+                                                  ? getJsonField(
+                                                      mangaItem,
+                                                      r'''$.attributes.title.en''',
+                                                    ).toString()
+                                                  : 'N/A'.maybeHandleOverflow(
+                                                      maxChars: 20,
+                                                      replacement: '…',
+                                                    ),
                                               textAlign: TextAlign.start,
                                               style:
                                                   FlutterFlowTheme.of(context)
@@ -416,13 +427,24 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                                       ),
                                             ),
                                             subtitle: Text(
-                                              getJsonField(
-                                                mangaItem,
-                                                r'''$.attributes.description.en''',
-                                              ).toString().maybeHandleOverflow(
-                                                    maxChars: 100,
-                                                    replacement: '…',
-                                                  ),
+                                              (getJsonField(
+                                                            mangaItem,
+                                                            r'''$.attributes.description.en''',
+                                                          ) !=
+                                                          'null') ||
+                                                      (getJsonField(
+                                                            mangaItem,
+                                                            r'''$.attributes.description.en''',
+                                                          ) !=
+                                                          null)
+                                                  ? getJsonField(
+                                                      mangaItem,
+                                                      r'''$.attributes.description.en''',
+                                                    ).toString()
+                                                  : 'N/A'.maybeHandleOverflow(
+                                                      maxChars: 100,
+                                                      replacement: '…',
+                                                    ),
                                               textAlign: TextAlign.start,
                                               style:
                                                   FlutterFlowTheme.of(context)
