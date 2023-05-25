@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "842824867919-5vvm49ff774lidn9fvr8qtpj0nvr2p6j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mirror.margwa",
+            "certificate_hash": "3a9d069d8255b00078ce7514ac783ceb5abdc3aa"
+          }
+        },
+        {
           "client_id": "842824867919-jeb174dfp42umldjgnbn39c4dcr0abed.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -22,7 +30,7 @@
           }
         },
         {
-          "client_id": "842824867919-3il996ema3a2fvepj49likkh13v0kfbd.apps.googleusercontent.com",
+          "client_id": "842824867919-ogp19q7cabg8t670l5gqi0ce3trrvc6e.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
