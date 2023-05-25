@@ -420,7 +420,7 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                                 fontFamily: 'Nunito',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .tertiary,
+                                                        .alternate,
                                                 fontSize: 16.0,
                                                 fontWeight: FontWeight.w600,
                                               ),

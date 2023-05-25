@@ -273,7 +273,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                                   fontFamily: 'Nunito',
                                                   color: FlutterFlowTheme.of(
                                                           context)
-                                                      .tertiary,
+                                                      .alternate,
                                                   fontWeight: FontWeight.w600,
                                                 ),
                                             mouseCursor:
@@ -357,7 +357,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                                 fontFamily: 'Nunito',
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .tertiary,
+                                                        .alternate,
                                                 fontWeight: FontWeight.w600,
                                               ),
                                           mouseCursor: SystemMouseCursors.click,

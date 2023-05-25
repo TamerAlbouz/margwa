@@ -9,14 +9,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.10"
-  aligned_dialog:
-    dependency: "direct main"
-    description:
-      name: aligned_dialog
-      sha256: c6ce4f82a5ab35dde2c48caa436eab4da9d6a4238802f67312c878394caf055d
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.0.6"
   archive:
     dependency: transitive
     description:
