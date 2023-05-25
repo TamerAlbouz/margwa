@@ -185,7 +185,10 @@ class _MangaWidgetState extends State<MangaWidget> {
                                     rowGetChaptersResponse.jsonBody,
                                     r'''$.total''',
                                   ),
-                                  notificationSent: false,
+                                  openedChapters: getJsonField(
+                                    rowGetChaptersResponse.jsonBody,
+                                    r'''$.total''',
+                                  ),
                                 );
                                 await FavoritesRecord.collection
                                     .doc()
