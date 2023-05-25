@@ -52,7 +52,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         appBar: AppBar(
-          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          backgroundColor: FlutterFlowTheme.of(context).primary,
           automaticallyImplyLeading: false,
           leading: FlutterFlowIconButton(
             borderColor: Colors.transparent,
@@ -90,7 +90,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  color: FlutterFlowTheme.of(context).primary,
                 ),
                 child: Padding(
                   padding:
@@ -219,7 +219,18 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 child: Container(
                   width: 100.0,
                   height: 100.0,
-                  decoration: BoxDecoration(),
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        FlutterFlowTheme.of(context).primary,
+                        FlutterFlowTheme.of(context).primaryBackground,
+                        FlutterFlowTheme.of(context).primaryBackground
+                      ],
+                      stops: [0.0, 0.35, 1.0],
+                      begin: AlignmentDirectional(0.0, -1.0),
+                      end: AlignmentDirectional(0, 1.0),
+                    ),
+                  ),
                   child: Padding(
                     padding:
                         EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 10.0),
@@ -346,9 +357,9 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   children: [
                                     ClipRRect(
                                       borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(10.0),
+                                        bottomLeft: Radius.circular(8.0),
                                         bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(10.0),
+                                        topLeft: Radius.circular(8.0),
                                         topRight: Radius.circular(0.0),
                                       ),
                                       child: CachedNetworkImage(
@@ -367,17 +378,32 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                     ),
                                     Expanded(
                                       child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(0.0),
+                                          bottomRight: Radius.circular(8.0),
+                                          topLeft: Radius.circular(0.0),
+                                          topRight: Radius.circular(8.0),
+                                        ),
                                         child: Container(
                                           width: 100.0,
                                           height: 150.0,
-                                          decoration: BoxDecoration(),
+                                          decoration: BoxDecoration(
+                                            color: FlutterFlowTheme.of(context)
+                                                .secondary,
+                                            borderRadius: BorderRadius.only(
+                                              bottomLeft: Radius.circular(0.0),
+                                              bottomRight: Radius.circular(8.0),
+                                              topLeft: Radius.circular(0.0),
+                                              topRight: Radius.circular(8.0),
+                                            ),
+                                          ),
                                           child: ListTile(
                                             title: Text(
                                               getJsonField(
                                                 mangaItem,
                                                 r'''$.attributes.title.en''',
                                               ).toString().maybeHandleOverflow(
-                                                    maxChars: 25,
+                                                    maxChars: 20,
                                                     replacement: '…',
                                                   ),
                                               textAlign: TextAlign.start,

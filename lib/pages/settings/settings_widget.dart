@@ -77,20 +77,6 @@ class _SettingsWidgetState extends State<SettingsWidget> {
           mainAxisSize: MainAxisSize.max,
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 0.0),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  Expanded(
-                    child: Text(
-                      'Choose what notifcations you want to recieve below and we will update the settings.',
-                      style: FlutterFlowTheme.of(context).bodySmall,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 12.0, 0.0, 0.0),
               child: SwitchListTile.adaptive(
                 value: _model.switchListTileValue1 ??= true,
@@ -124,30 +110,10 @@ class _SettingsWidgetState extends State<SettingsWidget> {
               ),
             ),
             SwitchListTile.adaptive(
-              value: _model.switchListTileValue2 ??= true,
-              onChanged: (newValue) async {
-                setState(() => _model.switchListTileValue2 = newValue!);
-              },
-              title: Text(
-                'Email Notifications',
-                style: FlutterFlowTheme.of(context).headlineSmall,
-              ),
-              subtitle: Text(
-                'Receive email notifications from our marketing team about new features.',
-                style: FlutterFlowTheme.of(context).bodySmall,
-              ),
-              activeColor: Colors.white,
-              activeTrackColor: FlutterFlowTheme.of(context).primary,
-              dense: false,
-              controlAffinity: ListTileControlAffinity.trailing,
-              contentPadding:
-                  EdgeInsetsDirectional.fromSTEB(24.0, 12.0, 24.0, 12.0),
-            ),
-            SwitchListTile.adaptive(
-              value: _model.switchListTileValue3 ??=
+              value: _model.switchListTileValue2 ??=
                   Theme.of(context).brightness == Brightness.dark,
               onChanged: (newValue) async {
-                setState(() => _model.switchListTileValue3 = newValue!);
+                setState(() => _model.switchListTileValue2 = newValue!);
                 if (newValue!) {
                   setDarkModeSetting(context, ThemeMode.dark);
                 } else {

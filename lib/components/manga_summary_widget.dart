@@ -52,6 +52,7 @@ class _MangaSummaryWidgetState extends State<MangaSummaryWidget> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
+        color: Color(0xE5101213),
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
