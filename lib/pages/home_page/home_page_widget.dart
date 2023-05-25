@@ -811,11 +811,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                           final favoritesUpdateData =
                                               createFavoritesRecordData(
-                                            numChapters: getJsonField(
-                                              containerGetChaptersResponse
-                                                  .jsonBody,
-                                              r'''$.total''',
-                                            ),
+                                            openedChapters:
+                                                wrapFavoritesRecord.numChapters,
                                           );
                                           await wrapFavoritesRecord.reference
                                               .update(favoritesUpdateData);
