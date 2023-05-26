@@ -210,6 +210,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                   ),
                                 ),
@@ -237,7 +238,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                         height: 75.0,
                                         child: SpinKitRipple(
                                           color: FlutterFlowTheme.of(context)
-                                              .primary,
+                                              .alternate,
                                           size: 75.0,
                                         ),
                                       ),
@@ -491,6 +492,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           fontFamily: 'Nunito',
                                           color: FlutterFlowTheme.of(context)
                                               .primaryText,
+                                          fontWeight: FontWeight.w600,
                                         ),
                                   ),
                                 ),
@@ -529,7 +531,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                       height: 75.0,
                                       child: SpinKitRipple(
                                         color: FlutterFlowTheme.of(context)
-                                            .primary,
+                                            .alternate,
                                         size: 75.0,
                                       ),
                                     ),
@@ -568,7 +570,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               child: SpinKitRipple(
                                                 color:
                                                     FlutterFlowTheme.of(context)
-                                                        .primary,
+                                                        .alternate,
                                                 size: 75.0,
                                               ),
                                             ),

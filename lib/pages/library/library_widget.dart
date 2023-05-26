@@ -103,7 +103,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                             width: 75.0,
                             height: 75.0,
                             child: SpinKitRipple(
-                              color: FlutterFlowTheme.of(context).primary,
+                              color: FlutterFlowTheme.of(context).alternate,
                               size: 75.0,
                             ),
                           ),
