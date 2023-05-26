@@ -26,6 +26,12 @@ import 'package:background_fetch/background_fetch.dart';
 // Be sure to annotate your callback function to avoid issues in release mode on Flutter >= 3.3.0
 @pragma('vm:entry-point')
 void backgroundFetchHeadlessTask(HeadlessTask task) async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initFirebase();
+
+  final appState = FFAppState(); // Initialize FFAppState
+  await appState.initializePersistedState();
+
   ApiCallResponse? apiResult;
   String taskId = task.taskId;
   bool isTimeout = task.timeout;
@@ -37,6 +43,7 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
     return;
   }
   print('[BackgroundFetch] Headless event received.');
+
   queryFavoritesRecord(
     queryBuilder: (favoritesRecord) =>
         favoritesRecord.where('user', isEqualTo: currentUserReference),
@@ -57,14 +64,19 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
             ) !=
             favoritesRecord.numChapters) {
           // If they don't match, send notification
+          favoritesRecord.reference.update(createFavoritesRecordData(
+              numChapters: getJsonField(
+            (apiResult?.jsonBody ?? ''),
+            r'''$.total''',
+          )));
           triggerPushNotification(
-            notificationTitle: "Test From headless",
+            notificationTitle: favoritesRecord.title,
             notificationText: 'Updated with ${(getJsonField(
                   (apiResult?.jsonBody ?? ''),
                   r'''$.total''',
-                ) - favoritesRecord.numChapters!).toString()} new chapters!',
+                ) - favoritesRecord.numChapters).toString()} new chapters!',
             notificationSound: 'default',
-            userRefs: [currentUserReference!],
+            userRefs: [favoritesRecord.user!],
             initialPageName: 'Manga',
             parameterData: {
               'title': favoritesRecord.title,
@@ -75,19 +87,6 @@ void backgroundFetchHeadlessTask(HeadlessTask task) async {
           );
         }
       }
-    },
-  );
-  triggerPushNotification(
-    notificationTitle: "Test From headless",
-    notificationText: 'new chapters!',
-    notificationSound: 'default',
-    userRefs: [currentUserReference!],
-    initialPageName: 'Manga',
-    parameterData: {
-      'title': "",
-      'desc': "",
-      'src': "",
-      'id': "",
     },
   );
   BackgroundFetch.finish(taskId);
@@ -109,7 +108,7 @@ void main() async {
 
   // Register to receive BackgroundFetch events after app is terminated.
   // Requires {stopOnTerminate: false, enableHeadless: true}
-  BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
+  await BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 
 class MyApp extends StatefulWidget {
@@ -187,6 +186,11 @@ class _MyAppState extends State<MyApp> {
                 ) !=
                 favoritesRecord.numChapters) {
               // If they don't match, send notification
+              favoritesRecord.reference.update(createFavoritesRecordData(
+                  numChapters: getJsonField(
+                (apiResult?.jsonBody ?? ''),
+                r'''$.total''',
+              )));
               triggerPushNotification(
                 notificationTitle: favoritesRecord.title,
                 notificationText: 'Updated with ${(getJsonField(

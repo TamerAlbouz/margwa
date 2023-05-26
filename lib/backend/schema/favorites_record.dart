@@ -44,6 +44,11 @@ class FavoritesRecord extends FirestoreRecord {
   int get numChapters => _numChapters ?? 0;
   bool hasNumChapters() => _numChapters != null;
 
+  // "opened_chapters" field.
+  int? _openedChapters;
+  int get openedChapters => _openedChapters ?? 0;
+  bool hasOpenedChapters() => _openedChapters != null;
+
   void _initializeFields() {
     _user = snapshotData['user'] as DocumentReference?;
     _id = snapshotData['id'] as String?;
@@ -51,6 +56,7 @@ class FavoritesRecord extends FirestoreRecord {
     _title = snapshotData['title'] as String?;
     _desc = snapshotData['desc'] as String?;
     _numChapters = snapshotData['num_chapters'] as int?;
+    _openedChapters = snapshotData['opened_chapters'] as int?;
   }
 
   static CollectionReference get collection =>
@@ -86,6 +92,7 @@ Map<String, dynamic> createFavoritesRecordData({
   String? title,
   String? desc,
   int? numChapters,
+  int? openedChapters,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -95,6 +102,7 @@ Map<String, dynamic> createFavoritesRecordData({
       'title': title,
       'desc': desc,
       'num_chapters': numChapters,
+      'opened_chapters': openedChapters,
     }.withoutNulls,
   );
 
