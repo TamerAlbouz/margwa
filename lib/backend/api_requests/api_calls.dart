@@ -44,7 +44,7 @@ class GetChaptersCall {
   static Future<ApiCallResponse> call({
     String? id = 'a72123a4-25e4-4b18-82ab-a4d520aa2417',
     int? offset = 20,
-    int? limit = 40,
+    int? limit = 20,
   }) {
     return ApiManager.instance.makeApiCall(
       callName: 'getChapters',
