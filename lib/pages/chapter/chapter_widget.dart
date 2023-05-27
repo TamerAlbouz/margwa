@@ -152,7 +152,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                               return Container(
                                 width: double.infinity,
                                 height:
-                                    MediaQuery.of(context).size.height * 0.9,
+                                    MediaQuery.of(context).size.height * 0.93,
                                 child: PageView.builder(
                                   controller: _model.pageViewController ??=
                                       PageController(
