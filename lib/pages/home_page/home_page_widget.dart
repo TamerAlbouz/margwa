@@ -108,8 +108,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                     color: FlutterFlowTheme.of(context).primaryText,
                     size: 32.0,
                   ),
-                  onPressed: () {
-                    print('IconButton pressed ...');
+                  onPressed: () async {
+                    context.pushNamed('Settings');
                   },
                 ),
               ),
