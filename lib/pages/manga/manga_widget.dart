@@ -142,7 +142,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                                   color: FlutterFlowTheme.of(context)
                                       .primaryBackground,
                                   image: DecorationImage(
-                                    fit: BoxFit.scaleDown,
+                                    fit: BoxFit.cover,
                                     image: CachedNetworkImageProvider(
                                       widget.src!,
                                     ),
@@ -649,22 +649,31 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                           r'''$.attributes.title''',
                                                         ) !=
                                                         '')) {
-                                                  return getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.title''',
-                                                  ).toString();
+                                                  return valueOrDefault<String>(
+                                                    getJsonField(
+                                                      chaptersItem,
+                                                      r'''$.attributes.title''',
+                                                    ).toString(),
+                                                    'N/A',
+                                                  );
                                                 } else if (getJsonField(
                                                       chaptersItem,
                                                       r'''$.attributes.volume''',
                                                     ) !=
                                                     null) {
-                                                  return 'Vol: ${getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.volume''',
-                                                  ).toString()} | Ch: ${getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.chapter''',
-                                                  ).toString()}';
+                                                  return 'Vol: ${valueOrDefault<String>(
+                                                    getJsonField(
+                                                      chaptersItem,
+                                                      r'''$.attributes.volume''',
+                                                    ).toString(),
+                                                    'N/A',
+                                                  )} | Ch: ${valueOrDefault<String>(
+                                                    getJsonField(
+                                                      chaptersItem,
+                                                      r'''$.attributes.chapter''',
+                                                    ).toString(),
+                                                    'N/A',
+                                                  )}';
                                                 } else {
                                                   return 'Ch: ${getJsonField(
                                                     chaptersItem,
@@ -693,13 +702,19 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                           r'''$.attributes.volume''',
                                                         ) !=
                                                         null)) {
-                                                  return 'Vol: ${getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.volume''',
-                                                  ).toString()} | Ch: ${getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.chapter''',
-                                                  ).toString()}';
+                                                  return 'Vol: ${valueOrDefault<String>(
+                                                    getJsonField(
+                                                      chaptersItem,
+                                                      r'''$.attributes.volume''',
+                                                    ).toString(),
+                                                    'N/A',
+                                                  )} | Ch: ${valueOrDefault<String>(
+                                                    getJsonField(
+                                                      chaptersItem,
+                                                      r'''$.attributes.chapter''',
+                                                    ).toString(),
+                                                    'N/A',
+                                                  )}';
                                                 } else if (((getJsonField(
                                                               chaptersItem,
                                                               r'''$.attributes.title''',
@@ -715,10 +730,13 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                           r'''$.attributes.volume''',
                                                         ) ==
                                                         null)) {
-                                                  return 'Ch: ${getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.chapter''',
-                                                  ).toString()}';
+                                                  return 'Ch: ${valueOrDefault<String>(
+                                                    getJsonField(
+                                                      chaptersItem,
+                                                      r'''$.attributes.chapter''',
+                                                    ).toString(),
+                                                    'N/A',
+                                                  )}';
                                                 } else {
                                                   return '';
                                                 }
@@ -816,16 +834,28 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                     chaptersItem,
                                                     r'''$.attributes.updatedAt''',
                                                   ).toString()),
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                      ),
+                                                  style:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                'Nunito',
+                                                            color: (containerChaptersRecord !=
+                                                                        null) &&
+                                                                    (containerChaptersRecord!
+                                                                            .chapterId ==
+                                                                        getJsonField(
+                                                                          chaptersItem,
+                                                                          r'''$.id''',
+                                                                        ))
+                                                                ? FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primaryText
+                                                                : FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .secondaryText,
+                                                          ),
                                                 ),
                                               ],
                                             ),
