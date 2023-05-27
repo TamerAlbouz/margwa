@@ -86,34 +86,71 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           appBar: AppBar(
             backgroundColor: FlutterFlowTheme.of(context).primary,
             automaticallyImplyLeading: false,
-            title: Text(
-              'Margwa',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily: 'Nunito',
-                    fontWeight: FontWeight.w800,
+            actions: [],
+            flexibleSpace: FlexibleSpaceBar(
+              background: Container(
+                width: 100.0,
+                height: 100.0,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      FlutterFlowTheme.of(context).primaryBackground,
+                      FlutterFlowTheme.of(context).primary
+                    ],
+                    stops: [0.0, 1.0],
+                    begin: AlignmentDirectional(-0.07, 1.0),
+                    end: AlignmentDirectional(0.07, -1.0),
                   ),
-            ),
-            actions: [
-              Row(
-                mainAxisSize: MainAxisSize.max,
-                children: [
-                  FlutterFlowIconButton(
-                    borderColor: Colors.transparent,
-                    borderRadius: 30.0,
-                    borderWidth: 1.0,
-                    buttonSize: 60.0,
-                    icon: Icon(
-                      Icons.settings,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 30.0,
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.max,
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(
+                      padding:
+                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(8.0),
+                            child: Image.asset(
+                              'assets/images/Transparent-Margwa.png',
+                              width: 50.0,
+                              height: 50.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                    onPressed: () async {
-                      context.pushNamed('Settings');
-                    },
-                  ),
-                ],
+                    Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 4.0, 0.0),
+                          child: FlutterFlowIconButton(
+                            borderColor: Colors.transparent,
+                            borderRadius: 30.0,
+                            borderWidth: 1.0,
+                            buttonSize: 60.0,
+                            icon: Icon(
+                              Icons.settings,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 30.0,
+                            ),
+                            onPressed: () async {
+                              context.pushNamed('Settings');
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
-            ],
+            ),
             centerTitle: false,
             elevation: 0.0,
           ),
@@ -121,699 +158,757 @@ class _HomePageWidgetState extends State<HomePageWidget> {
             top: true,
             child: Container(
               width: double.infinity,
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    FlutterFlowTheme.of(context).primary,
-                    FlutterFlowTheme.of(context).primaryBackground,
-                    FlutterFlowTheme.of(context).primaryBackground
-                  ],
-                  stops: [0.0, 0.35, 1.0],
-                  begin: AlignmentDirectional(0.0, -1.0),
-                  end: AlignmentDirectional(0, 1.0),
-                ),
-              ),
+              decoration: BoxDecoration(),
               child: Column(
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 12.0, 16.0, 0.0),
-                    child: InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        context.pushNamed('SearchPage');
-                      },
-                      child: Container(
-                        width: double.infinity,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          color: FlutterFlowTheme.of(context).secondary,
-                          borderRadius: BorderRadius.circular(12.0),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              12.0, 0.0, 12.0, 0.0),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            children: [
-                              FaIcon(
-                                FontAwesomeIcons.search,
-                                color:
-                                    FlutterFlowTheme.of(context).secondaryText,
-                                size: 20.0,
-                              ),
-                              Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    10.0, 0.0, 0.0, 0.0),
-                                child: Text(
-                                  'Search...',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyLarge
-                                      .override(
-                                        fontFamily: 'Nunito',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                      ),
-                                ),
-                              ),
-                            ],
+                  Stack(
+                    children: [
+                      Align(
+                        alignment: AlignmentDirectional(1.0, 0.0),
+                        child: Container(
+                          width: 250.0,
+                          height: 40.0,
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                FlutterFlowTheme.of(context).primary,
+                                FlutterFlowTheme.of(context).primaryBackground
+                              ],
+                              stops: [0.0, 1.0],
+                              begin: AlignmentDirectional(0.1, -1.0),
+                              end: AlignmentDirectional(-0.1, 1.0),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 4.0, 8.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 4.0, 0.0, 4.0),
-                                    child: Text(
-                                      'Latest',
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 12.0, 8.0, 12.0),
-                              child: Container(
-                                width: double.infinity,
-                                height: 200.0,
-                                decoration: BoxDecoration(),
-                                child: FutureBuilder<ApiCallResponse>(
-                                  future: GetMangaCall.call(
-                                    limit: 10,
-                                    offset: 0,
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 75.0,
-                                          height: 75.0,
-                                          child: SpinKitRipple(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 75.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    final pageViewGetMangaResponse =
-                                        snapshot.data!;
-                                    return Builder(
-                                      builder: (context) {
-                                        final manga = (GetMangaCall.data(
-                                                  pageViewGetMangaResponse
-                                                      .jsonBody,
-                                                )
-                                                    ?.map((e) => e)
-                                                    .toList()
-                                                    ?.toList() ??
-                                                [])
-                                            .take(10)
-                                            .toList();
-                                        if (manga.isEmpty) {
-                                          return EmptyWidget();
-                                        }
-                                        return Container(
-                                          width: double.infinity,
-                                          height: 500.0,
-                                          child: PageView.builder(
-                                            allowImplicitScrolling: true,
-                                            controller: _model
-                                                    .pageViewController ??=
-                                                PageController(
-                                                    initialPage: min(
-                                                        0, manga.length - 1)),
-                                            scrollDirection: Axis.horizontal,
-                                            itemCount: manga.length,
-                                            itemBuilder: (context, mangaIndex) {
-                                              final mangaItem =
-                                                  manga[mangaIndex];
-                                              return InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  context.pushNamed(
-                                                    'Manga',
-                                                    queryParams: {
-                                                      'title': serializeParam(
-                                                        valueOrDefault<String>(
-                                                          getJsonField(
-                                                                    mangaItem,
-                                                                    r'''$.attributes.title.en''',
-                                                                  ) ==
-                                                                  'null'
-                                                              ? 'N/A'
-                                                              : getJsonField(
-                                                                  mangaItem,
-                                                                  r'''$.attributes.title.en''',
-                                                                ).toString(),
-                                                          'N/A',
-                                                        ),
-                                                        ParamType.String,
-                                                      ),
-                                                      'desc': serializeParam(
-                                                        valueOrDefault<String>(
-                                                          getJsonField(
-                                                                    mangaItem,
-                                                                    r'''$.attributes.description.en''',
-                                                                  ) ==
-                                                                  'null'
-                                                              ? 'N/A'
-                                                              : getJsonField(
-                                                                  mangaItem,
-                                                                  r'''$.attributes.description.en''',
-                                                                ).toString(),
-                                                          'N/A',
-                                                        ),
-                                                        ParamType.String,
-                                                      ),
-                                                      'src': serializeParam(
-                                                        'https://uploads.mangadex.org/covers/${getJsonField(
-                                                          mangaItem,
-                                                          r'''$.id''',
-                                                        ).toString()}/${getJsonField(
-                                                          mangaItem,
-                                                          r'''$.relationships[:].attributes.fileName''',
-                                                        ).toString()}',
-                                                        ParamType.String,
-                                                      ),
-                                                      'id': serializeParam(
-                                                        getJsonField(
-                                                          mangaItem,
-                                                          r'''$.id''',
-                                                        ).toString(),
-                                                        ParamType.String,
-                                                      ),
-                                                    }.withoutNulls,
-                                                  );
-                                                },
-                                                child: Stack(
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              8.0),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            'https://uploads.mangadex.org/covers/${getJsonField(
-                                                          mangaItem,
-                                                          r'''$.id''',
-                                                        ).toString()}/${getJsonField(
-                                                          mangaItem,
-                                                          r'''$.relationships[:].attributes.fileName''',
-                                                        ).toString()}',
-                                                        width: double.infinity,
-                                                        height: 200.0,
-                                                        fit: BoxFit.cover,
-                                                        progressIndicatorBuilder:
-                                                            (context, url,
-                                                                    downloadProgress) =>
-                                                                Center(
-                                                          child: SizedBox(
-                                                            width: 25,
-                                                            height: 25,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              strokeWidth: 3,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primary,
-                                                              value: downloadProgress
-                                                                          .progress !=
-                                                                      null
-                                                                  ? downloadProgress
-                                                                      .progress
-                                                                  : 0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Align(
-                                                      alignment:
-                                                          AlignmentDirectional(
-                                                              -0.9, 0.9),
-                                                      child: Container(
-                                                        width: 160.0,
-                                                        height: 60.0,
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .secondary,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      5.0),
-                                                        ),
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsetsDirectional
-                                                                  .fromSTEB(
-                                                                      10.0,
-                                                                      10.0,
-                                                                      10.0,
-                                                                      10.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .min,
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                getJsonField(
-                                                                  mangaItem,
-                                                                  r'''$.attributes.title.en''',
-                                                                )
-                                                                    .toString()
-                                                                    .maybeHandleOverflow(
-                                                                      maxChars:
-                                                                          15,
-                                                                      replacement:
-                                                                          '…',
-                                                                    ),
-                                                                maxLines: 1,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .titleMedium,
-                                                              ),
-                                                              Text(
-                                                                (getJsonField(
-                                                                              mangaItem,
-                                                                              r'''$.attributes.year''',
-                                                                            ) ==
-                                                                            null) ||
-                                                                        (getJsonField(
-                                                                              mangaItem,
-                                                                              r'''$.attributes.year''',
-                                                                            ) ==
-                                                                            'null')
-                                                                    ? 'N/A'
-                                                                    : getJsonField(
-                                                                        mangaItem,
-                                                                        r'''$.attributes.year''',
-                                                                      ).toString(),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      fontFamily:
-                                                                          'Nunito',
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        );
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  8.0, 4.0, 8.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 4.0, 0.0, 4.0),
-                                    child: Text(
-                                      'Library',
-                                      style: FlutterFlowTheme.of(context)
-                                          .titleSmall
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: FlutterFlowTheme.of(context)
-                                                .primaryText,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                    ),
-                                  ),
-                                  InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      context.pushNamed('Library');
-                                    },
-                                    child: Text(
-                                      'See All',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 12.0, 0.0, 44.0),
-                              child: StreamBuilder<List<FavoritesRecord>>(
-                                stream: queryFavoritesRecord(
-                                  queryBuilder: (favoritesRecord) =>
-                                      favoritesRecord.where('user',
-                                          isEqualTo: currentUserReference),
-                                  limit: 10,
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 100.0, 0.0, 100.0),
-                                        child: SizedBox(
-                                          width: 75.0,
-                                          height: 75.0,
-                                          child: SpinKitRipple(
-                                            color: FlutterFlowTheme.of(context)
-                                                .alternate,
-                                            size: 75.0,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<FavoritesRecord>
-                                      wrapFavoritesRecordList = snapshot.data!;
-                                  if (wrapFavoritesRecordList.isEmpty) {
-                                    return Center(
-                                      child: Container(
-                                        height: 250.0,
-                                        child: EmptyWidget(),
-                                      ),
-                                    );
-                                  }
-                                  return Wrap(
-                                    spacing: 8.0,
-                                    runSpacing: 8.0,
-                                    alignment: WrapAlignment.start,
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.start,
-                                    direction: Axis.horizontal,
-                                    runAlignment: WrapAlignment.start,
-                                    verticalDirection: VerticalDirection.down,
-                                    clipBehavior: Clip.none,
-                                    children: List.generate(
-                                        wrapFavoritesRecordList.length,
-                                        (wrapIndex) {
-                                      final wrapFavoritesRecord =
-                                          wrapFavoritesRecordList[wrapIndex];
-                                      return FutureBuilder<ApiCallResponse>(
-                                        future: GetChaptersCall.call(
-                                          id: wrapFavoritesRecord.id,
-                                        ),
-                                        builder: (context, snapshot) {
-                                          // Customize what your widget looks like when it's loading.
-                                          if (!snapshot.hasData) {
-                                            return Center(
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        0.0, 20.0, 0.0, 20.0),
-                                                child: SizedBox(
-                                                  width: 75.0,
-                                                  height: 75.0,
-                                                  child: SpinKitRipple(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .alternate,
-                                                    size: 75.0,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          }
-                                          final containerGetChaptersResponse =
-                                              snapshot.data!;
-                                          return InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              context.pushNamed(
-                                                'Manga',
-                                                queryParams: {
-                                                  'title': serializeParam(
-                                                    wrapFavoritesRecord.title,
-                                                    ParamType.String,
-                                                  ),
-                                                  'desc': serializeParam(
-                                                    wrapFavoritesRecord.desc,
-                                                    ParamType.String,
-                                                  ),
-                                                  'src': serializeParam(
-                                                    wrapFavoritesRecord.src,
-                                                    ParamType.String,
-                                                  ),
-                                                  'id': serializeParam(
-                                                    wrapFavoritesRecord.id,
-                                                    ParamType.String,
-                                                  ),
-                                                }.withoutNulls,
-                                              );
-
-                                              final favoritesUpdateData =
-                                                  createFavoritesRecordData(
-                                                openedChapters:
-                                                    wrapFavoritesRecord
-                                                        .numChapters,
-                                              );
-                                              await wrapFavoritesRecord
-                                                  .reference
-                                                  .update(favoritesUpdateData);
-                                            },
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width *
-                                                  0.45,
-                                              height: 255.0,
-                                              decoration: BoxDecoration(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .secondary,
-                                                boxShadow: [
-                                                  BoxShadow(
-                                                    blurRadius: 4.0,
-                                                    color: Color(0x230E151B),
-                                                    offset: Offset(0.0, 2.0),
-                                                  )
-                                                ],
-                                                borderRadius:
-                                                    BorderRadius.circular(12.0),
-                                              ),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        4.0, 4.0, 4.0, 4.0),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10.0),
-                                                      child: CachedNetworkImage(
-                                                        imageUrl:
-                                                            wrapFavoritesRecord
-                                                                .src,
-                                                        width: double.infinity,
-                                                        height: 180.0,
-                                                        fit: BoxFit.cover,
-                                                        progressIndicatorBuilder:
-                                                            (context, url,
-                                                                    downloadProgress) =>
-                                                                Center(
-                                                          child: SizedBox(
-                                                            width: 25,
-                                                            height: 25,
-                                                            child:
-                                                                CircularProgressIndicator(
-                                                              strokeWidth: 3,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primary,
-                                                              value: downloadProgress
-                                                                          .progress !=
-                                                                      null
-                                                                  ? downloadProgress
-                                                                      .progress
-                                                                  : 0,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  8.0,
-                                                                  12.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        wrapFavoritesRecord
-                                                            .title
-                                                            .maybeHandleOverflow(
-                                                          maxChars: 12,
-                                                          replacement: '…',
-                                                        ),
-                                                        maxLines: 1,
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleMedium,
-                                                      ),
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  8.0,
-                                                                  4.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Text(
-                                                        valueOrDefault<String>(
-                                                          wrapFavoritesRecord
-                                                                      .openedChapters ==
-                                                                  getJsonField(
-                                                                    containerGetChaptersResponse
-                                                                        .jsonBody,
-                                                                    r'''$.total''',
-                                                                  )
-                                                              ? 'No Update'
-                                                              : 'New Update',
-                                                          'No Update',
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodySmall
-                                                                .override(
-                                                                  fontFamily:
-                                                                      'Nunito',
-                                                                  color: getJsonField(
-                                                                            containerGetChaptersResponse.jsonBody,
-                                                                            r'''$.total''',
-                                                                          ) ==
-                                                                          wrapFavoritesRecord.openedChapters
-                                                                      ? FlutterFlowTheme.of(context).secondaryText
-                                                                      : FlutterFlowTheme.of(context).tertiary,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    }),
-                                  );
-                                },
-                              ),
-                            ),
-                            Container(
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(),
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              16.0, 12.0, 16.0, 12.0),
+                          child: InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () async {
+                              context.pushNamed('SearchPage');
+                            },
+                            child: Container(
                               width: double.infinity,
+                              height: 50.0,
                               decoration: BoxDecoration(
-                                color: Color(0xFF181818),
+                                color: FlutterFlowTheme.of(context).secondary,
+                                borderRadius: BorderRadius.circular(12.0),
                               ),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 15.0, 0.0, 15.0),
+                                    12.0, 0.0, 12.0, 0.0),
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
                                   children: [
-                                    Text(
-                                      'API (Manga & Chapters): MangaDex\nScanlation Group: credited/chapter',
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily: 'Nunito',
-                                            color: FlutterFlowTheme.of(context)
-                                                .accent3,
-                                          ),
+                                    FaIcon(
+                                      FontAwesomeIcons.search,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 20.0,
                                     ),
-                                    SvgPicture.network(
-                                      'https://mangadex.org/img/brand/mangadex-logo.svg',
-                                      width: 50.0,
-                                      height: 50.0,
-                                      fit: BoxFit.cover,
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          10.0, 0.0, 0.0, 0.0),
+                                      child: Text(
+                                        'Search...',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyLarge
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryText,
+                                            ),
+                                      ),
                                     ),
                                   ],
                                 ),
                               ),
                             ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            FlutterFlowTheme.of(context).primaryBackground,
+                            FlutterFlowTheme.of(context).primary,
+                            FlutterFlowTheme.of(context).primaryBackground
                           ],
+                          stops: [0.0, 0.35, 0.5],
+                          begin: AlignmentDirectional(0.0, -1.0),
+                          end: AlignmentDirectional(0, 1.0),
+                        ),
+                      ),
+                      child: Padding(
+                        padding:
+                            EdgeInsetsDirectional.fromSTEB(8.0, 0.0, 8.0, 0.0),
+                        child: SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 0.0, 8.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 4.0, 0.0, 4.0),
+                                      child: Text(
+                                        'Latest',
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 12.0, 8.0, 12.0),
+                                child: Container(
+                                  width: double.infinity,
+                                  height: 200.0,
+                                  decoration: BoxDecoration(),
+                                  child: FutureBuilder<ApiCallResponse>(
+                                    future: GetMangaCall.call(
+                                      limit: 10,
+                                      offset: 0,
+                                    ),
+                                    builder: (context, snapshot) {
+                                      // Customize what your widget looks like when it's loading.
+                                      if (!snapshot.hasData) {
+                                        return Center(
+                                          child: SizedBox(
+                                            width: 75.0,
+                                            height: 75.0,
+                                            child: SpinKitRipple(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 75.0,
+                                            ),
+                                          ),
+                                        );
+                                      }
+                                      final pageViewGetMangaResponse =
+                                          snapshot.data!;
+                                      return Builder(
+                                        builder: (context) {
+                                          final manga = (GetMangaCall.data(
+                                                    pageViewGetMangaResponse
+                                                        .jsonBody,
+                                                  )
+                                                      ?.map((e) => e)
+                                                      .toList()
+                                                      ?.toList() ??
+                                                  [])
+                                              .take(10)
+                                              .toList();
+                                          if (manga.isEmpty) {
+                                            return EmptyWidget();
+                                          }
+                                          return Container(
+                                            width: double.infinity,
+                                            height: 500.0,
+                                            child: PageView.builder(
+                                              allowImplicitScrolling: true,
+                                              controller: _model
+                                                      .pageViewController ??=
+                                                  PageController(
+                                                      initialPage: min(
+                                                          0, manga.length - 1)),
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: manga.length,
+                                              itemBuilder:
+                                                  (context, mangaIndex) {
+                                                final mangaItem =
+                                                    manga[mangaIndex];
+                                                return InkWell(
+                                                  splashColor:
+                                                      Colors.transparent,
+                                                  focusColor:
+                                                      Colors.transparent,
+                                                  hoverColor:
+                                                      Colors.transparent,
+                                                  highlightColor:
+                                                      Colors.transparent,
+                                                  onTap: () async {
+                                                    context.pushNamed(
+                                                      'Manga',
+                                                      queryParams: {
+                                                        'title': serializeParam(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            getJsonField(
+                                                                      mangaItem,
+                                                                      r'''$.attributes.title.en''',
+                                                                    ) ==
+                                                                    'null'
+                                                                ? 'N/A'
+                                                                : getJsonField(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.title.en''',
+                                                                  ).toString(),
+                                                            'N/A',
+                                                          ),
+                                                          ParamType.String,
+                                                        ),
+                                                        'desc': serializeParam(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            getJsonField(
+                                                                      mangaItem,
+                                                                      r'''$.attributes.description.en''',
+                                                                    ) ==
+                                                                    'null'
+                                                                ? 'N/A'
+                                                                : getJsonField(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.description.en''',
+                                                                  ).toString(),
+                                                            'N/A',
+                                                          ),
+                                                          ParamType.String,
+                                                        ),
+                                                        'src': serializeParam(
+                                                          'https://uploads.mangadex.org/covers/${getJsonField(
+                                                            mangaItem,
+                                                            r'''$.id''',
+                                                          ).toString()}/${getJsonField(
+                                                            mangaItem,
+                                                            r'''$.relationships[:].attributes.fileName''',
+                                                          ).toString()}',
+                                                          ParamType.String,
+                                                        ),
+                                                        'id': serializeParam(
+                                                          getJsonField(
+                                                            mangaItem,
+                                                            r'''$.id''',
+                                                          ).toString(),
+                                                          ParamType.String,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    );
+                                                  },
+                                                  child: Stack(
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl:
+                                                              'https://uploads.mangadex.org/covers/${getJsonField(
+                                                            mangaItem,
+                                                            r'''$.id''',
+                                                          ).toString()}/${getJsonField(
+                                                            mangaItem,
+                                                            r'''$.relationships[:].attributes.fileName''',
+                                                          ).toString()}',
+                                                          width:
+                                                              double.infinity,
+                                                          height: 200.0,
+                                                          fit: BoxFit.cover,
+                                                          progressIndicatorBuilder:
+                                                              (context, url,
+                                                                      downloadProgress) =>
+                                                                  Center(
+                                                            child: SizedBox(
+                                                              width: 25,
+                                                              height: 25,
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                strokeWidth: 3,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                value: downloadProgress
+                                                                            .progress !=
+                                                                        null
+                                                                    ? downloadProgress
+                                                                        .progress
+                                                                    : 0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Align(
+                                                        alignment:
+                                                            AlignmentDirectional(
+                                                                -0.9, 0.9),
+                                                        child: Container(
+                                                          width: 160.0,
+                                                          height: 60.0,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .secondary,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        5.0),
+                                                          ),
+                                                          child: Padding(
+                                                            padding:
+                                                                EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        10.0,
+                                                                        10.0,
+                                                                        10.0,
+                                                                        10.0),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .min,
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  getJsonField(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.title.en''',
+                                                                  )
+                                                                      .toString()
+                                                                      .maybeHandleOverflow(
+                                                                        maxChars:
+                                                                            15,
+                                                                        replacement:
+                                                                            '…',
+                                                                      ),
+                                                                  maxLines: 1,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .titleMedium,
+                                                                ),
+                                                                Text(
+                                                                  (getJsonField(
+                                                                                mangaItem,
+                                                                                r'''$.attributes.year''',
+                                                                              ) ==
+                                                                              null) ||
+                                                                          (getJsonField(
+                                                                                mangaItem,
+                                                                                r'''$.attributes.year''',
+                                                                              ) ==
+                                                                              'null')
+                                                                      ? 'N/A'
+                                                                      : getJsonField(
+                                                                          mangaItem,
+                                                                          r'''$.attributes.year''',
+                                                                        ).toString(),
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmall
+                                                                      .override(
+                                                                        fontFamily:
+                                                                            'Nunito',
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                      ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    8.0, 4.0, 8.0, 0.0),
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          0.0, 4.0, 0.0, 4.0),
+                                      child: Text(
+                                        'Library',
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                      ),
+                                    ),
+                                    InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        context.pushNamed('Library');
+                                      },
+                                      child: Text(
+                                        'See All',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 12.0, 0.0, 44.0),
+                                child: StreamBuilder<List<FavoritesRecord>>(
+                                  stream: queryFavoritesRecord(
+                                    queryBuilder: (favoritesRecord) =>
+                                        favoritesRecord.where('user',
+                                            isEqualTo: currentUserReference),
+                                    limit: 10,
+                                  ),
+                                  builder: (context, snapshot) {
+                                    // Customize what your widget looks like when it's loading.
+                                    if (!snapshot.hasData) {
+                                      return Center(
+                                        child: Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0.0, 100.0, 0.0, 100.0),
+                                          child: SizedBox(
+                                            width: 75.0,
+                                            height: 75.0,
+                                            child: SpinKitRipple(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                              size: 75.0,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    List<FavoritesRecord>
+                                        wrapFavoritesRecordList =
+                                        snapshot.data!;
+                                    if (wrapFavoritesRecordList.isEmpty) {
+                                      return Center(
+                                        child: Container(
+                                          height: 250.0,
+                                          child: EmptyWidget(),
+                                        ),
+                                      );
+                                    }
+                                    return Wrap(
+                                      spacing: 8.0,
+                                      runSpacing: 8.0,
+                                      alignment: WrapAlignment.start,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.start,
+                                      direction: Axis.horizontal,
+                                      runAlignment: WrapAlignment.start,
+                                      verticalDirection: VerticalDirection.down,
+                                      clipBehavior: Clip.none,
+                                      children: List.generate(
+                                          wrapFavoritesRecordList.length,
+                                          (wrapIndex) {
+                                        final wrapFavoritesRecord =
+                                            wrapFavoritesRecordList[wrapIndex];
+                                        return FutureBuilder<ApiCallResponse>(
+                                          future: GetChaptersCall.call(
+                                            id: wrapFavoritesRecord.id,
+                                          ),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          0.0, 20.0, 0.0, 20.0),
+                                                  child: SizedBox(
+                                                    width: 75.0,
+                                                    height: 75.0,
+                                                    child: SpinKitRipple(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                      size: 75.0,
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            }
+                                            final containerGetChaptersResponse =
+                                                snapshot.data!;
+                                            return InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                  'Manga',
+                                                  queryParams: {
+                                                    'title': serializeParam(
+                                                      wrapFavoritesRecord.title,
+                                                      ParamType.String,
+                                                    ),
+                                                    'desc': serializeParam(
+                                                      wrapFavoritesRecord.desc,
+                                                      ParamType.String,
+                                                    ),
+                                                    'src': serializeParam(
+                                                      wrapFavoritesRecord.src,
+                                                      ParamType.String,
+                                                    ),
+                                                    'id': serializeParam(
+                                                      wrapFavoritesRecord.id,
+                                                      ParamType.String,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+
+                                                final favoritesUpdateData =
+                                                    createFavoritesRecordData(
+                                                  openedChapters:
+                                                      wrapFavoritesRecord
+                                                          .numChapters,
+                                                );
+                                                await wrapFavoritesRecord
+                                                    .reference
+                                                    .update(
+                                                        favoritesUpdateData);
+                                              },
+                                              child: Container(
+                                                width: MediaQuery.of(context)
+                                                        .size
+                                                        .width *
+                                                    0.45,
+                                                height: 255.0,
+                                                decoration: BoxDecoration(
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .secondary,
+                                                  boxShadow: [
+                                                    BoxShadow(
+                                                      blurRadius: 4.0,
+                                                      color: Color(0x230E151B),
+                                                      offset: Offset(0.0, 2.0),
+                                                    )
+                                                  ],
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          12.0),
+                                                ),
+                                                child: Padding(
+                                                  padding: EdgeInsetsDirectional
+                                                      .fromSTEB(
+                                                          4.0, 4.0, 4.0, 4.0),
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                        MainAxisSize.max,
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(10.0),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl:
+                                                              wrapFavoritesRecord
+                                                                  .src,
+                                                          width:
+                                                              double.infinity,
+                                                          height: 180.0,
+                                                          fit: BoxFit.cover,
+                                                          progressIndicatorBuilder:
+                                                              (context, url,
+                                                                      downloadProgress) =>
+                                                                  Center(
+                                                            child: SizedBox(
+                                                              width: 25,
+                                                              height: 25,
+                                                              child:
+                                                                  CircularProgressIndicator(
+                                                                strokeWidth: 3,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                value: downloadProgress
+                                                                            .progress !=
+                                                                        null
+                                                                    ? downloadProgress
+                                                                        .progress
+                                                                    : 0,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    8.0,
+                                                                    12.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          wrapFavoritesRecord
+                                                              .title
+                                                              .maybeHandleOverflow(
+                                                            maxChars: 12,
+                                                            replacement: '…',
+                                                          ),
+                                                          maxLines: 1,
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .titleMedium,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    8.0,
+                                                                    4.0,
+                                                                    0.0,
+                                                                    0.0),
+                                                        child: Text(
+                                                          valueOrDefault<
+                                                              String>(
+                                                            wrapFavoritesRecord
+                                                                        .openedChapters ==
+                                                                    getJsonField(
+                                                                      containerGetChaptersResponse
+                                                                          .jsonBody,
+                                                                      r'''$.total''',
+                                                                    )
+                                                                ? 'No Update'
+                                                                : 'New Update',
+                                                            'No Update',
+                                                          ),
+                                                          style: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .bodySmall
+                                                              .override(
+                                                                fontFamily:
+                                                                    'Nunito',
+                                                                color: getJsonField(
+                                                                          containerGetChaptersResponse
+                                                                              .jsonBody,
+                                                                          r'''$.total''',
+                                                                        ) ==
+                                                                        wrapFavoritesRecord.openedChapters
+                                                                    ? FlutterFlowTheme.of(context).secondaryText
+                                                                    : FlutterFlowTheme.of(context).tertiary,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      }),
+                                    );
+                                  },
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFF181818),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(0.0),
+                                    bottomRight: Radius.circular(0.0),
+                                    topLeft: Radius.circular(8.0),
+                                    topRight: Radius.circular(8.0),
+                                  ),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0.0, 15.0, 0.0, 15.0),
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceAround,
+                                    children: [
+                                      Text(
+                                        'API (Manga & Chapters): MangaDex\nScanlation Group: credited/chapter',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily: 'Nunito',
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .accent3,
+                                            ),
+                                      ),
+                                      SvgPicture.network(
+                                        'https://mangadex.org/img/brand/mangadex-logo.svg',
+                                        width: 50.0,
+                                        height: 50.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),

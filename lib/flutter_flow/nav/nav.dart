@@ -317,10 +317,14 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Colors.black,
-                  child: Image.asset(
-                    'assets/images/Margwa.png',
-                    fit: BoxFit.contain,
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/Margwa.png',
+                      width: 200.0,
+                      height: 200.0,
+                      fit: BoxFit.fitWidth,
+                    ),
                   ),
                 )
               : PushNotificationsHandler(child: page);
