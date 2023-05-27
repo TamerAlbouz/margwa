@@ -385,7 +385,9 @@ class _LogInWidgetState extends State<LogInWidget> {
 
                             context.goNamedAuth('HomePage', context.mounted);
                           },
-                          child: Container(
+                          child: AnimatedContainer(
+                            duration: Duration(milliseconds: 100),
+                            curve: Curves.easeIn,
                             width: 75.0,
                             height: 75.0,
                             decoration: BoxDecoration(
