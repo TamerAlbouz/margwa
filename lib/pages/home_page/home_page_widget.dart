@@ -84,73 +84,36 @@ class _HomePageWidgetState extends State<HomePageWidget> {
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           appBar: AppBar(
-            backgroundColor: FlutterFlowTheme.of(context).primary,
+            backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
             automaticallyImplyLeading: false,
-            actions: [],
-            flexibleSpace: FlexibleSpaceBar(
-              background: Container(
-                width: 100.0,
-                height: 100.0,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      FlutterFlowTheme.of(context).primaryBackground,
-                      FlutterFlowTheme.of(context).primary
-                    ],
-                    stops: [0.0, 1.0],
-                    begin: AlignmentDirectional(-0.07, 1.0),
-                    end: AlignmentDirectional(0.07, -1.0),
-                  ),
-                ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Padding(
-                      padding:
-                          EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.max,
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(8.0),
-                            child: Image.asset(
-                              'assets/images/Transparent-Margwa.png',
-                              width: 50.0,
-                              height: 50.0,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              0.0, 0.0, 4.0, 0.0),
-                          child: FlutterFlowIconButton(
-                            borderColor: Colors.transparent,
-                            borderRadius: 30.0,
-                            borderWidth: 1.0,
-                            buttonSize: 60.0,
-                            icon: Icon(
-                              Icons.settings,
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              size: 30.0,
-                            ),
-                            onPressed: () async {
-                              context.pushNamed('Settings');
-                            },
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+            leading: Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 0.0, 0.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8.0),
+                child: Image.asset(
+                  'assets/images/Margwa_Bigger.png',
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
+            actions: [
+              Padding(
+                padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 16.0, 0.0),
+                child: FlutterFlowIconButton(
+                  borderRadius: 20.0,
+                  borderWidth: 1.0,
+                  buttonSize: 40.0,
+                  icon: Icon(
+                    Icons.settings,
+                    color: FlutterFlowTheme.of(context).primaryText,
+                    size: 32.0,
+                  ),
+                  onPressed: () {
+                    print('IconButton pressed ...');
+                  },
+                ),
+              ),
+            ],
             centerTitle: false,
             elevation: 0.0,
           ),
@@ -273,7 +236,14 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                 child: Container(
                                   width: double.infinity,
                                   height: 200.0,
-                                  decoration: BoxDecoration(),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    border: Border.all(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 2.0,
+                                    ),
+                                  ),
                                   child: FutureBuilder<ApiCallResponse>(
                                     future: GetMangaCall.call(
                                       limit: 10,

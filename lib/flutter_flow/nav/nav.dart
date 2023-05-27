@@ -321,9 +321,9 @@ class FFRoute {
                   child: Center(
                     child: Image.asset(
                       'assets/images/Margwa.png',
-                      width: 200.0,
-                      height: 200.0,
-                      fit: BoxFit.fitWidth,
+                      width: 175.0,
+                      height: 175.0,
+                      fit: BoxFit.contain,
                     ),
                   ),
                 )
