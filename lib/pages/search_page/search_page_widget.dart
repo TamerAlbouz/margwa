@@ -70,7 +70,10 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
           ),
           title: Text(
             'Margwa',
-            style: FlutterFlowTheme.of(context).headlineMedium,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           actions: [],
           centerTitle: true,
@@ -94,7 +97,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 ),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
                   child: Container(
                     width: double.infinity,
                     height: 60.0,
@@ -130,7 +133,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   () async {
                                     setState(() =>
                                         _model.pagingController?.refresh());
-                                    await _model.waitForOnePage();
+                                    await _model.waitForOnePage(minWait: 100);
                                   },
                                 ),
                                 autofocus: true,
@@ -185,7 +188,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             setState(() => _model
                                                 .pagingController
                                                 ?.refresh());
-                                            await _model.waitForOnePage();
+                                            await _model.waitForOnePage(
+                                                minWait: 100);
                                             setState(() {});
                                           },
                                           child: Icon(
@@ -233,7 +237,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                   ),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 10.0),
                     child: RefreshIndicator(
                       onRefresh: () async {
                         setState(() => _model.pagingController?.refresh());
@@ -355,41 +359,53 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(8.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(8.0),
-                                        topRight: Radius.circular(0.0),
+                                    Container(
+                                      width: 100.0,
+                                      height: 150.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(8.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(8.0),
+                                          topRight: Radius.circular(0.0),
+                                        ),
                                       ),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            'https://uploads.mangadex.org/covers/${getJsonField(
-                                          mangaItem,
-                                          r'''$.id''',
-                                        ).toString()}/${getJsonField(
-                                          mangaItem,
-                                          r'''$.relationships[:].attributes.fileName''',
-                                        ).toString()}',
-                                        width: 100.0,
-                                        height: 150.0,
-                                        fit: BoxFit.cover,
-                                        progressIndicatorBuilder:
-                                            (context, url, downloadProgress) =>
-                                                Center(
-                                          child: SizedBox(
-                                            width: 25,
-                                            height: 25,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 3,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                              value: downloadProgress
-                                                          .progress !=
-                                                      null
-                                                  ? downloadProgress.progress
-                                                  : 0,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(8.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(8.0),
+                                          topRight: Radius.circular(0.0),
+                                        ),
+                                        child: CachedNetworkImage(
+                                          imageUrl:
+                                              'https://uploads.mangadex.org/covers/${getJsonField(
+                                            mangaItem,
+                                            r'''$.id''',
+                                          ).toString()}/${getJsonField(
+                                            mangaItem,
+                                            r'''$.relationships[:].attributes.fileName''',
+                                          ).toString()}',
+                                          width: 100.0,
+                                          height: 150.0,
+                                          fit: BoxFit.cover,
+                                          progressIndicatorBuilder: (context,
+                                                  url, downloadProgress) =>
+                                              Center(
+                                            child: SizedBox(
+                                              width: 25,
+                                              height: 25,
+                                              child: CircularProgressIndicator(
+                                                strokeWidth: 3,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primary,
+                                                value: downloadProgress
+                                                            .progress !=
+                                                        null
+                                                    ? downloadProgress.progress
+                                                    : 0,
+                                              ),
                                             ),
                                           ),
                                         ),
