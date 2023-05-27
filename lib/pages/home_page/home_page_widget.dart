@@ -163,82 +163,59 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                 mainAxisSize: MainAxisSize.max,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Stack(
-                    children: [
-                      Align(
-                        alignment: AlignmentDirectional(1.0, 0.0),
+                  Container(
+                    width: double.infinity,
+                    decoration: BoxDecoration(),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          16.0, 12.0, 16.0, 12.0),
+                      child: InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () async {
+                          context.pushNamed('SearchPage');
+                        },
                         child: Container(
-                          width: 250.0,
-                          height: 40.0,
+                          width: double.infinity,
+                          height: 50.0,
                           decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                FlutterFlowTheme.of(context).primary,
-                                FlutterFlowTheme.of(context).primaryBackground
-                              ],
-                              stops: [0.0, 1.0],
-                              begin: AlignmentDirectional(0.1, -1.0),
-                              end: AlignmentDirectional(-0.1, 1.0),
-                            ),
+                            color: FlutterFlowTheme.of(context).secondary,
+                            borderRadius: BorderRadius.circular(12.0),
                           ),
-                        ),
-                      ),
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(),
-                        child: Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              16.0, 12.0, 16.0, 12.0),
-                          child: InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              context.pushNamed('SearchPage');
-                            },
-                            child: Container(
-                              width: double.infinity,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).secondary,
-                                borderRadius: BorderRadius.circular(12.0),
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    12.0, 0.0, 12.0, 0.0),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    FaIcon(
-                                      FontAwesomeIcons.search,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryText,
-                                      size: 20.0,
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          10.0, 0.0, 0.0, 0.0),
-                                      child: Text(
-                                        'Search...',
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyLarge
-                                            .override(
-                                              fontFamily: 'Nunito',
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                            ),
-                                      ),
-                                    ),
-                                  ],
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                12.0, 0.0, 12.0, 0.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                FaIcon(
+                                  FontAwesomeIcons.search,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  size: 20.0,
                                 ),
-                              ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      10.0, 0.0, 0.0, 0.0),
+                                  child: Text(
+                                    'Search...',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          color: FlutterFlowTheme.of(context)
+                                              .secondaryText,
+                                        ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
                       ),
-                    ],
+                    ),
                   ),
                   Expanded(
                     child: Container(
@@ -715,9 +692,16 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
                                                 final favoritesUpdateData =
                                                     createFavoritesRecordData(
-                                                  openedChapters:
-                                                      wrapFavoritesRecord
-                                                          .numChapters,
+                                                  openedChapters: getJsonField(
+                                                    containerGetChaptersResponse
+                                                        .jsonBody,
+                                                    r'''$.total''',
+                                                  ),
+                                                  numChapters: getJsonField(
+                                                    containerGetChaptersResponse
+                                                        .jsonBody,
+                                                    r'''$.total''',
+                                                  ),
                                                 );
                                                 await wrapFavoritesRecord
                                                     .reference
@@ -824,35 +808,99 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                     4.0,
                                                                     0.0,
                                                                     0.0),
-                                                        child: Text(
-                                                          valueOrDefault<
-                                                              String>(
-                                                            wrapFavoritesRecord
-                                                                        .openedChapters ==
-                                                                    getJsonField(
-                                                                      containerGetChaptersResponse
-                                                                          .jsonBody,
-                                                                      r'''$.total''',
-                                                                    )
-                                                                ? 'No Update'
-                                                                : 'New Update',
-                                                            'No Update',
+                                                        child: FutureBuilder<
+                                                            ApiCallResponse>(
+                                                          future:
+                                                              GetChaptersCall
+                                                                  .call(
+                                                            id: wrapFavoritesRecord
+                                                                .id,
                                                           ),
-                                                          style: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .bodySmall
-                                                              .override(
-                                                                fontFamily:
-                                                                    'Nunito',
-                                                                color: getJsonField(
-                                                                          containerGetChaptersResponse
-                                                                              .jsonBody,
-                                                                          r'''$.total''',
-                                                                        ) ==
-                                                                        wrapFavoritesRecord.openedChapters
-                                                                    ? FlutterFlowTheme.of(context).secondaryText
-                                                                    : FlutterFlowTheme.of(context).tertiary,
+                                                          builder: (context,
+                                                              snapshot) {
+                                                            // Customize what your widget looks like when it's loading.
+                                                            if (!snapshot
+                                                                .hasData) {
+                                                              return Center(
+                                                                child: Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      LinearProgressIndicator(
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .tertiary,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                            final textGetChaptersResponse =
+                                                                snapshot.data!;
+                                                            return Text(
+                                                              valueOrDefault<
+                                                                  String>(
+                                                                () {
+                                                                  if (wrapFavoritesRecord
+                                                                          .openedChapters !=
+                                                                      getJsonField(
+                                                                        containerGetChaptersResponse
+                                                                            .jsonBody,
+                                                                        r'''$.total''',
+                                                                      )) {
+                                                                    return 'New Update';
+                                                                  } else if (wrapFavoritesRecord
+                                                                          .numChapters ==
+                                                                      getJsonField(
+                                                                        containerGetChaptersResponse
+                                                                            .jsonBody,
+                                                                        r'''$.total''',
+                                                                      )) {
+                                                                    return 'No Update';
+                                                                  } else {
+                                                                    return 'New Update';
+                                                                  }
+                                                                }(),
+                                                                'No Update',
                                                               ),
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodySmall
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        'Nunito',
+                                                                    color: valueOrDefault<
+                                                                        Color>(
+                                                                      () {
+                                                                        if (getJsonField(
+                                                                              containerGetChaptersResponse.jsonBody,
+                                                                              r'''$.total''',
+                                                                            ) !=
+                                                                            wrapFavoritesRecord.openedChapters) {
+                                                                          return FlutterFlowTheme.of(context)
+                                                                              .tertiary;
+                                                                        } else if (getJsonField(
+                                                                              containerGetChaptersResponse.jsonBody,
+                                                                              r'''$.total''',
+                                                                            ) ==
+                                                                            wrapFavoritesRecord.numChapters) {
+                                                                          return FlutterFlowTheme.of(context)
+                                                                              .secondaryText;
+                                                                        } else {
+                                                                          return FlutterFlowTheme.of(context)
+                                                                              .tertiary;
+                                                                        }
+                                                                      }(),
+                                                                      FlutterFlowTheme.of(
+                                                                              context)
+                                                                          .secondaryText,
+                                                                    ),
+                                                                  ),
+                                                            );
+                                                          },
                                                         ),
                                                       ),
                                                     ],
