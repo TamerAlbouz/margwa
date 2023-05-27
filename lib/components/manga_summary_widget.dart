@@ -1,3 +1,4 @@
+import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:flutter/material.dart';
@@ -52,8 +53,12 @@ class _MangaSummaryWidgetState extends State<MangaSummaryWidget> {
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
-        color: Color(0xE5101213),
+        color: Color(0xFF101213),
         borderRadius: BorderRadius.circular(10.0),
+        border: Border.all(
+          color: FlutterFlowTheme.of(context).alternate,
+          width: 2.0,
+        ),
       ),
       child: Padding(
         padding: EdgeInsetsDirectional.fromSTEB(20.0, 20.0, 20.0, 20.0),
@@ -62,12 +67,37 @@ class _MangaSummaryWidgetState extends State<MangaSummaryWidget> {
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
-              child: Text(
-                'Title',
-                style: FlutterFlowTheme.of(context).headlineLarge,
-              ),
+            Row(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                  child: Text(
+                    'Title',
+                    style: FlutterFlowTheme.of(context).headlineSmall.override(
+                          fontFamily: 'Nunito',
+                          fontWeight: FontWeight.w600,
+                        ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                  child: FlutterFlowIconButton(
+                    borderRadius: 20.0,
+                    borderWidth: 1.0,
+                    buttonSize: 40.0,
+                    icon: Icon(
+                      Icons.close,
+                      color: FlutterFlowTheme.of(context).secondaryText,
+                      size: 24.0,
+                    ),
+                    onPressed: () async {
+                      Navigator.pop(context);
+                    },
+                  ),
+                ),
+              ],
             ),
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
@@ -83,7 +113,10 @@ class _MangaSummaryWidgetState extends State<MangaSummaryWidget> {
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
               child: Text(
                 'Description',
-                style: FlutterFlowTheme.of(context).headlineLarge,
+                style: FlutterFlowTheme.of(context).headlineSmall.override(
+                      fontFamily: 'Nunito',
+                      fontWeight: FontWeight.w600,
+                    ),
               ),
             ),
             Expanded(

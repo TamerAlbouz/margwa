@@ -60,38 +60,12 @@ class _LogInWidgetState extends State<LogInWidget> {
                   width: 100.0,
                   height: double.infinity,
                   decoration: BoxDecoration(),
-                  alignment: AlignmentDirectional(0.0, -1.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          width: double.infinity,
-                          height: 140.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(16.0),
-                              bottomRight: Radius.circular(16.0),
-                              topLeft: Radius.circular(0.0),
-                              topRight: Radius.circular(0.0),
-                            ),
-                          ),
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                32.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Margwa',
-                              style: FlutterFlowTheme.of(context)
-                                  .displaySmall
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                            ),
-                          ),
-                        ),
                         Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
@@ -101,13 +75,32 @@ class _LogInWidgetState extends State<LogInWidget> {
                               mainAxisSize: MainAxisSize.max,
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
+                                Row(
+                                  mainAxisSize: MainAxisSize.max,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: Image.asset(
+                                        'assets/images/Transparent-Margwa.png',
+                                        width: 115.0,
+                                        height: 115.0,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ],
+                                ),
                                 Padding(
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 30.0, 0.0, 30.0),
                                   child: Text(
                                     'Log In',
                                     style: FlutterFlowTheme.of(context)
-                                        .displaySmall,
+                                        .headlineMedium
+                                        .override(
+                                          fontFamily: 'Nunito',
+                                          fontWeight: FontWeight.w500,
+                                        ),
                                   ),
                                 ),
                                 Padding(
@@ -377,73 +370,42 @@ class _LogInWidgetState extends State<LogInWidget> {
                             ),
                           ),
                         ),
-                        Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Container(
-                            width: 230.0,
-                            height: 44.0,
-                            child: Stack(
-                              children: [
-                                Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      GoRouter.of(context).prepareAuthEvent();
-                                      final user = await authManager
-                                          .signInWithGoogle(context);
-                                      if (user == null) {
-                                        return;
-                                      }
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            GoRouter.of(context).prepareAuthEvent();
+                            final user =
+                                await authManager.signInWithGoogle(context);
+                            if (user == null) {
+                              return;
+                            }
 
-                                      context.goNamedAuth(
-                                          'HomePage', context.mounted);
-                                    },
-                                    text: 'Sign in with Google',
-                                    icon: Icon(
-                                      Icons.add,
-                                      color: Colors.transparent,
-                                      size: 20.0,
-                                    ),
-                                    options: FFButtonOptions(
-                                      width: 230.0,
-                                      height: 44.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 8.0, 0.0),
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                      textStyle: GoogleFonts.getFont(
-                                        'Roboto',
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        fontSize: 17.0,
-                                      ),
-                                      elevation: 4.0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 0.0,
-                                      ),
-                                    ),
-                                  ),
+                            context.goNamedAuth('HomePage', context.mounted);
+                          },
+                          child: Container(
+                            width: 75.0,
+                            height: 75.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).secondary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Container(
+                                width: 40.0,
+                                height: 40.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
                                 ),
-                                Align(
-                                  alignment: AlignmentDirectional(-0.83, 0.0),
-                                  child: Container(
-                                    width: 28.0,
-                                    height: 28.0,
-                                    clipBehavior: Clip.antiAlias,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                    ),
-                                    child: Image.network(
-                                      'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
-                                      fit: BoxFit.contain,
-                                    ),
-                                  ),
+                                child: Image.network(
+                                  'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
+                                  fit: BoxFit.contain,
                                 ),
-                              ],
+                              ),
                             ),
                           ),
                         ),

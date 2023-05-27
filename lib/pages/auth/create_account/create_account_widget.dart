@@ -57,43 +57,16 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
             mainAxisSize: MainAxisSize.max,
             children: [
               Expanded(
-                flex: 8,
                 child: Container(
                   width: 100.0,
                   height: double.infinity,
                   decoration: BoxDecoration(),
-                  alignment: AlignmentDirectional(0.0, -1.0),
+                  alignment: AlignmentDirectional(0.0, 0.0),
                   child: SingleChildScrollView(
                     child: Column(
                       mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(
-                          width: double.infinity,
-                          height: 140.0,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(16.0),
-                              bottomRight: Radius.circular(16.0),
-                              topLeft: Radius.circular(0.0),
-                              topRight: Radius.circular(0.0),
-                            ),
-                          ),
-                          alignment: AlignmentDirectional(-1.0, 0.0),
-                          child: Padding(
-                            padding: EdgeInsetsDirectional.fromSTEB(
-                                32.0, 0.0, 0.0, 0.0),
-                            child: Text(
-                              'Margwa',
-                              style: FlutterFlowTheme.of(context)
-                                  .displaySmall
-                                  .override(
-                                    fontFamily: 'Nunito',
-                                    fontWeight: FontWeight.w800,
-                                  ),
-                            ),
-                          ),
-                        ),
                         Align(
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: Padding(
@@ -437,6 +410,45 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                                   ),
                                 ),
                               ],
+                            ),
+                          ),
+                        ),
+                        InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            GoRouter.of(context).prepareAuthEvent();
+                            final user =
+                                await authManager.signInWithGoogle(context);
+                            if (user == null) {
+                              return;
+                            }
+
+                            context.goNamedAuth('HomePage', context.mounted);
+                          },
+                          child: Container(
+                            width: 75.0,
+                            height: 75.0,
+                            decoration: BoxDecoration(
+                              color: FlutterFlowTheme.of(context).secondary,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Container(
+                                width: 40.0,
+                                height: 40.0,
+                                clipBehavior: Clip.antiAlias,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                ),
+                                child: Image.network(
+                                  'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
                             ),
                           ),
                         ),

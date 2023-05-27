@@ -1,10 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
 import '/backend/backend.dart';
+import '/components/manga_summary_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
+import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -72,284 +75,363 @@ class _MangaWidgetState extends State<MangaWidget> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                Padding(
-                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
-                  child: Container(
-                    width: double.infinity,
-                    height: 300.0,
-                    decoration: BoxDecoration(
-                      boxShadow: [
-                        BoxShadow(
-                          blurRadius: 16.0,
-                          color: Color(0x33000000),
-                          offset: Offset(0.0, 8.0),
-                        )
-                      ],
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(16.0),
-                        bottomRight: Radius.circular(16.0),
-                        topLeft: Radius.circular(0.0),
-                        topRight: Radius.circular(0.0),
-                      ),
-                    ),
-                    child: Container(
-                      width: double.infinity,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: double.infinity,
-                            height: 300.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context)
-                                  .primaryBackground,
-                              image: DecorationImage(
-                                fit: BoxFit.fill,
-                                image: CachedNetworkImageProvider(
-                                  widget.src!,
+                Builder(
+                  builder: (context) => Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 16.0),
+                    child: InkWell(
+                      splashColor: Colors.transparent,
+                      focusColor: Colors.transparent,
+                      hoverColor: Colors.transparent,
+                      highlightColor: Colors.transparent,
+                      onTap: () async {
+                        await showAlignedDialog(
+                          barrierColor: Color(0x4D000000),
+                          context: context,
+                          isGlobal: true,
+                          avoidOverflow: false,
+                          targetAnchor: Alignment(0.0, 0.0),
+                          followerAnchor: Alignment(0.0, 0.0),
+                          builder: (dialogContext) {
+                            return Material(
+                              color: Colors.transparent,
+                              child: GestureDetector(
+                                onTap: () => FocusScope.of(context)
+                                    .requestFocus(_unfocusNode),
+                                child: Container(
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.6,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.8,
+                                  child: MangaSummaryWidget(
+                                    title: widget.title,
+                                    desc: widget.desc!,
+                                  ),
                                 ),
                               ),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(16.0),
-                                bottomRight: Radius.circular(16.0),
-                                topLeft: Radius.circular(0.0),
-                                topRight: Radius.circular(0.0),
-                              ),
-                            ),
+                            );
+                          },
+                        ).then((value) => setState(() {}));
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 300.0,
+                        decoration: BoxDecoration(
+                          boxShadow: [
+                            BoxShadow(
+                              blurRadius: 16.0,
+                              color: Color(0x33000000),
+                              offset: Offset(0.0, 8.0),
+                            )
+                          ],
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(16.0),
+                            bottomRight: Radius.circular(16.0),
+                            topLeft: Radius.circular(0.0),
+                            topRight: Radius.circular(0.0),
                           ),
-                          Container(
-                            width: double.infinity,
-                            height: 300.0,
-                            decoration: BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Colors.transparent,
-                                  FlutterFlowTheme.of(context).secondary
-                                ],
-                                stops: [0.8, 1.0],
-                                begin: AlignmentDirectional(0.0, -1.0),
-                                end: AlignmentDirectional(0, 1.0),
-                              ),
-                              borderRadius: BorderRadius.only(
-                                bottomLeft: Radius.circular(16.0),
-                                bottomRight: Radius.circular(16.0),
-                                topLeft: Radius.circular(0.0),
-                                topRight: Radius.circular(0.0),
-                              ),
-                            ),
-                            child: Stack(
-                              children: [
-                                Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        gradient: LinearGradient(
-                                          colors: [
-                                            FlutterFlowTheme.of(context)
-                                                .primaryBackground,
-                                            Color(0x00101213)
-                                          ],
-                                          stops: [0.0, 1.0],
-                                          begin:
-                                              AlignmentDirectional(0.0, -1.0),
-                                          end: AlignmentDirectional(0, 1.0),
-                                        ),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          FlutterFlowIconButton(
-                                            borderColor: Colors.transparent,
-                                            borderRadius: 30.0,
-                                            borderWidth: 1.0,
-                                            buttonSize: 60.0,
-                                            icon: Icon(
-                                              Icons.arrow_back_ios_rounded,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              size: 32.0,
-                                            ),
-                                            onPressed: () async {
-                                              context.pop();
-                                            },
-                                          ),
-                                          StreamBuilder<List<FavoritesRecord>>(
-                                            stream: queryFavoritesRecord(
-                                              queryBuilder: (favoritesRecord) =>
-                                                  favoritesRecord
-                                                      .where('user',
-                                                          isEqualTo:
-                                                              currentUserReference)
-                                                      .where('id',
-                                                          isEqualTo: widget.id),
-                                              singleRecord: true,
-                                            ),
-                                            builder: (context, snapshot) {
-                                              // Customize what your widget looks like when it's loading.
-                                              if (!snapshot.hasData) {
-                                                return Center(
-                                                  child: SizedBox(
-                                                    width: 75.0,
-                                                    height: 75.0,
-                                                    child: SpinKitRipple(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
-                                                      size: 75.0,
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                              List<FavoritesRecord>
-                                                  containerFavoritesRecordList =
-                                                  snapshot.data!;
-                                              final containerFavoritesRecord =
-                                                  containerFavoritesRecordList
-                                                          .isNotEmpty
-                                                      ? containerFavoritesRecordList
-                                                          .first
-                                                      : null;
-                                              return Container(
-                                                width: 100.0,
-                                                decoration: BoxDecoration(),
-                                                child: FutureBuilder<
-                                                    ApiCallResponse>(
-                                                  future: GetChaptersCall.call(
-                                                    id: widget.id,
-                                                  ),
-                                                  builder: (context, snapshot) {
-                                                    // Customize what your widget looks like when it's loading.
-                                                    if (!snapshot.hasData) {
-                                                      return Center(
-                                                        child: SizedBox(
-                                                          width: 40.0,
-                                                          height: 40.0,
-                                                          child: SpinKitRipple(
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .primary,
-                                                            size: 40.0,
-                                                          ),
-                                                        ),
-                                                      );
-                                                    }
-                                                    final rowGetChaptersResponse =
-                                                        snapshot.data!;
-                                                    return Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.min,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: [
-                                                        if ((containerFavoritesRecord !=
-                                                                null) &&
-                                                            (widget.id ==
-                                                                containerFavoritesRecord!
-                                                                    .id))
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30.0,
-                                                            borderWidth: 1.0,
-                                                            buttonSize: 60.0,
-                                                            icon: Icon(
-                                                              Icons.favorite,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primary,
-                                                              size: 32.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              await containerFavoritesRecord!
-                                                                  .reference
-                                                                  .delete();
-                                                            },
-                                                          ),
-                                                        if (!(containerFavoritesRecord !=
-                                                                null) ||
-                                                            (containerFavoritesRecord!
-                                                                    .id !=
-                                                                widget.id))
-                                                          FlutterFlowIconButton(
-                                                            borderColor: Colors
-                                                                .transparent,
-                                                            borderRadius: 30.0,
-                                                            borderWidth: 1.0,
-                                                            buttonSize: 60.0,
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .favorite_border,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .primary,
-                                                              size: 32.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              final favoritesCreateData =
-                                                                  createFavoritesRecordData(
-                                                                user:
-                                                                    currentUserReference,
-                                                                id: widget.id,
-                                                                src: widget.src,
-                                                                title: widget
-                                                                    .title,
-                                                                desc:
-                                                                    widget.desc,
-                                                                numChapters:
-                                                                    getJsonField(
-                                                                  rowGetChaptersResponse
-                                                                      .jsonBody,
-                                                                  r'''$.total''',
-                                                                ),
-                                                                openedChapters:
-                                                                    getJsonField(
-                                                                  rowGetChaptersResponse
-                                                                      .jsonBody,
-                                                                  r'''$.total''',
-                                                                ),
-                                                              );
-                                                              await FavoritesRecord
-                                                                  .collection
-                                                                  .doc()
-                                                                  .set(
-                                                                      favoritesCreateData);
-                                                            },
-                                                          ),
-                                                      ],
-                                                    );
-                                                  },
-                                                ),
-                                              );
-                                            },
-                                          ),
-                                        ],
-                                      ),
+                        ),
+                        child: Container(
+                          width: double.infinity,
+                          child: Stack(
+                            children: [
+                              Container(
+                                width: double.infinity,
+                                height: 300.0,
+                                decoration: BoxDecoration(
+                                  color: FlutterFlowTheme.of(context)
+                                      .primaryBackground,
+                                  image: DecorationImage(
+                                    fit: BoxFit.scaleDown,
+                                    image: CachedNetworkImageProvider(
+                                      widget.src!,
                                     ),
-                                    Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          16.0, 0.0, 0.0, 20.0),
-                                      child: Text(
-                                        widget.title,
-                                        style: FlutterFlowTheme.of(context)
-                                            .titleLarge,
-                                      ),
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(16.0),
+                                    bottomRight: Radius.circular(16.0),
+                                    topLeft: Radius.circular(0.0),
+                                    topRight: Radius.circular(0.0),
+                                  ),
+                                ),
+                              ),
+                              Container(
+                                width: double.infinity,
+                                height: 300.0,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.transparent,
+                                      FlutterFlowTheme.of(context).secondary
+                                    ],
+                                    stops: [0.8, 1.0],
+                                    begin: AlignmentDirectional(0.0, -1.0),
+                                    end: AlignmentDirectional(0, 1.0),
+                                  ),
+                                  borderRadius: BorderRadius.only(
+                                    bottomLeft: Radius.circular(16.0),
+                                    bottomRight: Radius.circular(16.0),
+                                    topLeft: Radius.circular(0.0),
+                                    topRight: Radius.circular(0.0),
+                                  ),
+                                ),
+                                child: Stack(
+                                  children: [
+                                    Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Container(
+                                          width: double.infinity,
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              colors: [
+                                                FlutterFlowTheme.of(context)
+                                                    .primaryBackground,
+                                                Color(0x00101213)
+                                              ],
+                                              stops: [0.0, 1.0],
+                                              begin: AlignmentDirectional(
+                                                  0.0, -1.0),
+                                              end: AlignmentDirectional(0, 1.0),
+                                            ),
+                                          ),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              FlutterFlowIconButton(
+                                                borderColor: Colors.transparent,
+                                                borderRadius: 30.0,
+                                                borderWidth: 1.0,
+                                                buttonSize: 60.0,
+                                                icon: Icon(
+                                                  Icons.arrow_back_ios_rounded,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
+                                                      .primaryText,
+                                                  size: 32.0,
+                                                ),
+                                                onPressed: () async {
+                                                  context.pop();
+                                                },
+                                              ),
+                                              StreamBuilder<
+                                                  List<FavoritesRecord>>(
+                                                stream: queryFavoritesRecord(
+                                                  queryBuilder: (favoritesRecord) =>
+                                                      favoritesRecord
+                                                          .where('user',
+                                                              isEqualTo:
+                                                                  currentUserReference)
+                                                          .where('id',
+                                                              isEqualTo:
+                                                                  widget.id),
+                                                  singleRecord: true,
+                                                ),
+                                                builder: (context, snapshot) {
+                                                  // Customize what your widget looks like when it's loading.
+                                                  if (!snapshot.hasData) {
+                                                    return Center(
+                                                      child: SizedBox(
+                                                        width: 75.0,
+                                                        height: 75.0,
+                                                        child: SpinKitRipple(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .alternate,
+                                                          size: 75.0,
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }
+                                                  List<FavoritesRecord>
+                                                      containerFavoritesRecordList =
+                                                      snapshot.data!;
+                                                  final containerFavoritesRecord =
+                                                      containerFavoritesRecordList
+                                                              .isNotEmpty
+                                                          ? containerFavoritesRecordList
+                                                              .first
+                                                          : null;
+                                                  return Container(
+                                                    width: 100.0,
+                                                    decoration: BoxDecoration(),
+                                                    child: FutureBuilder<
+                                                        ApiCallResponse>(
+                                                      future:
+                                                          GetChaptersCall.call(
+                                                        id: widget.id,
+                                                      ),
+                                                      builder:
+                                                          (context, snapshot) {
+                                                        // Customize what your widget looks like when it's loading.
+                                                        if (!snapshot.hasData) {
+                                                          return Center(
+                                                            child: SizedBox(
+                                                              width: 40.0,
+                                                              height: 40.0,
+                                                              child:
+                                                                  SpinKitRipple(
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                size: 40.0,
+                                                              ),
+                                                            ),
+                                                          );
+                                                        }
+                                                        final rowGetChaptersResponse =
+                                                            snapshot.data!;
+                                                        return Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: [
+                                                            if ((containerFavoritesRecord !=
+                                                                    null) &&
+                                                                (widget.id ==
+                                                                    containerFavoritesRecord!
+                                                                        .id))
+                                                              FlutterFlowIconButton(
+                                                                borderColor: Colors
+                                                                    .transparent,
+                                                                borderRadius:
+                                                                    30.0,
+                                                                borderWidth:
+                                                                    1.0,
+                                                                buttonSize:
+                                                                    60.0,
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  size: 32.0,
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  await containerFavoritesRecord!
+                                                                      .reference
+                                                                      .delete();
+                                                                },
+                                                              ),
+                                                            if (!(containerFavoritesRecord !=
+                                                                    null) ||
+                                                                (containerFavoritesRecord!
+                                                                        .id !=
+                                                                    widget.id))
+                                                              FlutterFlowIconButton(
+                                                                borderColor: Colors
+                                                                    .transparent,
+                                                                borderRadius:
+                                                                    30.0,
+                                                                borderWidth:
+                                                                    1.0,
+                                                                buttonSize:
+                                                                    60.0,
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .favorite_border,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  size: 32.0,
+                                                                ),
+                                                                onPressed:
+                                                                    () async {
+                                                                  final favoritesCreateData =
+                                                                      createFavoritesRecordData(
+                                                                    user:
+                                                                        currentUserReference,
+                                                                    id: widget
+                                                                        .id,
+                                                                    src: widget
+                                                                        .src,
+                                                                    title: widget
+                                                                        .title,
+                                                                    desc: widget
+                                                                        .desc,
+                                                                    numChapters:
+                                                                        getJsonField(
+                                                                      rowGetChaptersResponse
+                                                                          .jsonBody,
+                                                                      r'''$.total''',
+                                                                    ),
+                                                                    openedChapters:
+                                                                        getJsonField(
+                                                                      rowGetChaptersResponse
+                                                                          .jsonBody,
+                                                                      r'''$.total''',
+                                                                    ),
+                                                                  );
+                                                                  await FavoritesRecord
+                                                                      .collection
+                                                                      .doc()
+                                                                      .set(
+                                                                          favoritesCreateData);
+                                                                },
+                                                              ),
+                                                          ],
+                                                        );
+                                                      },
+                                                    ),
+                                                  );
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      16.0, 0.0, 0.0, 20.0),
+                                              child: AutoSizeText(
+                                                widget.title
+                                                    .maybeHandleOverflow(
+                                                  maxChars: 20,
+                                                  replacement: '…',
+                                                ),
+                                                maxLines: 1,
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleLarge,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(
+                                                      0.0, 0.0, 16.0, 16.0),
+                                              child: Icon(
+                                                Icons.touch_app,
+                                                color:
+                                                    FlutterFlowTheme.of(context)
+                                                        .primaryText,
+                                                size: 32.0,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-                              ],
-                            ),
+                              ),
+                            ],
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
