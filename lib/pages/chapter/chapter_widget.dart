@@ -341,6 +341,49 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                             ).toString()}/${pagesItem}',
                                             width: double.infinity,
                                             fit: BoxFit.fitWidth,
+                                            errorBuilder:
+                                                (context, error, stackTrace) {
+                                              return Center(
+                                                child: Text(
+                                                  'Error loading image: ${error.toString()}',
+                                                  textAlign: TextAlign.center,
+                                                ),
+                                              );
+                                            },
+                                            frameBuilder:
+                                                (_, image, loadingBuilder, __) {
+                                              if (loadingBuilder == null) {
+                                                return Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0,
+                                                      MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              2 -
+                                                          150.0,
+                                                      0,
+                                                      MediaQuery.of(context)
+                                                                  .size
+                                                                  .height /
+                                                              2 -
+                                                          150.0),
+                                                  child: Center(
+                                                    child: SizedBox(
+                                                      width: 75,
+                                                      height: 75,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              return image;
+                                            },
                                             loadingBuilder:
                                                 (BuildContext context,
                                                     Widget child,
