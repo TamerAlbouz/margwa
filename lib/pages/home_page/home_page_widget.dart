@@ -371,10 +371,8 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(8.0),
-                                                        child:
-                                                            CachedNetworkImage(
-                                                          imageUrl:
-                                                              'https://uploads.mangadex.org/covers/${getJsonField(
+                                                        child: Image.network(
+                                                          'https://uploads.mangadex.org/covers/${getJsonField(
                                                             mangaItem,
                                                             r'''$.id''',
                                                           ).toString()}/${getJsonField(

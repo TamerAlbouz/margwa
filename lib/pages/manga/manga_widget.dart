@@ -8,7 +8,6 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -143,9 +142,9 @@ class _MangaWidgetState extends State<MangaWidget> {
                                       .primaryBackground,
                                   image: DecorationImage(
                                     fit: BoxFit.cover,
-                                    image: CachedNetworkImageProvider(
+                                    image: Image.network(
                                       widget.src!,
-                                    ),
+                                    ).image,
                                   ),
                                   borderRadius: BorderRadius.only(
                                     bottomLeft: Radius.circular(16.0),
@@ -211,9 +210,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                 buttonSize: 60.0,
                                                 icon: Icon(
                                                   Icons.arrow_back_ios_rounded,
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
+                                                  color: Colors.white,
                                                   size: 32.0,
                                                 ),
                                                 onPressed: () async {
@@ -407,7 +404,11 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                 maxLines: 1,
                                                 style:
                                                     FlutterFlowTheme.of(context)
-                                                        .titleLarge,
+                                                        .titleLarge
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: Colors.white,
+                                                        ),
                                               ),
                                             ),
                                             Padding(
@@ -416,9 +417,7 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                       0.0, 0.0, 16.0, 16.0),
                                               child: Icon(
                                                 Icons.touch_app,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
+                                                color: Colors.white,
                                                 size: 32.0,
                                               ),
                                             ),

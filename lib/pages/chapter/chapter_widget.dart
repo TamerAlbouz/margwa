@@ -4,7 +4,6 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -181,9 +180,8 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                                   type: PageTransitionType.fade,
                                                   child:
                                                       FlutterFlowExpandedImageView(
-                                                    image: CachedNetworkImage(
-                                                      imageUrl:
-                                                          '${GetChapterPagesCall.url(
+                                                    image: Image.network(
+                                                      '${GetChapterPagesCall.url(
                                                         columnGetChapterPagesResponse
                                                             .jsonBody,
                                                       ).toString()}/data/${GetChapterPagesCall.hash(
@@ -215,9 +213,8 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                                     .jsonBody,
                                               ).toString()}/${pagesHItem}',
                                               transitionOnUserGestures: true,
-                                              child: CachedNetworkImage(
-                                                imageUrl:
-                                                    '${GetChapterPagesCall.url(
+                                              child: Image.network(
+                                                '${GetChapterPagesCall.url(
                                                   columnGetChapterPagesResponse
                                                       .jsonBody,
                                                 ).toString()}/data/${GetChapterPagesCall.hash(
@@ -327,9 +324,8 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                       final pagesItem = pages[pagesIndex];
                                       return Stack(
                                         children: [
-                                          CachedNetworkImage(
-                                            imageUrl:
-                                                '${GetChapterPagesCall.url(
+                                          Image.network(
+                                            '${GetChapterPagesCall.url(
                                               columnGetChapterPagesResponse
                                                   .jsonBody,
                                             ).toString()}/data/${GetChapterPagesCall.hash(

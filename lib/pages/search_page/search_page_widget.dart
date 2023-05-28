@@ -3,7 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -377,9 +377,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           topLeft: Radius.circular(8.0),
                                           topRight: Radius.circular(0.0),
                                         ),
-                                        child: CachedNetworkImage(
-                                          imageUrl:
-                                              'https://uploads.mangadex.org/covers/${getJsonField(
+                                        child: Image.network(
+                                          'https://uploads.mangadex.org/covers/${getJsonField(
                                             mangaItem,
                                             r'''$.id''',
                                           ).toString()}/${getJsonField(
@@ -432,81 +431,81 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                               topRight: Radius.circular(8.0),
                                             ),
                                           ),
-                                          child: ListTile(
-                                            title: Text(
-                                              (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.title.en''',
-                                                          ) !=
-                                                          'null') ||
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 16.0, 16.0, 16.0),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  AutoSizeText(
+                                                    valueOrDefault<String>(
                                                       (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.title.en''',
-                                                          ) !=
-                                                          null)
-                                                  ? getJsonField(
-                                                      mangaItem,
-                                                      r'''$.attributes.title.en''',
-                                                    ).toString()
-                                                  : 'N/A'.maybeHandleOverflow(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.title.en''',
+                                                                  ) !=
+                                                                  'null') ||
+                                                              (getJsonField(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.title.en''',
+                                                                  ) !=
+                                                                  null)
+                                                          ? getJsonField(
+                                                              mangaItem,
+                                                              r'''$.attributes.title.en''',
+                                                            ).toString()
+                                                          : 'N/A',
+                                                      'N/A',
+                                                    ).maybeHandleOverflow(
                                                       maxChars: 20,
                                                       replacement: '…',
                                                     ),
-                                              textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        lineHeight: 2.0,
-                                                      ),
-                                            ),
-                                            subtitle: Text(
-                                              (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.description.en''',
-                                                          ) !=
-                                                          'null') ||
+                                                    maxLines: 1,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          lineHeight: 2.0,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    valueOrDefault<String>(
                                                       (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.description.en''',
-                                                          ) !=
-                                                          null)
-                                                  ? getJsonField(
-                                                      mangaItem,
-                                                      r'''$.attributes.description.en''',
-                                                    ).toString()
-                                                  : 'N/A'.maybeHandleOverflow(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.description.en''',
+                                                                  ) !=
+                                                                  'null') &&
+                                                              (getJsonField(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.description.en''',
+                                                                  ) !=
+                                                                  null)
+                                                          ? getJsonField(
+                                                              mangaItem,
+                                                              r'''$.attributes.description.en''',
+                                                            ).toString()
+                                                          : 'N/A',
+                                                      'N/A',
+                                                    ).maybeHandleOverflow(
                                                       maxChars: 100,
                                                       replacement: '…',
                                                     ),
-                                              textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                      ),
-                                            ),
-                                            tileColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondary,
-                                            dense: true,
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 10.0, 20.0, 10.0),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(0.0),
-                                                bottomRight:
-                                                    Radius.circular(10.0),
-                                                topLeft: Radius.circular(0.0),
-                                                topRight: Radius.circular(10.0),
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),
