@@ -136,18 +136,30 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.stretch,
                       children: [
-                        if (FFAppState().Orientation)
-                          Builder(
-                            builder: (context) {
-                              final pagesH = (GetChapterPagesCall.data(
-                                    columnGetChapterPagesResponse.jsonBody,
-                                  ) as List)
-                                      .map<String>((s) => s.toString())
-                                      .toList()
-                                      ?.map((e) => e)
-                                      .toList()
-                                      ?.toList() ??
-                                  [];
+                        Builder(
+                          builder: (context) {
+                            final pagesH = (GetChapterPagesCall.data(
+                                  columnGetChapterPagesResponse.jsonBody,
+                                ) as List)
+                                    .map<String>((s) => s.toString())
+                                    .toList()
+                                    ?.map((e) => e)
+                                    .toList()
+                                    ?.toList() ??
+                                [];
+
+                            if (FFAppState().Orientation)
+                              // Builder(
+                              //   builder: (context) {
+                              //     final pagesH = (GetChapterPagesCall.data(
+                              //           columnGetChapterPagesResponse.jsonBody,
+                              //         ) as List)
+                              //             .map<String>((s) => s.toString())
+                              //             .toList()
+                              //             ?.map((e) => e)
+                              //             .toList()
+                              //             ?.toList() ??
+                              //         [];
                               return Container(
                                 width: double.infinity,
                                 height:
@@ -308,47 +320,49 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                   },
                                 ),
                               );
-                            },
-                          ),
-                        if (FFAppState().Orientation == false)
-                          Flexible(
-                            child: Builder(
-                              builder: (context) {
-                                final pages = (GetChapterPagesCall.data(
-                                      columnGetChapterPagesResponse.jsonBody,
-                                    ) as List)
-                                        .map<String>((s) => s.toString())
-                                        .toList()
-                                        ?.map((e) => e)
-                                        .toList()
-                                        ?.toList() ??
-                                    [];
-                                return SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: List.generate(pages.length,
-                                        (pagesIndex) {
-                                      final pagesItem = pages[pagesIndex];
-                                      return Stack(
-                                        children: [
-                                          Image.network(
-                                            '${GetChapterPagesCall.url(
-                                              columnGetChapterPagesResponse
-                                                  .jsonBody,
-                                            ).toString()}/data/${GetChapterPagesCall.hash(
-                                              columnGetChapterPagesResponse
-                                                  .jsonBody,
-                                            ).toString()}/${pagesItem}',
-                                            width: double.infinity,
-                                            fit: BoxFit.fitWidth,
-                                            loadingBuilder:
-                                                (BuildContext context,
-                                                    Widget child,
-                                                    ImageChunkEvent?
-                                                        downloadProgress) {
-                                              if (downloadProgress == null)
-                                                return child;
 
+                            return Flexible(
+                              // child: Builder(
+                              //   builder: (context) {
+                              //     final pages = (GetChapterPagesCall.data(
+                              //           columnGetChapterPagesResponse.jsonBody,
+                              //         ) as List)
+                              //             .map<String>((s) => s.toString())
+                              //             .toList()
+                              //             ?.map((e) => e)
+                              //             .toList()
+                              //             ?.toList() ??
+                              //         [];
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  mainAxisSize: MainAxisSize.max,
+                                  children: List.generate(pagesH.length,
+                                      (pagesIndex) {
+                                    final pagesItem = pagesH[pagesIndex];
+                                    return Stack(
+                                      children: [
+                                        Image.network(
+                                          '${GetChapterPagesCall.url(
+                                            columnGetChapterPagesResponse
+                                                .jsonBody,
+                                          ).toString()}/data/${GetChapterPagesCall.hash(
+                                            columnGetChapterPagesResponse
+                                                .jsonBody,
+                                          ).toString()}/${pagesItem}',
+                                          width: double.infinity,
+                                          fit: BoxFit.fitWidth,
+                                          errorBuilder:
+                                              (context, error, stackTrace) {
+                                            return Center(
+                                              child: Text(
+                                                'Error loading image: ${error.toString()}',
+                                                textAlign: TextAlign.center,
+                                              ),
+                                            );
+                                          },
+                                          frameBuilder:
+                                              (_, image, loadingBuilder, __) {
+                                            if (loadingBuilder == null) {
                                               return Padding(
                                                 padding: EdgeInsets.fromLTRB(
                                                     0,
@@ -373,59 +387,96 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                                           FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
-                                                      value: downloadProgress
-                                                                  .expectedTotalBytes !=
-                                                              null
-                                                          ? downloadProgress
-                                                                  .cumulativeBytesLoaded /
-                                                              downloadProgress
-                                                                  .expectedTotalBytes!
-                                                          : null,
                                                     ),
                                                   ),
                                                 ),
                                               );
-                                            },
-                                          ),
-                                          Align(
-                                            alignment:
-                                                AlignmentDirectional(1.0, 0.0),
-                                            child: Padding(
+                                            }
+                                            return image;
+                                          },
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent?
+                                                  downloadProgress) {
+                                            if (downloadProgress == null)
+                                              return child;
+
+                                            return Padding(
+                                              padding: EdgeInsets.fromLTRB(
+                                                  0,
+                                                  MediaQuery.of(context)
+                                                              .size
+                                                              .height /
+                                                          2 -
+                                                      150.0,
+                                                  0,
+                                                  MediaQuery.of(context)
+                                                              .size
+                                                              .height /
+                                                          2 -
+                                                      150.0),
+                                              child: Center(
+                                                child: SizedBox(
+                                                  width: 75,
+                                                  height: 75,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .primary,
+                                                    value: downloadProgress
+                                                                .expectedTotalBytes !=
+                                                            null
+                                                        ? downloadProgress
+                                                                .cumulativeBytesLoaded /
+                                                            downloadProgress
+                                                                .expectedTotalBytes!
+                                                        : null,
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
+                                        Align(
+                                          alignment:
+                                              AlignmentDirectional(1.0, 0.0),
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    0.0, 10.0, 2.5, 0.0),
+                                            child: badges.Badge(
+                                              badgeContent: Text(
+                                                '${(pagesIndex + 1).toString()}/${widget.pages?.toString()}',
+                                                style:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall,
+                                              ),
+                                              showBadge: true,
+                                              shape: badges.BadgeShape.circle,
+                                              badgeColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryBackground,
+                                              elevation: 0.0,
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      0.0, 10.0, 2.5, 0.0),
-                                              child: badges.Badge(
-                                                badgeContent: Text(
-                                                  '${(pagesIndex + 1).toString()}/${widget.pages?.toString()}',
-                                                  style: FlutterFlowTheme.of(
-                                                          context)
-                                                      .bodySmall,
-                                                ),
-                                                showBadge: true,
-                                                shape: badges.BadgeShape.circle,
-                                                badgeColor:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryBackground,
-                                                elevation: 0.0,
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        12.0, 12.0, 12.0, 12.0),
-                                                position: badges.BadgePosition
-                                                    .topEnd(),
-                                                animationType: badges
-                                                    .BadgeAnimationType.scale,
-                                                toAnimate: false,
-                                              ),
+                                                      12.0, 12.0, 12.0, 12.0),
+                                              position:
+                                                  badges.BadgePosition.topEnd(),
+                                              animationType: badges
+                                                  .BadgeAnimationType.scale,
+                                              toAnimate: false,
                                             ),
                                           ),
-                                        ],
-                                      );
-                                    }),
-                                  ),
-                                );
-                              },
-                            ),
-                          ),
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                       ],
                     );
                   },

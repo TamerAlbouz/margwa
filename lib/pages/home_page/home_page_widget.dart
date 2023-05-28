@@ -284,6 +284,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                           }
                                           return Container(
                                             width: double.infinity,
+                                            decoration: BoxDecoration(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondary,
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
                                             height: 500.0,
                                             child: PageView.builder(
                                               allowImplicitScrolling: true,
@@ -383,6 +390,29 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               double.infinity,
                                                           height: 200.0,
                                                           fit: BoxFit.cover,
+                                                          frameBuilder: (_,
+                                                              image,
+                                                              loadingBuilder,
+                                                              __) {
+                                                            if (loadingBuilder ==
+                                                                null) {
+                                                              return Center(
+                                                                child: SizedBox(
+                                                                  width: 25,
+                                                                  height: 25,
+                                                                  child:
+                                                                      CircularProgressIndicator(
+                                                                    strokeWidth:
+                                                                        3,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            }
+                                                            return image;
+                                                          },
                                                           loadingBuilder:
                                                               (BuildContext
                                                                       context,

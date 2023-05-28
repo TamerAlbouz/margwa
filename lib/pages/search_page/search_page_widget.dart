@@ -363,6 +363,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                       width: 100.0,
                                       height: 150.0,
                                       decoration: BoxDecoration(
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(8.0),
                                           bottomRight: Radius.circular(0.0),
