@@ -3,7 +3,7 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'dart:async';
-import 'package:cached_network_image/cached_network_image.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
@@ -70,7 +70,10 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
           ),
           title: Text(
             'Margwa',
-            style: FlutterFlowTheme.of(context).headlineMedium,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           actions: [],
           centerTitle: true,
@@ -94,7 +97,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                 ),
                 child: Padding(
                   padding:
-                      EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
                   child: Container(
                     width: double.infinity,
                     height: 60.0,
@@ -130,7 +133,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                   () async {
                                     setState(() =>
                                         _model.pagingController?.refresh());
-                                    await _model.waitForOnePage();
+                                    await _model.waitForOnePage(minWait: 100);
                                   },
                                 ),
                                 autofocus: true,
@@ -185,7 +188,8 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                             setState(() => _model
                                                 .pagingController
                                                 ?.refresh());
-                                            await _model.waitForOnePage();
+                                            await _model.waitForOnePage(
+                                                minWait: 100);
                                             setState(() {});
                                           },
                                           child: Icon(
@@ -233,7 +237,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                   ),
                   child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(15.0, 0.0, 15.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 10.0),
                     child: RefreshIndicator(
                       onRefresh: () async {
                         setState(() => _model.pagingController?.refresh());
@@ -297,7 +301,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                               width: 75.0,
                               height: 75.0,
                               child: SpinKitRipple(
-                                color: FlutterFlowTheme.of(context).primary,
+                                color: FlutterFlowTheme.of(context).alternate,
                                 size: 75.0,
                               ),
                             ),
@@ -355,43 +359,64 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                 child: Row(
                                   mainAxisSize: MainAxisSize.max,
                                   children: [
-                                    ClipRRect(
-                                      borderRadius: BorderRadius.only(
-                                        bottomLeft: Radius.circular(8.0),
-                                        bottomRight: Radius.circular(0.0),
-                                        topLeft: Radius.circular(8.0),
-                                        topRight: Radius.circular(0.0),
+                                    Container(
+                                      width: 100.0,
+                                      height: 150.0,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(8.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(8.0),
+                                          topRight: Radius.circular(0.0),
+                                        ),
                                       ),
-                                      child: CachedNetworkImage(
-                                        imageUrl:
-                                            'https://uploads.mangadex.org/covers/${getJsonField(
-                                          mangaItem,
-                                          r'''$.id''',
-                                        ).toString()}/${getJsonField(
-                                          mangaItem,
-                                          r'''$.relationships[:].attributes.fileName''',
-                                        ).toString()}',
-                                        width: 100.0,
-                                        height: 150.0,
-                                        fit: BoxFit.cover,
-                                        progressIndicatorBuilder:
-                                            (context, url, downloadProgress) =>
-                                                Center(
-                                          child: SizedBox(
-                                            width: 25,
-                                            height: 25,
-                                            child: CircularProgressIndicator(
-                                              strokeWidth: 3,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(8.0),
+                                          bottomRight: Radius.circular(0.0),
+                                          topLeft: Radius.circular(8.0),
+                                          topRight: Radius.circular(0.0),
+                                        ),
+                                        child: Image.network(
+                                          'https://uploads.mangadex.org/covers/${getJsonField(
+                                            mangaItem,
+                                            r'''$.id''',
+                                          ).toString()}/${getJsonField(
+                                            mangaItem,
+                                            r'''$.relationships[:].attributes.fileName''',
+                                          ).toString()}',
+                                          width: 100.0,
+                                          height: 150.0,
+                                          fit: BoxFit.cover,
+                                          loadingBuilder: (BuildContext context,
+                                              Widget child,
+                                              ImageChunkEvent?
+                                                  downloadProgress) {
+                                            if (downloadProgress == null)
+                                              return child;
+
+                                            return Center(
+                                              child: SizedBox(
+                                                width: 25,
+                                                height: 25,
+                                                child:
+                                                    CircularProgressIndicator(
+                                                  strokeWidth: 3,
+                                                  color: FlutterFlowTheme.of(
+                                                          context)
                                                       .primary,
-                                              value: downloadProgress
-                                                          .progress !=
-                                                      null
-                                                  ? downloadProgress.progress
-                                                  : 0,
-                                            ),
-                                          ),
+                                                  value: downloadProgress
+                                                              .expectedTotalBytes !=
+                                                          null
+                                                      ? downloadProgress
+                                                              .cumulativeBytesLoaded /
+                                                          downloadProgress
+                                                              .expectedTotalBytes!
+                                                      : null,
+                                                ),
+                                              ),
+                                            );
+                                          },
                                         ),
                                       ),
                                     ),
@@ -416,81 +441,81 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                               topRight: Radius.circular(8.0),
                                             ),
                                           ),
-                                          child: ListTile(
-                                            title: Text(
-                                              (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.title.en''',
-                                                          ) !=
-                                                          'null') ||
+                                          child: Padding(
+                                            padding:
+                                                EdgeInsetsDirectional.fromSTEB(
+                                                    16.0, 16.0, 16.0, 16.0),
+                                            child: SingleChildScrollView(
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.stretch,
+                                                children: [
+                                                  AutoSizeText(
+                                                    valueOrDefault<String>(
                                                       (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.title.en''',
-                                                          ) !=
-                                                          null)
-                                                  ? getJsonField(
-                                                      mangaItem,
-                                                      r'''$.attributes.title.en''',
-                                                    ).toString()
-                                                  : 'N/A'.maybeHandleOverflow(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.title.en''',
+                                                                  ) !=
+                                                                  'null') ||
+                                                              (getJsonField(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.title.en''',
+                                                                  ) !=
+                                                                  null)
+                                                          ? getJsonField(
+                                                              mangaItem,
+                                                              r'''$.attributes.title.en''',
+                                                            ).toString()
+                                                          : 'N/A',
+                                                      'N/A',
+                                                    ).maybeHandleOverflow(
                                                       maxChars: 20,
                                                       replacement: '…',
                                                     ),
-                                              textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        lineHeight: 2.0,
-                                                      ),
-                                            ),
-                                            subtitle: Text(
-                                              (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.description.en''',
-                                                          ) !=
-                                                          'null') ||
+                                                    maxLines: 1,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .titleMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          lineHeight: 2.0,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    valueOrDefault<String>(
                                                       (getJsonField(
-                                                            mangaItem,
-                                                            r'''$.attributes.description.en''',
-                                                          ) !=
-                                                          null)
-                                                  ? getJsonField(
-                                                      mangaItem,
-                                                      r'''$.attributes.description.en''',
-                                                    ).toString()
-                                                  : 'N/A'.maybeHandleOverflow(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.description.en''',
+                                                                  ) !=
+                                                                  'null') &&
+                                                              (getJsonField(
+                                                                    mangaItem,
+                                                                    r'''$.attributes.description.en''',
+                                                                  ) !=
+                                                                  null)
+                                                          ? getJsonField(
+                                                              mangaItem,
+                                                              r'''$.attributes.description.en''',
+                                                            ).toString()
+                                                          : 'N/A',
+                                                      'N/A',
+                                                    ).maybeHandleOverflow(
                                                       maxChars: 100,
                                                       replacement: '…',
                                                     ),
-                                              textAlign: TextAlign.start,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                      ),
-                                            ),
-                                            tileColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondary,
-                                            dense: true,
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    20.0, 10.0, 20.0, 10.0),
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(0.0),
-                                                bottomRight:
-                                                    Radius.circular(10.0),
-                                                topLeft: Radius.circular(0.0),
-                                                topRight: Radius.circular(10.0),
+                                                    textAlign: TextAlign.start,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily: 'Nunito',
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .secondaryText,
+                                                        ),
+                                                  ),
+                                                ],
                                               ),
                                             ),
                                           ),

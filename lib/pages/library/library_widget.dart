@@ -59,7 +59,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
             icon: Icon(
               Icons.arrow_back_ios_rounded,
               color: FlutterFlowTheme.of(context).primaryText,
-              size: 30.0,
+              size: 32.0,
             ),
             onPressed: () async {
               context.pop();
@@ -67,14 +67,17 @@ class _LibraryWidgetState extends State<LibraryWidget> {
           ),
           title: Text(
             'Library',
-            style: FlutterFlowTheme.of(context).displaySmall,
+            style: FlutterFlowTheme.of(context).headlineMedium.override(
+                  fontFamily: 'Nunito',
+                  fontWeight: FontWeight.bold,
+                ),
           ),
           actions: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 16.0, 0.0),
               child: Icon(
                 Icons.favorite,
-                color: FlutterFlowTheme.of(context).primaryText,
+                color: FlutterFlowTheme.of(context).primary,
                 size: 32.0,
               ),
             ),
@@ -103,7 +106,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                             width: 75.0,
                             height: 75.0,
                             child: SpinKitRipple(
-                              color: FlutterFlowTheme.of(context).primary,
+                              color: FlutterFlowTheme.of(context).alternate,
                               size: 75.0,
                             ),
                           ),
@@ -260,25 +263,6 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                               Icons.chevron_right_rounded,
                                               color: Color(0xFF57636C),
                                               size: 24.0,
-                                            ),
-                                          ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 12.0, 4.0, 8.0),
-                                            child: Text(
-                                              listViewIndex.toString(),
-                                              textAlign: TextAlign.end,
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        fontFamily: 'Nunito',
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .secondaryText,
-                                                      ),
                                             ),
                                           ),
                                         ],
