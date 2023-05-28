@@ -5,6 +5,7 @@ import '/flutter_flow/flutter_flow_widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'log_in_model.dart';
@@ -82,7 +83,7 @@ class _LogInWidgetState extends State<LogInWidget> {
                                     ClipRRect(
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: Image.asset(
-                                        'assets/images/Margwa.png',
+                                        'assets/images/Transparent-Margwa.png',
                                         width: 115.0,
                                         height: 115.0,
                                         fit: BoxFit.cover,
@@ -370,12 +371,8 @@ class _LogInWidgetState extends State<LogInWidget> {
                             ),
                           ),
                         ),
-                        InkWell(
-                          splashColor: Colors.transparent,
-                          focusColor: Colors.transparent,
-                          hoverColor: Colors.transparent,
-                          highlightColor: Colors.transparent,
-                          onTap: () async {
+                        FFButtonWidget(
+                          onPressed: () async {
                             GoRouter.of(context).prepareAuthEvent();
                             final user =
                                 await authManager.signInWithGoogle(context);
@@ -385,30 +382,25 @@ class _LogInWidgetState extends State<LogInWidget> {
 
                             context.goNamedAuth('HomePage', context.mounted);
                           },
-                          child: AnimatedContainer(
-                            duration: Duration(milliseconds: 100),
-                            curve: Curves.easeIn,
-                            width: 75.0,
-                            height: 75.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).secondary,
-                              shape: BoxShape.circle,
+                          text: 'Sign in with Google',
+                          icon: FaIcon(
+                            FontAwesomeIcons.google,
+                            size: 28.0,
+                          ),
+                          options: FFButtonOptions(
+                            height: 60.0,
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                8.0, 0.0, 16.0, 0.0),
+                            iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                8.0, 0.0, 0.0, 0.0),
+                            color: FlutterFlowTheme.of(context).secondary,
+                            textStyle: FlutterFlowTheme.of(context).titleMedium,
+                            elevation: 3.0,
+                            borderSide: BorderSide(
+                              color: Colors.transparent,
+                              width: 1.0,
                             ),
-                            child: Align(
-                              alignment: AlignmentDirectional(0.0, 0.0),
-                              child: Container(
-                                width: 40.0,
-                                height: 40.0,
-                                clipBehavior: Clip.antiAlias,
-                                decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Image.network(
-                                  'https://i0.wp.com/nanophorm.com/wp-content/uploads/2018/04/google-logo-icon-PNG-Transparent-Background.png?w=1000&ssl=1',
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            ),
+                            borderRadius: BorderRadius.circular(15.0),
                           ),
                         ),
                       ],
@@ -416,32 +408,6 @@ class _LogInWidgetState extends State<LogInWidget> {
                   ),
                 ),
               ),
-              if (responsiveVisibility(
-                context: context,
-                phone: false,
-                tablet: false,
-              ))
-                Expanded(
-                  flex: 6,
-                  child: Padding(
-                    padding:
-                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
-                    child: Container(
-                      width: 100.0,
-                      height: double.infinity,
-                      decoration: BoxDecoration(
-                        color: FlutterFlowTheme.of(context).secondaryBackground,
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: Image.network(
-                            'https://images.unsplash.com/photo-1514924013411-cbf25faa35bb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1380&q=80',
-                          ).image,
-                        ),
-                        borderRadius: BorderRadius.circular(16.0),
-                      ),
-                    ),
-                  ),
-                ),
             ],
           ),
         ),
