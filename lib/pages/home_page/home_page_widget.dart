@@ -383,28 +383,39 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                               double.infinity,
                                                           height: 200.0,
                                                           fit: BoxFit.cover,
-                                                          progressIndicatorBuilder:
-                                                              (context, url,
-                                                                      downloadProgress) =>
-                                                                  Center(
-                                                            child: SizedBox(
-                                                              width: 25,
-                                                              height: 25,
-                                                              child:
-                                                                  CircularProgressIndicator(
-                                                                strokeWidth: 3,
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primary,
-                                                                value: downloadProgress
-                                                                            .progress !=
-                                                                        null
-                                                                    ? downloadProgress
-                                                                        .progress
-                                                                    : 0,
+                                                          loadingBuilder:
+                                                              (BuildContext
+                                                                      context,
+                                                                  Widget child,
+                                                                  ImageChunkEvent?
+                                                                      downloadProgress) {
+                                                            if (downloadProgress ==
+                                                                null)
+                                                              return child;
+
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 25,
+                                                                height: 25,
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                                  strokeWidth:
+                                                                      3,
+                                                                  color: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .primary,
+                                                                  value: downloadProgress
+                                                                              .expectedTotalBytes !=
+                                                                          null
+                                                                      ? downloadProgress
+                                                                              .cumulativeBytesLoaded /
+                                                                          downloadProgress
+                                                                              .expectedTotalBytes!
+                                                                      : null,
+                                                                ),
                                                               ),
-                                                            ),
-                                                          ),
+                                                            );
+                                                          },
                                                         ),
                                                       ),
                                                       Align(

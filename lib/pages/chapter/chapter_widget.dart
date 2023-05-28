@@ -224,43 +224,50 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                                 width: double.infinity,
                                                 height: 750.0,
                                                 fit: BoxFit.fitWidth,
-                                                progressIndicatorBuilder:
-                                                    (context, url,
-                                                            downloadProgress) =>
-                                                        Padding(
-                                                  padding: EdgeInsets.fromLTRB(
-                                                      0,
-                                                      MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              2 -
-                                                          150.0,
-                                                      0,
-                                                      MediaQuery.of(context)
-                                                                  .size
-                                                                  .height /
-                                                              2 -
-                                                          150.0),
-                                                  child: Center(
-                                                    child: SizedBox(
-                                                      width: 75,
-                                                      height: 75,
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                        color:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                        value: downloadProgress
-                                                                    .progress !=
-                                                                null
-                                                            ? downloadProgress
-                                                                .progress
-                                                            : 0,
+                                                loadingBuilder:
+                                                    (BuildContext context,
+                                                        Widget child,
+                                                        ImageChunkEvent?
+                                                            downloadProgress) {
+                                                  if (downloadProgress == null)
+                                                    return child;
+
+                                                  return Padding(
+                                                    padding: EdgeInsets.fromLTRB(
+                                                        0,
+                                                        MediaQuery.of(context)
+                                                                    .size
+                                                                    .height /
+                                                                2 -
+                                                            150.0,
+                                                        0,
+                                                        MediaQuery.of(context)
+                                                                    .size
+                                                                    .height /
+                                                                2 -
+                                                            150.0),
+                                                    child: Center(
+                                                      child: SizedBox(
+                                                        width: 75,
+                                                        height: 75,
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                          color: FlutterFlowTheme
+                                                                  .of(context)
+                                                              .primary,
+                                                          value: downloadProgress
+                                                                      .expectedTotalBytes !=
+                                                                  null
+                                                              ? downloadProgress
+                                                                      .cumulativeBytesLoaded /
+                                                                  downloadProgress
+                                                                      .expectedTotalBytes!
+                                                              : null,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
+                                                  );
+                                                },
                                               ),
                                             ),
                                           ),
@@ -334,41 +341,51 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                             ).toString()}/${pagesItem}',
                                             width: double.infinity,
                                             fit: BoxFit.fitWidth,
-                                            progressIndicatorBuilder: (context,
-                                                    url, downloadProgress) =>
-                                                Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0,
-                                                  MediaQuery.of(context)
-                                                              .size
-                                                              .height /
-                                                          2 -
-                                                      150.0,
-                                                  0,
-                                                  MediaQuery.of(context)
-                                                              .size
-                                                              .height /
-                                                          2 -
-                                                      150.0),
-                                              child: Center(
-                                                child: SizedBox(
-                                                  width: 75,
-                                                  height: 75,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    value: downloadProgress
-                                                                .progress !=
-                                                            null
-                                                        ? downloadProgress
-                                                            .progress
-                                                        : 0,
+                                            loadingBuilder:
+                                                (BuildContext context,
+                                                    Widget child,
+                                                    ImageChunkEvent?
+                                                        downloadProgress) {
+                                              if (downloadProgress == null)
+                                                return child;
+
+                                              return Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    0,
+                                                    MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            2 -
+                                                        150.0,
+                                                    0,
+                                                    MediaQuery.of(context)
+                                                                .size
+                                                                .height /
+                                                            2 -
+                                                        150.0),
+                                                child: Center(
+                                                  child: SizedBox(
+                                                    width: 75,
+                                                    height: 75,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      color:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
+                                                      value: downloadProgress
+                                                                  .expectedTotalBytes !=
+                                                              null
+                                                          ? downloadProgress
+                                                                  .cumulativeBytesLoaded /
+                                                              downloadProgress
+                                                                  .expectedTotalBytes!
+                                                          : null,
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                            ),
+                                              );
+                                            },
                                           ),
                                           Align(
                                             alignment:
