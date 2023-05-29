@@ -1,8 +1,3 @@
-import 'dart:async';
-
-import 'package:margwa/backend/api_requests/api_calls.dart';
-import 'package:margwa/backend/backend.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +6,9 @@ import 'package:firebase_core/firebase_core.dart';
 import 'auth/firebase_auth/firebase_user_provider.dart';
 import 'auth/firebase_auth/auth_util.dart';
 
+import 'backend/api_requests/api_calls.dart';
+import 'backend/api_requests/api_manager.dart';
+import 'backend/backend.dart';
 import 'backend/push_notifications/push_notifications_util.dart';
 import 'backend/firebase/firebase_config.dart';
 import 'flutter_flow/flutter_flow_theme.dart';
@@ -28,9 +26,6 @@ import 'package:background_fetch/background_fetch.dart';
 void backgroundFetchHeadlessTask(HeadlessTask task) async {
   WidgetsFlutterBinding.ensureInitialized();
   await initFirebase();
-
-  final appState = FFAppState(); // Initialize FFAppState
-  await appState.initializePersistedState();
 
   ApiCallResponse? apiResult;
   String taskId = task.taskId;
@@ -98,16 +93,8 @@ void main() async {
 
   await FlutterFlowTheme.initialize();
 
-  final appState = FFAppState(); // Initialize FFAppState
-  await appState.initializePersistedState();
+  runApp(MyApp());
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => appState,
-    child: MyApp(),
-  ));
-
-  // Register to receive BackgroundFetch events after app is terminated.
-  // Requires {stopOnTerminate: false, enableHeadless: true}
   await BackgroundFetch.registerHeadlessTask(backgroundFetchHeadlessTask);
 }
 

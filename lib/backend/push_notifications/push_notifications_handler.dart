@@ -83,8 +83,8 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
           child: Center(
             child: Image.asset(
               'assets/images/Margwa.png',
-              width: 125.0,
-              height: 125.0,
+              width: 175.0,
+              height: 175.0,
               fit: BoxFit.cover,
             ),
           ),
@@ -136,6 +136,14 @@ final parametersBuilderMap =
   'ForgotPasswrod': ParameterData.none(),
   'HomePage': ParameterData.none(),
   'Library': ParameterData.none(),
+  'ChapterWebtoon': (data) async => ParameterData(
+        allParams: {
+          'title': getParameter<String>(data, 'title'),
+          'chapterId': getParameter<String>(data, 'chapterId'),
+          'mangaid': getParameter<String>(data, 'mangaid'),
+          'pages': getParameter<int>(data, 'pages'),
+        },
+      ),
 };
 
 Map<String, dynamic> getInitialParameterData(Map<String, dynamic> data) {

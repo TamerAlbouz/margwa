@@ -49,6 +49,11 @@ class FavoritesRecord extends FirestoreRecord {
   int get openedChapters => _openedChapters ?? 0;
   bool hasOpenedChapters() => _openedChapters != null;
 
+  // "tags" field.
+  List<String>? _tags;
+  List<String> get tags => _tags ?? const [];
+  bool hasTags() => _tags != null;
+
   void _initializeFields() {
     _user = snapshotData['user'] as DocumentReference?;
     _id = snapshotData['id'] as String?;
@@ -57,6 +62,7 @@ class FavoritesRecord extends FirestoreRecord {
     _desc = snapshotData['desc'] as String?;
     _numChapters = snapshotData['num_chapters'] as int?;
     _openedChapters = snapshotData['opened_chapters'] as int?;
+    _tags = getDataList(snapshotData['tags']);
   }
 
   static CollectionReference get collection =>

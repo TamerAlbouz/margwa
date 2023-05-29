@@ -44,8 +44,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
@@ -352,6 +350,16 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                           r'''$.id''',
                                         ).toString(),
                                         ParamType.String,
+                                      ),
+                                      'format': serializeParam(
+                                        (getJsonField(
+                                          mangaItem,
+                                          r'''$.attributes.tags[:].id''',
+                                        ) as List)
+                                            .map<String>((s) => s.toString())
+                                            .toList(),
+                                        ParamType.String,
+                                        true,
                                       ),
                                     }.withoutNulls,
                                   );

@@ -8,12 +8,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
-class ChapterModel extends FlutterFlowModel {
-  ///  State fields for stateful widgets in this page.
-
-  // State field(s) for PageView widget.
-  PageController? pageViewController;
-
+class ChapterWebtoonModel extends FlutterFlowModel {
   /// Initialization and disposal methods.
 
   void initState(BuildContext context) {}
