@@ -869,27 +869,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                             return Text(
                                                               valueOrDefault<
                                                                   String>(
-                                                                () {
-                                                                  if (wrapFavoritesRecord
-                                                                          .openedChapters !=
-                                                                      getJsonField(
-                                                                        containerGetChaptersResponse
-                                                                            .jsonBody,
-                                                                        r'''$.total''',
-                                                                      )) {
-                                                                    return 'New Update';
-                                                                  } else if (wrapFavoritesRecord
-                                                                          .numChapters ==
-                                                                      getJsonField(
-                                                                        containerGetChaptersResponse
-                                                                            .jsonBody,
-                                                                        r'''$.total''',
-                                                                      )) {
-                                                                    return 'No Update';
-                                                                  } else {
-                                                                    return 'New Update';
-                                                                  }
-                                                                }(),
+                                                                (wrapFavoritesRecord.openedChapters !=
+                                                                            getJsonField(
+                                                                              containerGetChaptersResponse.jsonBody,
+                                                                              r'''$.total''',
+                                                                            )) &&
+                                                                        (wrapFavoritesRecord.numChapters !=
+                                                                            getJsonField(
+                                                                              containerGetChaptersResponse.jsonBody,
+                                                                              r'''$.total''',
+                                                                            ))
+                                                                    ? 'New Update'
+                                                                    : 'No Update',
                                                                 'No Update',
                                                               ),
                                                               style: FlutterFlowTheme
@@ -900,26 +891,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                                         'Nunito',
                                                                     color: valueOrDefault<
                                                                         Color>(
-                                                                      () {
-                                                                        if (getJsonField(
-                                                                              containerGetChaptersResponse.jsonBody,
-                                                                              r'''$.total''',
-                                                                            ) !=
-                                                                            wrapFavoritesRecord.openedChapters) {
-                                                                          return FlutterFlowTheme.of(context)
-                                                                              .tertiary;
-                                                                        } else if (getJsonField(
-                                                                              containerGetChaptersResponse.jsonBody,
-                                                                              r'''$.total''',
-                                                                            ) ==
-                                                                            wrapFavoritesRecord.numChapters) {
-                                                                          return FlutterFlowTheme.of(context)
-                                                                              .secondaryText;
-                                                                        } else {
-                                                                          return FlutterFlowTheme.of(context)
-                                                                              .tertiary;
-                                                                        }
-                                                                      }(),
+                                                                      (getJsonField(
+                                                                                    containerGetChaptersResponse.jsonBody,
+                                                                                    r'''$.total''',
+                                                                                  ) !=
+                                                                                  wrapFavoritesRecord.openedChapters) &&
+                                                                              (getJsonField(
+                                                                                    containerGetChaptersResponse.jsonBody,
+                                                                                    r'''$.total''',
+                                                                                  ) !=
+                                                                                  wrapFavoritesRecord.numChapters)
+                                                                          ? FlutterFlowTheme.of(context).tertiary
+                                                                          : FlutterFlowTheme.of(context).secondaryText,
                                                                       FlutterFlowTheme.of(
                                                                               context)
                                                                           .secondaryText,

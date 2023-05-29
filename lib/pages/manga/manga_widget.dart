@@ -615,6 +615,23 @@ class _MangaWidgetState extends State<MangaWidget> {
                                               ),
                                               ParamType.int,
                                             ),
+                                            'index': serializeParam(
+                                              chaptersIndex,
+                                              ParamType.int,
+                                            ),
+                                            'format': serializeParam(
+                                              widget.format,
+                                              ParamType.String,
+                                              true,
+                                            ),
+                                            'desc': serializeParam(
+                                              widget.desc,
+                                              ParamType.String,
+                                            ),
+                                            'src': serializeParam(
+                                              widget.src,
+                                              ParamType.String,
+                                            ),
                                           }.withoutNulls,
                                         );
                                       }
