@@ -430,11 +430,12 @@ class _CreateAccountWidgetState extends State<CreateAccountWidget> {
                             size: 28.0,
                           ),
                           options: FFButtonOptions(
+                            width: 220.0,
                             height: 60.0,
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 16.0, 0.0),
+                                0.0, 0.0, 0.0, 0.0),
                             iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                8.0, 0.0, 0.0, 0.0),
+                                0.0, 0.0, 0.0, 0.0),
                             color: FlutterFlowTheme.of(context).secondary,
                             textStyle: FlutterFlowTheme.of(context).titleMedium,
                             elevation: 3.0,

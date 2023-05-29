@@ -1,13 +1,10 @@
 import '/backend/api_requests/api_calls.dart';
-import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'chapter_model.dart';
 export 'chapter_model.dart';
@@ -35,11 +32,6 @@ class _ChapterWidgetState extends State<ChapterWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
-  int get pageViewCurrentIndex => _model.pageViewController != null &&
-          _model.pageViewController!.hasClients &&
-          _model.pageViewController!.page != null
-      ? _model.pageViewController!.page!.round()
-      : 0;
 
   @override
   void initState() {
@@ -131,353 +123,90 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                       );
                     }
                     final columnGetChapterPagesResponse = snapshot.data!;
-                    return Column(
-                      mainAxisSize: MainAxisSize.max,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Builder(
-                          builder: (context) {
-                            final pagesH = (GetChapterPagesCall.data(
-                                  columnGetChapterPagesResponse.jsonBody,
-                                ) as List)
-                                    .map<String>((s) => s.toString())
-                                    .toList()
-                                    ?.map((e) => e)
-                                    .toList()
-                                    ?.toList() ??
-                                [];
-
-                            if (FFAppState().Orientation)
-                              // Builder(
-                              //   builder: (context) {
-                              //     final pagesH = (GetChapterPagesCall.data(
-                              //           columnGetChapterPagesResponse.jsonBody,
-                              //         ) as List)
-                              //             .map<String>((s) => s.toString())
-                              //             .toList()
-                              //             ?.map((e) => e)
-                              //             .toList()
-                              //             ?.toList() ??
-                              //         [];
+                    return Builder(
+                      builder: (context) {
+                        final chapters = (GetChapterPagesCall.data(
+                              columnGetChapterPagesResponse.jsonBody,
+                            ) as List)
+                                .map<String>((s) => s.toString())
+                                .toList()
+                                ?.map((e) => e)
+                                .toList()
+                                ?.toList() ??
+                            [];
+                        return SingleChildScrollView(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children:
+                                List.generate(chapters.length, (chaptersIndex) {
+                              final chaptersItem = chapters[chaptersIndex];
                               return Container(
-                                width: double.infinity,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.93,
-                                child: PageView.builder(
-                                  allowImplicitScrolling: true,
-                                  controller: _model.pageViewController ??=
-                                      PageController(
-                                          initialPage:
-                                              min(0, pagesH.length - 1)),
-                                  onPageChanged: (_) => setState(() {}),
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: pagesH.length,
-                                  itemBuilder: (context, pagesHIndex) {
-                                    final pagesHItem = pagesH[pagesHIndex];
-                                    return Stack(
-                                      children: [
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(0.0, 0.0),
-                                          child: InkWell(
-                                            splashColor: Colors.transparent,
-                                            focusColor: Colors.transparent,
-                                            hoverColor: Colors.transparent,
-                                            highlightColor: Colors.transparent,
-                                            onTap: () async {
-                                              await Navigator.push(
-                                                context,
-                                                PageTransition(
-                                                  type: PageTransitionType.fade,
-                                                  child:
-                                                      FlutterFlowExpandedImageView(
-                                                    image: Image.network(
-                                                      '${GetChapterPagesCall.url(
-                                                        columnGetChapterPagesResponse
-                                                            .jsonBody,
-                                                      ).toString()}/data/${GetChapterPagesCall.hash(
-                                                        columnGetChapterPagesResponse
-                                                            .jsonBody,
-                                                      ).toString()}/${pagesHItem}',
-                                                      fit: BoxFit.contain,
-                                                    ),
-                                                    allowRotation: false,
-                                                    tag:
-                                                        '${GetChapterPagesCall.url(
-                                                      columnGetChapterPagesResponse
-                                                          .jsonBody,
-                                                    ).toString()}/data/${GetChapterPagesCall.hash(
-                                                      columnGetChapterPagesResponse
-                                                          .jsonBody,
-                                                    ).toString()}/${pagesHItem}',
-                                                    useHeroAnimation: true,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Hero(
-                                              tag: '${GetChapterPagesCall.url(
-                                                columnGetChapterPagesResponse
-                                                    .jsonBody,
-                                              ).toString()}/data/${GetChapterPagesCall.hash(
-                                                columnGetChapterPagesResponse
-                                                    .jsonBody,
-                                              ).toString()}/${pagesHItem}',
-                                              transitionOnUserGestures: true,
-                                              child: Image.network(
-                                                '${GetChapterPagesCall.url(
-                                                  columnGetChapterPagesResponse
-                                                      .jsonBody,
-                                                ).toString()}/data/${GetChapterPagesCall.hash(
-                                                  columnGetChapterPagesResponse
-                                                      .jsonBody,
-                                                ).toString()}/${pagesHItem}',
-                                                width: double.infinity,
-                                                height: 750.0,
-                                                fit: BoxFit.fitWidth,
-                                                loadingBuilder:
-                                                    (BuildContext context,
-                                                        Widget child,
-                                                        ImageChunkEvent?
-                                                            downloadProgress) {
-                                                  if (downloadProgress == null)
-                                                    return child;
+                                decoration: BoxDecoration(),
+                                child: Image.network(
+                                  '${GetChapterPagesCall.url(
+                                    columnGetChapterPagesResponse.jsonBody,
+                                  ).toString()}/data/${GetChapterPagesCall.hash(
+                                    columnGetChapterPagesResponse.jsonBody,
+                                  ).toString()}/${chaptersItem}',
+                                  width: double.infinity,
+                                  fit: BoxFit.fitWidth,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return Center(
+                                      child: Text(
+                                        'Error loading image: ${error.toString()}',
+                                        textAlign: TextAlign.center,
+                                      ),
+                                    );
+                                  },
+                                  frameBuilder: (_, image, loadingBuilder, __) {
+                                    if (loadingBuilder == null) {
+                                      return Center(
+                                        heightFactor: 9,
+                                        child: SizedBox(
+                                          width: 75,
+                                          height: 75,
+                                          child: CircularProgressIndicator(
+                                            color: FlutterFlowTheme.of(context)
+                                                .primary,
+                                          ),
+                                        ),
+                                      );
+                                    }
+                                    return image;
+                                  },
+                                  loadingBuilder: (BuildContext context,
+                                      Widget child,
+                                      ImageChunkEvent? downloadProgress) {
+                                    if (downloadProgress == null) return child;
 
-                                                  return Padding(
-                                                    padding: EdgeInsets.fromLTRB(
-                                                        0,
-                                                        MediaQuery.of(context)
-                                                                    .size
-                                                                    .height /
-                                                                2 -
-                                                            150.0,
-                                                        0,
-                                                        MediaQuery.of(context)
-                                                                    .size
-                                                                    .height /
-                                                                2 -
-                                                            150.0),
-                                                    child: Center(
-                                                      child: SizedBox(
-                                                        width: 75,
-                                                        height: 75,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          value: downloadProgress
-                                                                      .expectedTotalBytes !=
-                                                                  null
-                                                              ? downloadProgress
-                                                                      .cumulativeBytesLoaded /
-                                                                  downloadProgress
-                                                                      .expectedTotalBytes!
-                                                              : null,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                              ),
-                                            ),
-                                          ),
+                                    return Center(
+                                      heightFactor: 9,
+                                      child: SizedBox(
+                                        width: 75,
+                                        height: 75,
+                                        child: CircularProgressIndicator(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
+                                          value: downloadProgress
+                                                      .expectedTotalBytes !=
+                                                  null
+                                              ? downloadProgress
+                                                      .cumulativeBytesLoaded /
+                                                  downloadProgress
+                                                      .expectedTotalBytes!
+                                              : null,
                                         ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(1.0, -0.85),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 2.5, 0.0),
-                                            child: badges.Badge(
-                                              badgeContent: Text(
-                                                '${(pagesHIndex + 1).toString()}/${widget.pages?.toString()}',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall,
-                                              ),
-                                              showBadge: true,
-                                              shape: badges.BadgeShape.circle,
-                                              badgeColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              elevation: 0.0,
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 12.0, 12.0, 12.0),
-                                              position:
-                                                  badges.BadgePosition.topEnd(),
-                                              animationType: badges
-                                                  .BadgeAnimationType.scale,
-                                              toAnimate: false,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
+                                      ),
                                     );
                                   },
                                 ),
                               );
-
-                            return Flexible(
-                              // child: Builder(
-                              //   builder: (context) {
-                              //     final pages = (GetChapterPagesCall.data(
-                              //           columnGetChapterPagesResponse.jsonBody,
-                              //         ) as List)
-                              //             .map<String>((s) => s.toString())
-                              //             .toList()
-                              //             ?.map((e) => e)
-                              //             .toList()
-                              //             ?.toList() ??
-                              //         [];
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: List.generate(pagesH.length,
-                                      (pagesIndex) {
-                                    final pagesItem = pagesH[pagesIndex];
-                                    return Stack(
-                                      children: [
-                                        Image.network(
-                                          '${GetChapterPagesCall.url(
-                                            columnGetChapterPagesResponse
-                                                .jsonBody,
-                                          ).toString()}/data/${GetChapterPagesCall.hash(
-                                            columnGetChapterPagesResponse
-                                                .jsonBody,
-                                          ).toString()}/${pagesItem}',
-                                          width: double.infinity,
-                                          fit: BoxFit.fitWidth,
-                                          errorBuilder:
-                                              (context, error, stackTrace) {
-                                            return Center(
-                                              child: Text(
-                                                'Error loading image: ${error.toString()}',
-                                                textAlign: TextAlign.center,
-                                              ),
-                                            );
-                                          },
-                                          frameBuilder:
-                                              (_, image, loadingBuilder, __) {
-                                            if (loadingBuilder == null) {
-                                              return Padding(
-                                                padding: EdgeInsets.fromLTRB(
-                                                    0,
-                                                    MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            2 -
-                                                        150.0,
-                                                    0,
-                                                    MediaQuery.of(context)
-                                                                .size
-                                                                .height /
-                                                            2 -
-                                                        150.0),
-                                                child: Center(
-                                                  child: SizedBox(
-                                                    width: 75,
-                                                    height: 75,
-                                                    child:
-                                                        CircularProgressIndicator(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .primary,
-                                                    ),
-                                                  ),
-                                                ),
-                                              );
-                                            }
-                                            return image;
-                                          },
-                                          loadingBuilder: (BuildContext context,
-                                              Widget child,
-                                              ImageChunkEvent?
-                                                  downloadProgress) {
-                                            if (downloadProgress == null)
-                                              return child;
-
-                                            return Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0,
-                                                  MediaQuery.of(context)
-                                                              .size
-                                                              .height /
-                                                          2 -
-                                                      150.0,
-                                                  0,
-                                                  MediaQuery.of(context)
-                                                              .size
-                                                              .height /
-                                                          2 -
-                                                      150.0),
-                                              child: Center(
-                                                child: SizedBox(
-                                                  width: 75,
-                                                  height: 75,
-                                                  child:
-                                                      CircularProgressIndicator(
-                                                    color: FlutterFlowTheme.of(
-                                                            context)
-                                                        .primary,
-                                                    value: downloadProgress
-                                                                .expectedTotalBytes !=
-                                                            null
-                                                        ? downloadProgress
-                                                                .cumulativeBytesLoaded /
-                                                            downloadProgress
-                                                                .expectedTotalBytes!
-                                                        : null,
-                                                  ),
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
-                                        Align(
-                                          alignment:
-                                              AlignmentDirectional(1.0, 0.0),
-                                          child: Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0.0, 10.0, 2.5, 0.0),
-                                            child: badges.Badge(
-                                              badgeContent: Text(
-                                                '${(pagesIndex + 1).toString()}/${widget.pages?.toString()}',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodySmall,
-                                              ),
-                                              showBadge: true,
-                                              shape: badges.BadgeShape.circle,
-                                              badgeColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryBackground,
-                                              elevation: 0.0,
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 12.0, 12.0, 12.0),
-                                              position:
-                                                  badges.BadgePosition.topEnd(),
-                                              animationType: badges
-                                                  .BadgeAnimationType.scale,
-                                              toAnimate: false,
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    );
-                                  }),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                            }),
+                          ),
+                        );
+                      },
                     );
                   },
                 ),
