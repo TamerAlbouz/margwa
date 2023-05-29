@@ -1,4 +1,5 @@
 import '/backend/api_requests/api_calls.dart';
+import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -6,6 +7,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:provider/provider.dart';
 import 'chapter_webtoon_model.dart';
 export 'chapter_webtoon_model.dart';
@@ -130,6 +132,7 @@ class _ChapterWebtoonWidgetState extends State<ChapterWebtoonWidget> {
                                   [];
                               return ListView.builder(
                                 padding: EdgeInsets.zero,
+                                primary: false,
                                 shrinkWrap: true,
                                 scrollDirection: Axis.vertical,
                                 itemCount: chapters.length,
@@ -139,16 +142,65 @@ class _ChapterWebtoonWidgetState extends State<ChapterWebtoonWidget> {
                                     decoration: BoxDecoration(),
                                     child: Stack(
                                       children: [
-                                        CachedNetworkImage(
-                                          imageUrl: '${GetChapterPagesCall.url(
-                                            listViewGetChapterPagesResponse
-                                                .jsonBody,
-                                          ).toString()}/data/${GetChapterPagesCall.hash(
-                                            listViewGetChapterPagesResponse
-                                                .jsonBody,
-                                          ).toString()}/${chaptersItem}',
-                                          width: double.infinity,
-                                          fit: BoxFit.fitWidth,
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            await Navigator.push(
+                                              context,
+                                              PageTransition(
+                                                type: PageTransitionType.fade,
+                                                child:
+                                                    FlutterFlowExpandedImageView(
+                                                  image: CachedNetworkImage(
+                                                    imageUrl:
+                                                        '${GetChapterPagesCall.url(
+                                                      listViewGetChapterPagesResponse
+                                                          .jsonBody,
+                                                    ).toString()}/data/${GetChapterPagesCall.hash(
+                                                      listViewGetChapterPagesResponse
+                                                          .jsonBody,
+                                                    ).toString()}/${chaptersItem}',
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                  allowRotation: false,
+                                                  tag:
+                                                      '${GetChapterPagesCall.url(
+                                                    listViewGetChapterPagesResponse
+                                                        .jsonBody,
+                                                  ).toString()}/data/${GetChapterPagesCall.hash(
+                                                    listViewGetChapterPagesResponse
+                                                        .jsonBody,
+                                                  ).toString()}/${chaptersItem}',
+                                                  useHeroAnimation: true,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                          child: Hero(
+                                            tag: '${GetChapterPagesCall.url(
+                                              listViewGetChapterPagesResponse
+                                                  .jsonBody,
+                                            ).toString()}/data/${GetChapterPagesCall.hash(
+                                              listViewGetChapterPagesResponse
+                                                  .jsonBody,
+                                            ).toString()}/${chaptersItem}',
+                                            transitionOnUserGestures: true,
+                                            child: CachedNetworkImage(
+                                              imageUrl:
+                                                  '${GetChapterPagesCall.url(
+                                                listViewGetChapterPagesResponse
+                                                    .jsonBody,
+                                              ).toString()}/data/${GetChapterPagesCall.hash(
+                                                listViewGetChapterPagesResponse
+                                                    .jsonBody,
+                                              ).toString()}/${chaptersItem}',
+                                              width: double.infinity,
+                                              fit: BoxFit.fitWidth,
+                                            ),
+                                          ),
                                         ),
                                         Align(
                                           alignment:
