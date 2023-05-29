@@ -93,6 +93,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             desc: params.getParam('desc', ParamType.String),
             src: params.getParam('src', ParamType.String),
             id: params.getParam('id', ParamType.String),
+            format: params.getParam<String>('format', ParamType.String, true),
           ),
         ),
         FFRoute(
@@ -134,6 +135,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: 'Library',
           path: '/library',
           builder: (context, params) => LibraryWidget(),
+        ),
+        FFRoute(
+          name: 'ChapterWebtoon',
+          path: '/wchapter',
+          builder: (context, params) => ChapterWebtoonWidget(
+            title: params.getParam('title', ParamType.String),
+            chapterId: params.getParam('chapterId', ParamType.String),
+            mangaid: params.getParam('mangaid', ParamType.String),
+            pages: params.getParam('pages', ParamType.int),
+          ),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
       urlPathStrategy: UrlPathStrategy.path,
@@ -321,8 +332,8 @@ class FFRoute {
                   child: Center(
                     child: Image.asset(
                       'assets/images/Margwa.png',
-                      width: 125.0,
-                      height: 125.0,
+                      width: 175.0,
+                      height: 175.0,
                       fit: BoxFit.cover,
                     ),
                   ),

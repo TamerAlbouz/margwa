@@ -2,6 +2,7 @@ import '/backend/api_requests/api_calls.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -32,6 +33,11 @@ class _ChapterWidgetState extends State<ChapterWidget> {
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
   final _unfocusNode = FocusNode();
+  int get pageViewCurrentIndex => _model.pageViewController != null &&
+          _model.pageViewController!.hasClients &&
+          _model.pageViewController!.page != null
+      ? _model.pageViewController!.page!.round()
+      : 0;
 
   @override
   void initState() {
@@ -49,61 +55,48 @@ class _ChapterWidgetState extends State<ChapterWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-        body: NestedScrollView(
-          headerSliverBuilder: (context, _) => [
-            SliverAppBar(
-              pinned: false,
-              floating: true,
-              snap: true,
-              backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
-              automaticallyImplyLeading: false,
-              leading: FlutterFlowIconButton(
-                borderColor: Colors.transparent,
-                borderRadius: 30.0,
-                borderWidth: 1.0,
-                buttonSize: 60.0,
-                icon: Icon(
-                  Icons.arrow_back_ios_rounded,
-                  color: FlutterFlowTheme.of(context).primaryText,
-                  size: 30.0,
-                ),
-                onPressed: () async {
-                  context.pop();
-                },
+        appBar: AppBar(
+          backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
+          automaticallyImplyLeading: false,
+          leading: FlutterFlowIconButton(
+            borderColor: Colors.transparent,
+            borderRadius: 30.0,
+            borderWidth: 1.0,
+            buttonSize: 60.0,
+            icon: Icon(
+              Icons.arrow_back_ios_rounded,
+              color: FlutterFlowTheme.of(context).primaryText,
+              size: 30.0,
+            ),
+            onPressed: () async {
+              context.pop();
+            },
+          ),
+          actions: [
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 16.0, 0.0),
+              child: Text(
+                '${(pageViewCurrentIndex + 1).toString()}/${widget.pages?.toString()}',
+                style: FlutterFlowTheme.of(context).titleMedium,
               ),
-              actions: [
-                FlutterFlowIconButton(
-                  borderColor: Colors.transparent,
-                  borderRadius: 30.0,
-                  borderWidth: 1.0,
-                  buttonSize: 60.0,
-                  icon: Icon(
-                    Icons.crop_rotate,
-                    color: FlutterFlowTheme.of(context).primaryText,
-                    size: 32.0,
-                  ),
-                  onPressed: () async {
-                    setState(() {
-                      FFAppState().Orientation = !FFAppState().Orientation;
-                    });
-                  },
-                ),
-              ],
-              centerTitle: true,
-              elevation: 0.0,
-            )
+            ),
           ],
-          body: Builder(
-            builder: (context) {
-              return SafeArea(
-                top: false,
+          centerTitle: true,
+          elevation: 0.0,
+        ),
+        body: SafeArea(
+          top: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
                 child: FutureBuilder<ApiCallResponse>(
                   future: GetChapterPagesCall.call(
                     chapterId: widget.chapterId,
@@ -122,11 +115,11 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                         ),
                       );
                     }
-                    final columnGetChapterPagesResponse = snapshot.data!;
+                    final pageViewGetChapterPagesResponse = snapshot.data!;
                     return Builder(
                       builder: (context) {
-                        final chapters = (GetChapterPagesCall.data(
-                              columnGetChapterPagesResponse.jsonBody,
+                        final pages = (GetChapterPagesCall.data(
+                              pageViewGetChapterPagesResponse.jsonBody,
                             ) as List)
                                 .map<String>((s) => s.toString())
                                 .toList()
@@ -134,35 +127,38 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                                 .toList()
                                 ?.toList() ??
                             [];
-                        return SingleChildScrollView(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children:
-                                List.generate(chapters.length, (chaptersIndex) {
-                              final chaptersItem = chapters[chaptersIndex];
+                        return Container(
+                          width: double.infinity,
+                          height: 500.0,
+                          child: PageView.builder(
+                            controller: _model.pageViewController ??=
+                                PageController(
+                                    initialPage: min(0, pages.length - 1)),
+                            scrollDirection: Axis.horizontal,
+                            itemCount: pages.length,
+                            itemBuilder: (context, pagesIndex) {
+                              final pagesItem = pages[pagesIndex];
                               return Container(
                                 decoration: BoxDecoration(),
-                                child: Image.network(
-                                  '${GetChapterPagesCall.url(
-                                    columnGetChapterPagesResponse.jsonBody,
+                                child: CachedNetworkImage(
+                                  imageUrl: '${GetChapterPagesCall.url(
+                                    pageViewGetChapterPagesResponse.jsonBody,
                                   ).toString()}/data/${GetChapterPagesCall.hash(
-                                    columnGetChapterPagesResponse.jsonBody,
-                                  ).toString()}/${chaptersItem}',
+                                    pageViewGetChapterPagesResponse.jsonBody,
+                                  ).toString()}/${pagesItem}',
                                   width: double.infinity,
                                   fit: BoxFit.fitWidth,
                                 ),
                               );
-                            }),
+                            },
                           ),
                         );
                       },
                     );
                   },
                 ),
-              );
-            },
+              ),
+            ],
           ),
         ),
       ),

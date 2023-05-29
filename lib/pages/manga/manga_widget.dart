@@ -24,6 +24,7 @@ class MangaWidget extends StatefulWidget {
     required this.desc,
     required this.src,
     required this.id,
+    required this.format,
   })  : this.title = title ?? 'Manga',
         super(key: key);
 
@@ -31,6 +32,7 @@ class MangaWidget extends StatefulWidget {
   final String? desc;
   final String? src;
   final String? id;
+  final List<String>? format;
 
   @override
   _MangaWidgetState createState() => _MangaWidgetState();
@@ -58,8 +60,6 @@ class _MangaWidgetState extends State<MangaWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
@@ -345,30 +345,34 @@ class _MangaWidgetState extends State<MangaWidget> {
                                                                 onPressed:
                                                                     () async {
                                                                   final favoritesCreateData =
-                                                                      createFavoritesRecordData(
-                                                                    user:
-                                                                        currentUserReference,
-                                                                    id: widget
-                                                                        .id,
-                                                                    src: widget
-                                                                        .src,
-                                                                    title: widget
-                                                                        .title,
-                                                                    desc: widget
-                                                                        .desc,
-                                                                    numChapters:
-                                                                        getJsonField(
-                                                                      rowGetChaptersResponse
-                                                                          .jsonBody,
-                                                                      r'''$.total''',
+                                                                      {
+                                                                    ...createFavoritesRecordData(
+                                                                      user:
+                                                                          currentUserReference,
+                                                                      id: widget
+                                                                          .id,
+                                                                      src: widget
+                                                                          .src,
+                                                                      title: widget
+                                                                          .title,
+                                                                      desc: widget
+                                                                          .desc,
+                                                                      numChapters:
+                                                                          getJsonField(
+                                                                        rowGetChaptersResponse
+                                                                            .jsonBody,
+                                                                        r'''$.total''',
+                                                                      ),
+                                                                      openedChapters:
+                                                                          getJsonField(
+                                                                        rowGetChaptersResponse
+                                                                            .jsonBody,
+                                                                        r'''$.total''',
+                                                                      ),
                                                                     ),
-                                                                    openedChapters:
-                                                                        getJsonField(
-                                                                      rowGetChaptersResponse
-                                                                          .jsonBody,
-                                                                      r'''$.total''',
-                                                                    ),
-                                                                  );
+                                                                    'tags': widget
+                                                                        .format,
+                                                                  };
                                                                   await FavoritesRecord
                                                                       .collection
                                                                       .doc()
@@ -549,36 +553,70 @@ class _MangaWidgetState extends State<MangaWidget> {
                                     hoverColor: Colors.transparent,
                                     highlightColor: Colors.transparent,
                                     onTap: () async {
-                                      context.pushNamed(
-                                        'Chapter',
-                                        queryParams: {
-                                          'title': serializeParam(
-                                            getJsonField(
-                                              chaptersItem,
-                                              r'''$.attributes.title''',
-                                            ).toString(),
-                                            ParamType.String,
-                                          ),
-                                          'chapterId': serializeParam(
-                                            getJsonField(
-                                              chaptersItem,
-                                              r'''$.id''',
-                                            ).toString(),
-                                            ParamType.String,
-                                          ),
-                                          'mangaid': serializeParam(
-                                            widget.id,
-                                            ParamType.String,
-                                          ),
-                                          'pages': serializeParam(
-                                            getJsonField(
-                                              chaptersItem,
-                                              r'''$.attributes.pages''',
+                                      if (widget.format!.contains(
+                                          '3e2b8dae-350e-4ab8-a8ce-016e844b9f0d')) {
+                                        context.pushNamed(
+                                          'ChapterWebtoon',
+                                          queryParams: {
+                                            'title': serializeParam(
+                                              getJsonField(
+                                                chaptersItem,
+                                                r'''$.attributes.title''',
+                                              ).toString(),
+                                              ParamType.String,
                                             ),
-                                            ParamType.int,
-                                          ),
-                                        }.withoutNulls,
-                                      );
+                                            'chapterId': serializeParam(
+                                              getJsonField(
+                                                chaptersItem,
+                                                r'''$.id''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                            'mangaid': serializeParam(
+                                              widget.id,
+                                              ParamType.String,
+                                            ),
+                                            'pages': serializeParam(
+                                              getJsonField(
+                                                chaptersItem,
+                                                r'''$.attributes.pages''',
+                                              ),
+                                              ParamType.int,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      } else {
+                                        context.pushNamed(
+                                          'Chapter',
+                                          queryParams: {
+                                            'title': serializeParam(
+                                              getJsonField(
+                                                chaptersItem,
+                                                r'''$.attributes.title''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                            'chapterId': serializeParam(
+                                              getJsonField(
+                                                chaptersItem,
+                                                r'''$.id''',
+                                              ).toString(),
+                                              ParamType.String,
+                                            ),
+                                            'mangaid': serializeParam(
+                                              widget.id,
+                                              ParamType.String,
+                                            ),
+                                            'pages': serializeParam(
+                                              getJsonField(
+                                                chaptersItem,
+                                                r'''$.attributes.pages''',
+                                              ),
+                                              ParamType.int,
+                                            ),
+                                          }.withoutNulls,
+                                        );
+                                      }
 
                                       if ((containerChaptersRecord != null) &&
                                           (widget.id ==

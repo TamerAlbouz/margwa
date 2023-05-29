@@ -74,8 +74,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: WillPopScope(
@@ -363,6 +361,18 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                           ).toString(),
                                                           ParamType.String,
                                                         ),
+                                                        'format':
+                                                            serializeParam(
+                                                          (getJsonField(
+                                                            mangaItem,
+                                                            r'''$.attributes.tags[:].id''',
+                                                          ) as List)
+                                                              .map<String>((s) =>
+                                                                  s.toString())
+                                                              .toList(),
+                                                          ParamType.String,
+                                                          true,
+                                                        ),
                                                       }.withoutNulls,
                                                     );
                                                   },
@@ -633,6 +643,11 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                     'id': serializeParam(
                                                       wrapFavoritesRecord.id,
                                                       ParamType.String,
+                                                    ),
+                                                    'format': serializeParam(
+                                                      wrapFavoritesRecord.tags,
+                                                      ParamType.String,
+                                                      true,
                                                     ),
                                                   }.withoutNulls,
                                                 );

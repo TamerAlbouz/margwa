@@ -41,8 +41,6 @@ class _LibraryWidgetState extends State<LibraryWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return GestureDetector(
       onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
       child: Scaffold(
@@ -158,6 +156,11 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                                     'id': serializeParam(
                                       listViewFavoritesRecord.id,
                                       ParamType.String,
+                                    ),
+                                    'format': serializeParam(
+                                      listViewFavoritesRecord.tags,
+                                      ParamType.String,
+                                      true,
                                     ),
                                   }.withoutNulls,
                                 );

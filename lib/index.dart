@@ -10,3 +10,5 @@ export '/pages/auth/forgot_passwrod/forgot_passwrod_widget.dart'
     show ForgotPasswrodWidget;
 export '/pages/home_page/home_page_widget.dart' show HomePageWidget;
 export '/pages/library/library_widget.dart' show LibraryWidget;
+export '/pages/chapter_webtoon/chapter_webtoon_widget.dart'
+    show ChapterWebtoonWidget;

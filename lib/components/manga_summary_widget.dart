@@ -48,8 +48,6 @@ class _MangaSummaryWidgetState extends State<MangaSummaryWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.watch<FFAppState>();
-
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
