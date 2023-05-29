@@ -104,6 +104,10 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
             chapterId: params.getParam('chapterId', ParamType.String),
             mangaid: params.getParam('mangaid', ParamType.String),
             pages: params.getParam('pages', ParamType.int),
+            index: params.getParam('index', ParamType.int),
+            format: params.getParam<String>('format', ParamType.String, true),
+            desc: params.getParam('desc', ParamType.String),
+            src: params.getParam('src', ParamType.String),
           ),
         ),
         FFRoute(

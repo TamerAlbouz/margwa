@@ -1,9 +1,12 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_expanded_image_view.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -19,12 +22,20 @@ class ChapterWidget extends StatefulWidget {
     required this.chapterId,
     required this.mangaid,
     required this.pages,
+    required this.index,
+    required this.format,
+    required this.desc,
+    required this.src,
   }) : super(key: key);
 
   final String? title;
   final String? chapterId;
   final String? mangaid;
   final int? pages;
+  final int? index;
+  final List<String>? format;
+  final String? desc;
+  final String? src;
 
   @override
   _ChapterWidgetState createState() => _ChapterWidgetState();
@@ -76,7 +87,32 @@ class _ChapterWidgetState extends State<ChapterWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pop();
+              context.pushNamed(
+                'Manga',
+                queryParams: {
+                  'title': serializeParam(
+                    widget.title,
+                    ParamType.String,
+                  ),
+                  'desc': serializeParam(
+                    widget.desc,
+                    ParamType.String,
+                  ),
+                  'src': serializeParam(
+                    widget.src,
+                    ParamType.String,
+                  ),
+                  'id': serializeParam(
+                    widget.mangaid,
+                    ParamType.String,
+                  ),
+                  'format': serializeParam(
+                    widget.format,
+                    ParamType.String,
+                    true,
+                  ),
+                }.withoutNulls,
+              );
             },
           ),
           actions: [
@@ -136,6 +172,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                             controller: _model.pageViewController ??=
                                 PageController(
                                     initialPage: min(0, pages.length - 1)),
+                            onPageChanged: (_) => setState(() {}),
                             scrollDirection: Axis.horizontal,
                             itemCount: pages.length,
                             itemBuilder: (context, pagesIndex) {
@@ -204,6 +241,246 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                       },
                     );
                   },
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 75.0,
+                decoration: BoxDecoration(
+                  color: FlutterFlowTheme.of(context).primaryBackground,
+                ),
+                child: Padding(
+                  padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 16.0, 0.0),
+                  child: StreamBuilder<List<ChaptersRecord>>(
+                    stream: queryChaptersRecord(
+                      queryBuilder: (chaptersRecord) => chaptersRecord
+                          .where('manga_id', isEqualTo: widget.mangaid)
+                          .where('user', isEqualTo: currentUserReference),
+                      singleRecord: true,
+                    ),
+                    builder: (context, snapshot) {
+                      // Customize what your widget looks like when it's loading.
+                      if (!snapshot.hasData) {
+                        return Center(
+                          child: SizedBox(
+                            width: 75.0,
+                            height: 75.0,
+                            child: SpinKitRipple(
+                              color: FlutterFlowTheme.of(context).alternate,
+                              size: 75.0,
+                            ),
+                          ),
+                        );
+                      }
+                      List<ChaptersRecord> rowChaptersRecordList =
+                          snapshot.data!;
+                      final rowChaptersRecord = rowChaptersRecordList.isNotEmpty
+                          ? rowChaptersRecordList.first
+                          : null;
+                      return Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          FutureBuilder<ApiCallResponse>(
+                            future: GetChaptersCall.call(
+                              id: widget.mangaid,
+                              limit: 1,
+                              offset: widget.index! + 1,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 75.0,
+                                    height: 75.0,
+                                    child: SpinKitRipple(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 75.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                              final iconButtonGetChaptersResponse =
+                                  snapshot.data!;
+                              return FlutterFlowIconButton(
+                                borderRadius: 20.0,
+                                borderWidth: 1.0,
+                                buttonSize: 40.0,
+                                icon: Icon(
+                                  Icons.arrow_back,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 32.0,
+                                ),
+                                onPressed: () async {
+                                  context.pushNamed(
+                                    'Chapter',
+                                    queryParams: {
+                                      'title': serializeParam(
+                                        getJsonField(
+                                          iconButtonGetChaptersResponse
+                                              .jsonBody,
+                                          r'''$.data[:].attributes.title''',
+                                        ).toString(),
+                                        ParamType.String,
+                                      ),
+                                      'chapterId': serializeParam(
+                                        getJsonField(
+                                          iconButtonGetChaptersResponse
+                                              .jsonBody,
+                                          r'''$.data[:].id''',
+                                        ).toString(),
+                                        ParamType.String,
+                                      ),
+                                      'mangaid': serializeParam(
+                                        widget.mangaid,
+                                        ParamType.String,
+                                      ),
+                                      'index': serializeParam(
+                                        widget.index! + 1,
+                                        ParamType.int,
+                                      ),
+                                      'pages': serializeParam(
+                                        getJsonField(
+                                          iconButtonGetChaptersResponse
+                                              .jsonBody,
+                                          r'''$.data[:].attributes.pages''',
+                                        ),
+                                        ParamType.int,
+                                      ),
+                                      'format': serializeParam(
+                                        widget.format,
+                                        ParamType.String,
+                                        true,
+                                      ),
+                                      'desc': serializeParam(
+                                        widget.desc,
+                                        ParamType.String,
+                                      ),
+                                      'src': serializeParam(
+                                        widget.src,
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+
+                                  final chaptersUpdateData =
+                                      createChaptersRecordData(
+                                    chapterId: getJsonField(
+                                      iconButtonGetChaptersResponse.jsonBody,
+                                      r'''$.data[:].id''',
+                                    ).toString(),
+                                  );
+                                  await rowChaptersRecord!.reference
+                                      .update(chaptersUpdateData);
+                                },
+                              );
+                            },
+                          ),
+                          FutureBuilder<ApiCallResponse>(
+                            future: GetChaptersCall.call(
+                              id: widget.mangaid,
+                              limit: 1,
+                              offset: widget.index! - 1,
+                            ),
+                            builder: (context, snapshot) {
+                              // Customize what your widget looks like when it's loading.
+                              if (!snapshot.hasData) {
+                                return Center(
+                                  child: SizedBox(
+                                    width: 75.0,
+                                    height: 75.0,
+                                    child: SpinKitRipple(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      size: 75.0,
+                                    ),
+                                  ),
+                                );
+                              }
+                              final iconButtonGetChaptersResponse =
+                                  snapshot.data!;
+                              return FlutterFlowIconButton(
+                                borderRadius: 20.0,
+                                borderWidth: 1.0,
+                                buttonSize: 40.0,
+                                icon: Icon(
+                                  Icons.arrow_forward,
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  size: 32.0,
+                                ),
+                                onPressed: () async {
+                                  context.pushNamed(
+                                    'Chapter',
+                                    queryParams: {
+                                      'title': serializeParam(
+                                        getJsonField(
+                                          iconButtonGetChaptersResponse
+                                              .jsonBody,
+                                          r'''$.data[:].attributes.title''',
+                                        ).toString(),
+                                        ParamType.String,
+                                      ),
+                                      'chapterId': serializeParam(
+                                        getJsonField(
+                                          iconButtonGetChaptersResponse
+                                              .jsonBody,
+                                          r'''$.data[:].id''',
+                                        ).toString(),
+                                        ParamType.String,
+                                      ),
+                                      'mangaid': serializeParam(
+                                        widget.mangaid,
+                                        ParamType.String,
+                                      ),
+                                      'index': serializeParam(
+                                        widget.index! - 1,
+                                        ParamType.int,
+                                      ),
+                                      'pages': serializeParam(
+                                        getJsonField(
+                                          iconButtonGetChaptersResponse
+                                              .jsonBody,
+                                          r'''$.data[:].attributes.pages''',
+                                        ),
+                                        ParamType.int,
+                                      ),
+                                      'format': serializeParam(
+                                        widget.format,
+                                        ParamType.String,
+                                        true,
+                                      ),
+                                      'desc': serializeParam(
+                                        widget.desc,
+                                        ParamType.String,
+                                      ),
+                                      'src': serializeParam(
+                                        widget.src,
+                                        ParamType.String,
+                                      ),
+                                    }.withoutNulls,
+                                  );
+
+                                  final chaptersUpdateData =
+                                      createChaptersRecordData(
+                                    chapterId: getJsonField(
+                                      iconButtonGetChaptersResponse.jsonBody,
+                                      r'''$.data[:].id''',
+                                    ).toString(),
+                                  );
+                                  await rowChaptersRecord!.reference
+                                      .update(chaptersUpdateData);
+                                },
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
