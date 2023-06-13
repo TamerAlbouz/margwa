@@ -89,6 +89,14 @@ class FavoritesRecord extends FirestoreRecord {
   @override
   String toString() =>
       'FavoritesRecord(reference: ${reference.path}, data: $snapshotData)';
+
+  @override
+  int get hashCode => reference.path.hashCode;
+
+  @override
+  bool operator ==(other) =>
+      other is FavoritesRecord &&
+      reference.path.hashCode == other.reference.path.hashCode;
 }
 
 Map<String, dynamic> createFavoritesRecordData({

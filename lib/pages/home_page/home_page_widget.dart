@@ -29,12 +29,6 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   late HomePageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
-  int get pageViewCurrentIndex => _model.pageViewController != null &&
-          _model.pageViewController!.hasClients &&
-          _model.pageViewController!.page != null
-      ? _model.pageViewController!.page!.round()
-      : 0;
 
   @override
   void initState() {
@@ -46,7 +40,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
       _model.instantTimer = InstantTimer.periodic(
         duration: Duration(milliseconds: 5000),
         callback: (timer) async {
-          if (pageViewCurrentIndex < 9) {
+          if (_model.pageViewCurrentIndex < 9) {
             await _model.pageViewController?.nextPage(
               duration: Duration(milliseconds: 300),
               curve: Curves.ease,
@@ -68,14 +62,13 @@ class _HomePageWidgetState extends State<HomePageWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: WillPopScope(
         onWillPop: () async => false,
         child: Scaffold(
@@ -309,7 +302,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                                   onTap: () async {
                                                     context.pushNamed(
                                                       'Manga',
-                                                      queryParams: {
+                                                      queryParameters: {
                                                         'title': serializeParam(
                                                           valueOrDefault<
                                                               String>(
@@ -627,7 +620,7 @@ class _HomePageWidgetState extends State<HomePageWidget> {
                                               onTap: () async {
                                                 context.pushNamed(
                                                   'Manga',
-                                                  queryParams: {
+                                                  queryParameters: {
                                                     'title': serializeParam(
                                                       wrapFavoritesRecord.title,
                                                       ParamType.String,

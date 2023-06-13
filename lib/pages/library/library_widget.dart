@@ -23,7 +23,6 @@ class _LibraryWidgetState extends State<LibraryWidget> {
   late LibraryModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -35,14 +34,13 @@ class _LibraryWidgetState extends State<LibraryWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -140,7 +138,7 @@ class _LibraryWidgetState extends State<LibraryWidget> {
                               onTap: () async {
                                 context.pushNamed(
                                   'Manga',
-                                  queryParams: {
+                                  queryParameters: {
                                     'title': serializeParam(
                                       listViewFavoritesRecord.title,
                                       ParamType.String,

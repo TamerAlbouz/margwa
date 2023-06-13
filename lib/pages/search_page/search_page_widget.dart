@@ -24,7 +24,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
   late SearchPageModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -38,14 +37,13 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -84,10 +82,6 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Container(
-                width: double.infinity,
-                decoration: BoxDecoration(),
-              ),
               Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
@@ -319,7 +313,7 @@ class _SearchPageWidgetState extends State<SearchPageWidget> {
                                 onTap: () async {
                                   context.pushNamed(
                                     'Manga',
-                                    queryParams: {
+                                    queryParameters: {
                                       'title': serializeParam(
                                         getJsonField(
                                           mangaItem,

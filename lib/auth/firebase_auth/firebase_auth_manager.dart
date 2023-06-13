@@ -140,7 +140,9 @@ class FirebaseAuthManager extends AuthManager
 
   @override
   Future<BaseAuthUser?> signInWithJwtToken(
-          BuildContext context, String jwtToken) =>
+    BuildContext context,
+    String jwtToken,
+  ) =>
       _signInOrCreateAccount(context, () => jwtTokenSignIn(jwtToken), 'JWT');
 
   void handlePhoneAuthStateChanges(BuildContext context) {
