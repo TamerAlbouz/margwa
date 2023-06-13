@@ -5,7 +5,6 @@ import '/components/manga_summary_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import 'dart:async';
 import 'package:aligned_dialog/aligned_dialog.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -43,7 +42,6 @@ class _MangaWidgetState extends State<MangaWidget> {
   late MangaModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
 
   @override
   void initState() {
@@ -55,14 +53,13 @@ class _MangaWidgetState extends State<MangaWidget> {
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -90,14 +87,16 @@ class _MangaWidgetState extends State<MangaWidget> {
                           context: context,
                           isGlobal: true,
                           avoidOverflow: false,
-                          targetAnchor: Alignment(0.0, 0.0),
-                          followerAnchor: Alignment(0.0, 0.0),
+                          targetAnchor: AlignmentDirectional(0.0, 0.0)
+                              .resolve(Directionality.of(context)),
+                          followerAnchor: AlignmentDirectional(0.0, 0.0)
+                              .resolve(Directionality.of(context)),
                           builder: (dialogContext) {
                             return Material(
                               color: Colors.transparent,
                               child: GestureDetector(
                                 onTap: () => FocusScope.of(context)
-                                    .requestFocus(_unfocusNode),
+                                    .requestFocus(_model.unfocusNode),
                                 child: Container(
                                   height:
                                       MediaQuery.of(context).size.height * 0.6,
@@ -473,455 +472,450 @@ class _MangaWidgetState extends State<MangaWidget> {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(8.0),
                         ),
-                        child: RefreshIndicator(
-                          onRefresh: () async {
-                            setState(() => _model.pagingController?.refresh());
-                            await _model.waitForOnePage();
-                          },
-                          child: PagedListView<ApiPagingParams, dynamic>(
-                            pagingController: () {
-                              if (_model.pagingController != null) {
-                                return _model.pagingController!;
-                              }
-
-                              _model.pagingController = PagingController(
-                                firstPageKey: ApiPagingParams(
-                                  nextPageNumber: 0,
-                                  numItems: 0,
-                                  lastResponse: null,
-                                ),
-                              );
-                              _model.pagingController!
-                                  .addPageRequestListener((nextPageMarker) {
-                                GetChaptersCall.call(
-                                  id: widget.id,
-                                  offset: nextPageMarker.numItems,
-                                ).then((listViewGetChaptersResponse) {
-                                  final pageItems = (GetChaptersCall.data(
-                                            listViewGetChaptersResponse
-                                                .jsonBody,
-                                          )!
-                                              .map((e) => e)
-                                              .toList() ??
-                                          [])
-                                      .toList() as List;
-                                  final newNumItems = nextPageMarker.numItems +
-                                      pageItems.length;
-                                  _model.pagingController!.appendPage(
-                                    pageItems,
-                                    (pageItems.length > 0)
-                                        ? ApiPagingParams(
-                                            nextPageNumber:
-                                                nextPageMarker.nextPageNumber +
-                                                    1,
-                                            numItems: newNumItems,
-                                            lastResponse:
-                                                listViewGetChaptersResponse,
-                                          )
-                                        : null,
-                                  );
-                                });
-                              });
+                        child: PagedListView<ApiPagingParams, dynamic>(
+                          pagingController: () {
+                            if (_model.pagingController != null) {
                               return _model.pagingController!;
-                            }(),
-                            padding: EdgeInsets.zero,
-                            shrinkWrap: true,
-                            reverse: false,
-                            scrollDirection: Axis.vertical,
-                            builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                              // Customize what your widget looks like when it's loading the first page.
-                              firstPageProgressIndicatorBuilder: (_) => Center(
-                                child: SizedBox(
-                                  width: 75.0,
-                                  height: 75.0,
-                                  child: SpinKitRipple(
-                                    color:
-                                        FlutterFlowTheme.of(context).alternate,
-                                    size: 75.0,
-                                  ),
+                            }
+
+                            _model.pagingController = PagingController(
+                              firstPageKey: ApiPagingParams(
+                                nextPageNumber: 0,
+                                numItems: 0,
+                                lastResponse: null,
+                              ),
+                            );
+                            _model.pagingController!
+                                .addPageRequestListener((nextPageMarker) {
+                              GetChaptersCall.call(
+                                id: widget.id,
+                                offset: nextPageMarker.numItems,
+                              ).then((listViewGetChaptersResponse) {
+                                final pageItems = (GetChaptersCall.data(
+                                          listViewGetChaptersResponse.jsonBody,
+                                        )!
+                                            .map((e) => e)
+                                            .toList() ??
+                                        [])
+                                    .toList() as List;
+                                final newNumItems =
+                                    nextPageMarker.numItems + pageItems.length;
+                                _model.pagingController!.appendPage(
+                                  pageItems,
+                                  (pageItems.length > 0)
+                                      ? ApiPagingParams(
+                                          nextPageNumber:
+                                              nextPageMarker.nextPageNumber + 1,
+                                          numItems: newNumItems,
+                                          lastResponse:
+                                              listViewGetChaptersResponse,
+                                        )
+                                      : null,
+                                );
+                              });
+                            });
+                            return _model.pagingController!;
+                          }(),
+                          padding: EdgeInsets.zero,
+                          reverse: false,
+                          scrollDirection: Axis.vertical,
+                          builderDelegate: PagedChildBuilderDelegate<dynamic>(
+                            // Customize what your widget looks like when it's loading the first page.
+                            firstPageProgressIndicatorBuilder: (_) => Center(
+                              child: SizedBox(
+                                width: 75.0,
+                                height: 75.0,
+                                child: SpinKitRipple(
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  size: 75.0,
                                 ),
                               ),
+                            ),
 
-                              itemBuilder: (context, _, chaptersIndex) {
-                                final chaptersItem = _model
-                                    .pagingController!.itemList![chaptersIndex];
-                                return Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0.0, 5.0, 0.0, 5.0),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      if (widget.format!.contains(
-                                          '3e2b8dae-350e-4ab8-a8ce-016e844b9f0d')) {
-                                        context.pushNamed(
-                                          'ChapterWebtoon',
-                                          queryParams: {
-                                            'title': serializeParam(
-                                              getJsonField(
-                                                chaptersItem,
-                                                r'''$.attributes.title''',
-                                              ).toString(),
-                                              ParamType.String,
+                            itemBuilder: (context, _, chaptersIndex) {
+                              final chaptersItem = _model
+                                  .pagingController!.itemList![chaptersIndex];
+                              return Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    0.0, 5.0, 0.0, 5.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    if (widget.format!.contains(
+                                        '3e2b8dae-350e-4ab8-a8ce-016e844b9f0d')) {
+                                      context.pushNamed(
+                                        'ChapterWebtoon',
+                                        queryParameters: {
+                                          'title': serializeParam(
+                                            getJsonField(
+                                              listViewGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.attributes.title''',
+                                            ).toString(),
+                                            ParamType.String,
+                                          ),
+                                          'chapterId': serializeParam(
+                                            getJsonField(
+                                              listViewGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.id''',
+                                            ).toString(),
+                                            ParamType.String,
+                                          ),
+                                          'mangaid': serializeParam(
+                                            widget.id,
+                                            ParamType.String,
+                                          ),
+                                          'pages': serializeParam(
+                                            getJsonField(
+                                              listViewGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.attributes.pages''',
                                             ),
-                                            'chapterId': serializeParam(
-                                              getJsonField(
-                                                chaptersItem,
-                                                r'''$.id''',
-                                              ).toString(),
-                                              ParamType.String,
+                                            ParamType.int,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    } else {
+                                      context.pushNamed(
+                                        'Chapter',
+                                        queryParameters: {
+                                          'title': serializeParam(
+                                            getJsonField(
+                                              listViewGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.attributes.title''',
+                                            ).toString(),
+                                            ParamType.String,
+                                          ),
+                                          'chapterId': serializeParam(
+                                            getJsonField(
+                                              listViewGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.id''',
+                                            ).toString(),
+                                            ParamType.String,
+                                          ),
+                                          'mangaid': serializeParam(
+                                            widget.id,
+                                            ParamType.String,
+                                          ),
+                                          'pages': serializeParam(
+                                            getJsonField(
+                                              listViewGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.attributes.pages''',
                                             ),
-                                            'mangaid': serializeParam(
-                                              widget.id,
-                                              ParamType.String,
-                                            ),
-                                            'pages': serializeParam(
-                                              getJsonField(
-                                                chaptersItem,
-                                                r'''$.attributes.pages''',
-                                              ),
-                                              ParamType.int,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      } else {
-                                        context.pushNamed(
-                                          'Chapter',
-                                          queryParams: {
-                                            'title': serializeParam(
-                                              getJsonField(
-                                                chaptersItem,
-                                                r'''$.attributes.title''',
-                                              ).toString(),
-                                              ParamType.String,
-                                            ),
-                                            'chapterId': serializeParam(
-                                              getJsonField(
-                                                chaptersItem,
-                                                r'''$.id''',
-                                              ).toString(),
-                                              ParamType.String,
-                                            ),
-                                            'mangaid': serializeParam(
-                                              widget.id,
-                                              ParamType.String,
-                                            ),
-                                            'pages': serializeParam(
-                                              getJsonField(
-                                                chaptersItem,
-                                                r'''$.attributes.pages''',
-                                              ),
-                                              ParamType.int,
-                                            ),
-                                            'index': serializeParam(
-                                              chaptersIndex,
-                                              ParamType.int,
-                                            ),
-                                            'format': serializeParam(
-                                              widget.format,
-                                              ParamType.String,
-                                              true,
-                                            ),
-                                            'desc': serializeParam(
-                                              widget.desc,
-                                              ParamType.String,
-                                            ),
-                                            'src': serializeParam(
-                                              widget.src,
-                                              ParamType.String,
-                                            ),
-                                          }.withoutNulls,
-                                        );
-                                      }
+                                            ParamType.int,
+                                          ),
+                                          'index': serializeParam(
+                                            chaptersIndex,
+                                            ParamType.int,
+                                          ),
+                                          'format': serializeParam(
+                                            widget.format,
+                                            ParamType.String,
+                                            true,
+                                          ),
+                                          'items': serializeParam(
+                                            (getJsonField(
+                                              listViewGetChaptersResponse
+                                                  .jsonBody,
+                                              r'''$.data[:].id''',
+                                            ) as List)
+                                                .map<String>(
+                                                    (s) => s.toString())
+                                                .toList(),
+                                            ParamType.String,
+                                            true,
+                                          ),
+                                        }.withoutNulls,
+                                      );
+                                    }
 
-                                      if ((containerChaptersRecord != null) &&
-                                          (widget.id ==
-                                              containerChaptersRecord!
-                                                  .mangaId)) {
-                                        final chaptersUpdateData =
-                                            createChaptersRecordData(
-                                          chapterId: getJsonField(
-                                            chaptersItem,
-                                            r'''$.id''',
-                                          ).toString(),
-                                        );
-                                        await containerChaptersRecord!.reference
-                                            .update(chaptersUpdateData);
-                                      } else {
-                                        final chaptersCreateData =
-                                            createChaptersRecordData(
-                                          chapterId: getJsonField(
-                                            chaptersItem,
-                                            r'''$.id''',
-                                          ).toString(),
-                                          user: currentUserReference,
-                                          mangaId: widget.id,
-                                        );
-                                        await ChaptersRecord.collection
-                                            .doc()
-                                            .set(chaptersCreateData);
-                                      }
-                                    },
-                                    child: AnimatedContainer(
-                                      duration: Duration(milliseconds: 100),
-                                      curve: Curves.easeInOut,
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color:
-                                            (containerChaptersRecord != null) &&
-                                                    (containerChaptersRecord!
-                                                            .chapterId ==
-                                                        getJsonField(
-                                                          chaptersItem,
-                                                          r'''$.id''',
-                                                        ))
-                                                ? FlutterFlowTheme.of(context)
-                                                    .success
-                                                : FlutterFlowTheme.of(context)
-                                                    .secondary,
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                      ),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.min,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          ListTile(
-                                            title: Text(
-                                              () {
-                                                if ((getJsonField(
-                                                          chaptersItem,
-                                                          r'''$.attributes.title''',
-                                                        ) !=
-                                                        null) &&
-                                                    (getJsonField(
-                                                          chaptersItem,
-                                                          r'''$.attributes.title''',
-                                                        ) !=
-                                                        '')) {
-                                                  return valueOrDefault<String>(
-                                                    getJsonField(
-                                                      chaptersItem,
-                                                      r'''$.attributes.title''',
-                                                    ).toString(),
-                                                    'N/A',
-                                                  );
-                                                } else if (getJsonField(
-                                                      chaptersItem,
-                                                      r'''$.attributes.volume''',
-                                                    ) !=
-                                                    null) {
-                                                  return 'Vol: ${valueOrDefault<String>(
-                                                    getJsonField(
-                                                      chaptersItem,
-                                                      r'''$.attributes.volume''',
-                                                    ).toString(),
-                                                    'N/A',
-                                                  )} | Ch: ${valueOrDefault<String>(
-                                                    getJsonField(
-                                                      chaptersItem,
-                                                      r'''$.attributes.chapter''',
-                                                    ).toString(),
-                                                    'N/A',
-                                                  )}';
-                                                } else {
-                                                  return 'Ch: ${getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.chapter''',
-                                                  ).toString()}';
-                                                }
-                                              }(),
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .titleMedium,
-                                            ),
-                                            subtitle: Text(
-                                              () {
-                                                if (((getJsonField(
-                                                              chaptersItem,
-                                                              r'''$.attributes.title''',
-                                                            ) !=
-                                                            null) &&
-                                                        (getJsonField(
-                                                              chaptersItem,
-                                                              r'''$.attributes.title''',
-                                                            ) !=
-                                                            '')) &&
-                                                    (getJsonField(
-                                                          chaptersItem,
-                                                          r'''$.attributes.volume''',
-                                                        ) !=
-                                                        null)) {
-                                                  return 'Vol: ${valueOrDefault<String>(
-                                                    getJsonField(
-                                                      chaptersItem,
-                                                      r'''$.attributes.volume''',
-                                                    ).toString(),
-                                                    'N/A',
-                                                  )} | Ch: ${valueOrDefault<String>(
-                                                    getJsonField(
-                                                      chaptersItem,
-                                                      r'''$.attributes.chapter''',
-                                                    ).toString(),
-                                                    'N/A',
-                                                  )}';
-                                                } else if (((getJsonField(
-                                                              chaptersItem,
-                                                              r'''$.attributes.title''',
-                                                            ) !=
-                                                            null) &&
-                                                        (getJsonField(
-                                                              chaptersItem,
-                                                              r'''$.attributes.title''',
-                                                            ) !=
-                                                            '')) &&
-                                                    (getJsonField(
-                                                          chaptersItem,
-                                                          r'''$.attributes.volume''',
-                                                        ) ==
-                                                        null)) {
-                                                  return 'Ch: ${valueOrDefault<String>(
-                                                    getJsonField(
-                                                      chaptersItem,
-                                                      r'''$.attributes.chapter''',
-                                                    ).toString(),
-                                                    'N/A',
-                                                  )}';
-                                                } else {
-                                                  return '';
-                                                }
-                                              }(),
-                                              style: FlutterFlowTheme.of(
-                                                      context)
-                                                  .labelMedium
-                                                  .override(
-                                                    fontFamily: 'Nunito',
-                                                    color: (containerChaptersRecord !=
-                                                                null) &&
-                                                            (containerChaptersRecord!
-                                                                    .chapterId ==
-                                                                getJsonField(
-                                                                  chaptersItem,
-                                                                  r'''$.id''',
-                                                                ))
-                                                        ? FlutterFlowTheme.of(
-                                                                context)
-                                                            .primaryText
-                                                        : FlutterFlowTheme.of(
-                                                                context)
-                                                            .secondaryText,
-                                                  ),
-                                            ),
-                                            trailing: Icon(
-                                              Icons.arrow_forward_ios,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .accent2,
-                                              size: 20.0,
-                                            ),
-                                            dense: false,
-                                            contentPadding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 1.0, 15.0, 0.0),
+                                    if ((containerChaptersRecord != null) &&
+                                        (widget.id ==
+                                            containerChaptersRecord!.mangaId)) {
+                                      final chaptersUpdateData =
+                                          createChaptersRecordData(
+                                        chapterId: getJsonField(
+                                          listViewGetChaptersResponse.jsonBody,
+                                          r'''$.id''',
+                                        ).toString(),
+                                      );
+                                      await containerChaptersRecord!.reference
+                                          .update(chaptersUpdateData);
+                                    } else {
+                                      final chaptersCreateData =
+                                          createChaptersRecordData(
+                                        chapterId: getJsonField(
+                                          listViewGetChaptersResponse.jsonBody,
+                                          r'''$.id''',
+                                        ).toString(),
+                                        user: currentUserReference,
+                                        mangaId: widget.id,
+                                      );
+                                      await ChaptersRecord.collection
+                                          .doc()
+                                          .set(chaptersCreateData);
+                                    }
+                                  },
+                                  child: AnimatedContainer(
+                                    duration: Duration(milliseconds: 100),
+                                    curve: Curves.easeInOut,
+                                    width: double.infinity,
+                                    decoration: BoxDecoration(
+                                      color: (containerChaptersRecord !=
+                                                  null) &&
+                                              (containerChaptersRecord!
+                                                      .chapterId ==
+                                                  getJsonField(
+                                                    listViewGetChaptersResponse
+                                                        .jsonBody,
+                                                    r'''$.id''',
+                                                  ))
+                                          ? FlutterFlowTheme.of(context).success
+                                          : FlutterFlowTheme.of(context)
+                                              .secondary,
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        ListTile(
+                                          title: Text(
+                                            () {
+                                              if ((getJsonField(
+                                                        listViewGetChaptersResponse
+                                                            .jsonBody,
+                                                        r'''$.attributes.title''',
+                                                      ) !=
+                                                      null) &&
+                                                  (getJsonField(
+                                                        listViewGetChaptersResponse
+                                                            .jsonBody,
+                                                        r'''$.attributes.title''',
+                                                      ) !=
+                                                      '')) {
+                                                return getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.title''',
+                                                ).toString();
+                                              } else if (getJsonField(
+                                                    listViewGetChaptersResponse
+                                                        .jsonBody,
+                                                    r'''$.attributes.volume''',
+                                                  ) !=
+                                                  null) {
+                                                return 'Vol: ${getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.volume''',
+                                                ).toString()} | Ch: ${getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.chapter''',
+                                                ).toString()}';
+                                              } else {
+                                                return 'Ch: ${getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.chapter''',
+                                                ).toString()}';
+                                              }
+                                            }(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .titleMedium,
                                           ),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    15.0, 0.0, 15.0, 10.0),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.max,
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              children: [
-                                                Text(
-                                                  valueOrDefault<String>(
-                                                    (getJsonField(
-                                                                  chaptersItem,
-                                                                  r'''$.relationships[:].attributes.name''',
-                                                                ) ==
-                                                                'null') ||
-                                                            (getJsonField(
-                                                                  chaptersItem,
-                                                                  r'''$.relationships[:].attributes.name''',
-                                                                ) ==
-                                                                null)
-                                                        ? 'N/A'
-                                                        : getJsonField(
-                                                            chaptersItem,
-                                                            r'''$.relationships[:].attributes.name''',
-                                                          ).toString(),
-                                                    'N/A',
-                                                  ),
-                                                  textAlign: TextAlign.center,
-                                                  style:
-                                                      FlutterFlowTheme.of(
+                                          subtitle: Text(
+                                            () {
+                                              if (((getJsonField(
+                                                            listViewGetChaptersResponse
+                                                                .jsonBody,
+                                                            r'''$.attributes.title''',
+                                                          ) !=
+                                                          null) &&
+                                                      (getJsonField(
+                                                            listViewGetChaptersResponse
+                                                                .jsonBody,
+                                                            r'''$.attributes.title''',
+                                                          ) !=
+                                                          '')) &&
+                                                  (getJsonField(
+                                                        listViewGetChaptersResponse
+                                                            .jsonBody,
+                                                        r'''$.attributes.volume''',
+                                                      ) !=
+                                                      null)) {
+                                                return 'Vol: ${getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.volume''',
+                                                ).toString()} | Ch: ${getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.chapter''',
+                                                ).toString()}';
+                                              } else if (((getJsonField(
+                                                            listViewGetChaptersResponse
+                                                                .jsonBody,
+                                                            r'''$.attributes.title''',
+                                                          ) !=
+                                                          null) &&
+                                                      (getJsonField(
+                                                            listViewGetChaptersResponse
+                                                                .jsonBody,
+                                                            r'''$.attributes.title''',
+                                                          ) !=
+                                                          '')) &&
+                                                  (getJsonField(
+                                                        listViewGetChaptersResponse
+                                                            .jsonBody,
+                                                        r'''$.attributes.volume''',
+                                                      ) ==
+                                                      null)) {
+                                                return 'Ch: ${getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.chapter''',
+                                                ).toString()}';
+                                              } else {
+                                                return '';
+                                              }
+                                            }(),
+                                            style: FlutterFlowTheme.of(context)
+                                                .labelMedium
+                                                .override(
+                                                  fontFamily: 'Nunito',
+                                                  color: (containerChaptersRecord !=
+                                                              null) &&
+                                                          (containerChaptersRecord!
+                                                                  .chapterId ==
+                                                              getJsonField(
+                                                                listViewGetChaptersResponse
+                                                                    .jsonBody,
+                                                                r'''$.id''',
+                                                              ))
+                                                      ? FlutterFlowTheme.of(
                                                               context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            color: (containerChaptersRecord !=
-                                                                        null) &&
-                                                                    (containerChaptersRecord!
-                                                                            .chapterId ==
-                                                                        getJsonField(
-                                                                          chaptersItem,
-                                                                          r'''$.id''',
-                                                                        ))
-                                                                ? FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText
-                                                                : FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .alternate,
-                                                          ),
-                                                ),
-                                                Text(
-                                                  (String date) {
-                                                    return date.split("T")[0];
-                                                  }(getJsonField(
-                                                    chaptersItem,
-                                                    r'''$.attributes.updatedAt''',
-                                                  ).toString()),
-                                                  style:
-                                                      FlutterFlowTheme.of(
+                                                          .primaryText
+                                                      : FlutterFlowTheme.of(
                                                               context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                'Nunito',
-                                                            color: (containerChaptersRecord !=
-                                                                        null) &&
-                                                                    (containerChaptersRecord!
-                                                                            .chapterId ==
-                                                                        getJsonField(
-                                                                          chaptersItem,
-                                                                          r'''$.id''',
-                                                                        ))
-                                                                ? FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryText
-                                                                : FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .secondaryText,
-                                                          ),
+                                                          .secondaryText,
                                                 ),
-                                              ],
-                                            ),
                                           ),
-                                        ],
-                                      ),
+                                          trailing: Icon(
+                                            Icons.arrow_forward_ios,
+                                            color: FlutterFlowTheme.of(context)
+                                                .accent2,
+                                            size: 20.0,
+                                          ),
+                                          dense: false,
+                                          contentPadding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  15.0, 1.0, 15.0, 0.0),
+                                        ),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  15.0, 0.0, 15.0, 10.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                valueOrDefault<String>(
+                                                  (getJsonField(
+                                                                listViewGetChaptersResponse
+                                                                    .jsonBody,
+                                                                r'''$.relationships[:].attributes.name''',
+                                                              ) ==
+                                                              'null') ||
+                                                          (getJsonField(
+                                                                listViewGetChaptersResponse
+                                                                    .jsonBody,
+                                                                r'''$.relationships[:].attributes.name''',
+                                                              ) ==
+                                                              null)
+                                                      ? 'N/A'
+                                                      : getJsonField(
+                                                          listViewGetChaptersResponse
+                                                              .jsonBody,
+                                                          r'''$.relationships[:].attributes.name''',
+                                                        ).toString(),
+                                                  'N/A',
+                                                ),
+                                                textAlign: TextAlign.center,
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .labelMedium
+                                                    .override(
+                                                      fontFamily: 'Nunito',
+                                                      color: (containerChaptersRecord !=
+                                                                  null) &&
+                                                              (containerChaptersRecord!
+                                                                      .chapterId ==
+                                                                  getJsonField(
+                                                                    listViewGetChaptersResponse
+                                                                        .jsonBody,
+                                                                    r'''$.id''',
+                                                                  ))
+                                                          ? FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText
+                                                          : FlutterFlowTheme.of(
+                                                                  context)
+                                                              .alternate,
+                                                    ),
+                                              ),
+                                              Text(
+                                                (String date) {
+                                                  return date.split("T")[0];
+                                                }(getJsonField(
+                                                  listViewGetChaptersResponse
+                                                      .jsonBody,
+                                                  r'''$.attributes.updatedAt''',
+                                                ).toString()),
+                                                style: FlutterFlowTheme.of(
+                                                        context)
+                                                    .bodyMedium
+                                                    .override(
+                                                      fontFamily: 'Nunito',
+                                                      color: (containerChaptersRecord !=
+                                                                  null) &&
+                                                              (containerChaptersRecord!
+                                                                      .chapterId ==
+                                                                  getJsonField(
+                                                                    listViewGetChaptersResponse
+                                                                        .jsonBody,
+                                                                    r'''$.id''',
+                                                                  ))
+                                                          ? FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primaryText
+                                                          : FlutterFlowTheme.of(
+                                                                  context)
+                                                              .secondaryText,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
-                                );
-                              },
-                            ),
+                                ),
+                              );
+                            },
                           ),
                         ),
                       );

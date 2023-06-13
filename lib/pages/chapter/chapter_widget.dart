@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:page_transition/page_transition.dart';
@@ -24,8 +25,7 @@ class ChapterWidget extends StatefulWidget {
     required this.pages,
     required this.index,
     required this.format,
-    required this.desc,
-    required this.src,
+    required this.items,
   }) : super(key: key);
 
   final String? title;
@@ -34,8 +34,7 @@ class ChapterWidget extends StatefulWidget {
   final int? pages;
   final int? index;
   final List<String>? format;
-  final String? desc;
-  final String? src;
+  final List<String>? items;
 
   @override
   _ChapterWidgetState createState() => _ChapterWidgetState();
@@ -45,31 +44,31 @@ class _ChapterWidgetState extends State<ChapterWidget> {
   late ChapterModel _model;
 
   final scaffoldKey = GlobalKey<ScaffoldState>();
-  final _unfocusNode = FocusNode();
-  int get pageViewCurrentIndex => _model.pageViewController != null &&
-          _model.pageViewController!.hasClients &&
-          _model.pageViewController!.page != null
-      ? _model.pageViewController!.page!.round()
-      : 0;
 
   @override
   void initState() {
     super.initState();
     _model = createModel(context, () => ChapterModel());
+
+    // On page load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      setState(() {
+        _model.localChapterId = widget.chapterId;
+      });
+    });
   }
 
   @override
   void dispose() {
     _model.dispose();
 
-    _unfocusNode.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => FocusScope.of(context).requestFocus(_unfocusNode),
+      onTap: () => FocusScope.of(context).requestFocus(_model.unfocusNode),
       child: Scaffold(
         key: scaffoldKey,
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -87,39 +86,14 @@ class _ChapterWidgetState extends State<ChapterWidget> {
               size: 30.0,
             ),
             onPressed: () async {
-              context.pushNamed(
-                'Manga',
-                queryParams: {
-                  'title': serializeParam(
-                    widget.title,
-                    ParamType.String,
-                  ),
-                  'desc': serializeParam(
-                    widget.desc,
-                    ParamType.String,
-                  ),
-                  'src': serializeParam(
-                    widget.src,
-                    ParamType.String,
-                  ),
-                  'id': serializeParam(
-                    widget.mangaid,
-                    ParamType.String,
-                  ),
-                  'format': serializeParam(
-                    widget.format,
-                    ParamType.String,
-                    true,
-                  ),
-                }.withoutNulls,
-              );
+              context.safePop();
             },
           ),
           actions: [
             Padding(
               padding: EdgeInsetsDirectional.fromSTEB(0.0, 16.0, 16.0, 0.0),
               child: Text(
-                '${(pageViewCurrentIndex + 1).toString()}/${widget.pages?.toString()}',
+                '${(_model.pageViewCurrentIndex + 1).toString()}/${widget.pages?.toString()}',
                 style: FlutterFlowTheme.of(context).titleMedium,
               ),
             ),
@@ -137,7 +111,7 @@ class _ChapterWidgetState extends State<ChapterWidget> {
               Expanded(
                 child: FutureBuilder<ApiCallResponse>(
                   future: GetChapterPagesCall.call(
-                    chapterId: widget.chapterId,
+                    chapterId: _model.localChapterId,
                   ),
                   builder: (context, snapshot) {
                     // Customize what your widget looks like when it's loading.
@@ -304,200 +278,48 @@ class _ChapterWidgetState extends State<ChapterWidget> {
                         mainAxisSize: MainAxisSize.max,
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          FutureBuilder<ApiCallResponse>(
-                            future: GetChaptersCall.call(
-                              id: widget.mangaid,
-                              limit: 1,
-                              offset: widget.index! + 1,
+                          FlutterFlowIconButton(
+                            borderRadius: 20.0,
+                            borderWidth: 1.0,
+                            buttonSize: 50.0,
+                            icon: Icon(
+                              Icons.arrow_back,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 32.0,
                             ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 75.0,
-                                    height: 75.0,
-                                    child: SpinKitRipple(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      size: 75.0,
-                                    ),
-                                  ),
-                                );
-                              }
-                              final iconButtonGetChaptersResponse =
-                                  snapshot.data!;
-                              return FlutterFlowIconButton(
-                                borderRadius: 20.0,
-                                borderWidth: 1.0,
-                                buttonSize: 40.0,
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 32.0,
-                                ),
-                                onPressed: () async {
-                                  context.pushNamed(
-                                    'Chapter',
-                                    queryParams: {
-                                      'title': serializeParam(
-                                        getJsonField(
-                                          iconButtonGetChaptersResponse
-                                              .jsonBody,
-                                          r'''$.data[:].attributes.title''',
-                                        ).toString(),
-                                        ParamType.String,
-                                      ),
-                                      'chapterId': serializeParam(
-                                        getJsonField(
-                                          iconButtonGetChaptersResponse
-                                              .jsonBody,
-                                          r'''$.data[:].id''',
-                                        ).toString(),
-                                        ParamType.String,
-                                      ),
-                                      'mangaid': serializeParam(
-                                        widget.mangaid,
-                                        ParamType.String,
-                                      ),
-                                      'index': serializeParam(
-                                        widget.index! + 1,
-                                        ParamType.int,
-                                      ),
-                                      'pages': serializeParam(
-                                        getJsonField(
-                                          iconButtonGetChaptersResponse
-                                              .jsonBody,
-                                          r'''$.data[:].attributes.pages''',
-                                        ),
-                                        ParamType.int,
-                                      ),
-                                      'format': serializeParam(
-                                        widget.format,
-                                        ParamType.String,
-                                        true,
-                                      ),
-                                      'desc': serializeParam(
-                                        widget.desc,
-                                        ParamType.String,
-                                      ),
-                                      'src': serializeParam(
-                                        widget.src,
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-
-                                  final chaptersUpdateData =
-                                      createChaptersRecordData(
-                                    chapterId: getJsonField(
-                                      iconButtonGetChaptersResponse.jsonBody,
-                                      r'''$.data[:].id''',
-                                    ).toString(),
-                                  );
-                                  await rowChaptersRecord!.reference
-                                      .update(chaptersUpdateData);
-                                },
+                            onPressed: () async {
+                              final chaptersUpdateData =
+                                  createChaptersRecordData(
+                                chapterId: widget.items?[widget.index! + 1],
                               );
+                              await rowChaptersRecord!.reference
+                                  .update(chaptersUpdateData);
+                              setState(() {
+                                _model.localChapterId =
+                                    widget.format?[widget.index! + 1];
+                              });
                             },
                           ),
-                          FutureBuilder<ApiCallResponse>(
-                            future: GetChaptersCall.call(
-                              id: widget.mangaid,
-                              limit: 1,
-                              offset: widget.index! - 1,
+                          FlutterFlowIconButton(
+                            borderRadius: 20.0,
+                            borderWidth: 1.0,
+                            buttonSize: 50.0,
+                            icon: Icon(
+                              Icons.arrow_forward,
+                              color: FlutterFlowTheme.of(context).primaryText,
+                              size: 32.0,
                             ),
-                            builder: (context, snapshot) {
-                              // Customize what your widget looks like when it's loading.
-                              if (!snapshot.hasData) {
-                                return Center(
-                                  child: SizedBox(
-                                    width: 75.0,
-                                    height: 75.0,
-                                    child: SpinKitRipple(
-                                      color: FlutterFlowTheme.of(context)
-                                          .alternate,
-                                      size: 75.0,
-                                    ),
-                                  ),
-                                );
-                              }
-                              final iconButtonGetChaptersResponse =
-                                  snapshot.data!;
-                              return FlutterFlowIconButton(
-                                borderRadius: 20.0,
-                                borderWidth: 1.0,
-                                buttonSize: 40.0,
-                                icon: Icon(
-                                  Icons.arrow_forward,
-                                  color:
-                                      FlutterFlowTheme.of(context).primaryText,
-                                  size: 32.0,
-                                ),
-                                onPressed: () async {
-                                  context.pushNamed(
-                                    'Chapter',
-                                    queryParams: {
-                                      'title': serializeParam(
-                                        getJsonField(
-                                          iconButtonGetChaptersResponse
-                                              .jsonBody,
-                                          r'''$.data[:].attributes.title''',
-                                        ).toString(),
-                                        ParamType.String,
-                                      ),
-                                      'chapterId': serializeParam(
-                                        getJsonField(
-                                          iconButtonGetChaptersResponse
-                                              .jsonBody,
-                                          r'''$.data[:].id''',
-                                        ).toString(),
-                                        ParamType.String,
-                                      ),
-                                      'mangaid': serializeParam(
-                                        widget.mangaid,
-                                        ParamType.String,
-                                      ),
-                                      'index': serializeParam(
-                                        widget.index! - 1,
-                                        ParamType.int,
-                                      ),
-                                      'pages': serializeParam(
-                                        getJsonField(
-                                          iconButtonGetChaptersResponse
-                                              .jsonBody,
-                                          r'''$.data[:].attributes.pages''',
-                                        ),
-                                        ParamType.int,
-                                      ),
-                                      'format': serializeParam(
-                                        widget.format,
-                                        ParamType.String,
-                                        true,
-                                      ),
-                                      'desc': serializeParam(
-                                        widget.desc,
-                                        ParamType.String,
-                                      ),
-                                      'src': serializeParam(
-                                        widget.src,
-                                        ParamType.String,
-                                      ),
-                                    }.withoutNulls,
-                                  );
-
-                                  final chaptersUpdateData =
-                                      createChaptersRecordData(
-                                    chapterId: getJsonField(
-                                      iconButtonGetChaptersResponse.jsonBody,
-                                      r'''$.data[:].id''',
-                                    ).toString(),
-                                  );
-                                  await rowChaptersRecord!.reference
-                                      .update(chaptersUpdateData);
-                                },
+                            onPressed: () async {
+                              final chaptersUpdateData =
+                                  createChaptersRecordData(
+                                chapterId: widget.items?[widget.index! - 1],
                               );
+                              await rowChaptersRecord!.reference
+                                  .update(chaptersUpdateData);
+                              setState(() {
+                                _model.localChapterId =
+                                    widget.format?[widget.index! - 1];
+                              });
                             },
                           ),
                         ],

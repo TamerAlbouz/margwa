@@ -57,7 +57,7 @@ class _PushNotificationsHandlerState extends State<PushNotificationsHandler> {
         final parameterData = await parametersBuilder(initialParameterData);
         context.pushNamed(
           initialPageName,
-          params: parameterData.params,
+          pathParameters: parameterData.pathParameters,
           extra: parameterData.extra,
         );
       }
@@ -98,7 +98,7 @@ class ParameterData {
   final Map<String, String?> requiredParams;
   final Map<String, dynamic> allParams;
 
-  Map<String, String> get params => Map.fromEntries(
+  Map<String, String> get pathParameters => Map.fromEntries(
         requiredParams.entries
             .where((e) => e.value != null)
             .map((e) => MapEntry(e.key, e.value!)),
@@ -129,8 +129,6 @@ final parametersBuilderMap =
           'mangaid': getParameter<String>(data, 'mangaid'),
           'pages': getParameter<int>(data, 'pages'),
           'index': getParameter<int>(data, 'index'),
-          'desc': getParameter<String>(data, 'desc'),
-          'src': getParameter<String>(data, 'src'),
         },
       ),
   'LogIn': ParameterData.none(),
